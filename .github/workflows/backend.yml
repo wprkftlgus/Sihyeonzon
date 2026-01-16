@@ -23,7 +23,8 @@ jobs:
           ssh -o StrictHostKeyChecking=no ec2-user@16.176.132.188 "
             sudo yum install -y nodejs || true;
             cd ~/Sihyeonzon/server || exit;
-            git pull origin main;
+            git fetch origin main
+            git reset --hard origin/main;
             npm install;
             pm2 restart my-backend || pm2 start server.js --name my-backend;
             pm2 save
