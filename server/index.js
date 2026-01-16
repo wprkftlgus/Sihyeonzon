@@ -1,3 +1,4 @@
+import cors from 'cors'
 import express from 'express'
 import mysql from 'mysql2/promise'
 import dotenv from 'dotenv'
@@ -7,6 +8,12 @@ import RegisterRouter from './routes/register.js'
 dotenv.config() 
 
 const app = express();
+app.use(cors({
+  origin: 'http://localhost:5173',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  credentials: true,
+}));
+app.use(express.json());
 app.use('/api' ,loginRouter);
 app.use('/api' ,RegisterRouter);
 
@@ -30,7 +37,7 @@ app.get('/', async (req,res) => {
     res.send(rows)
 })
 
-app.listen(process.env.PORT, () => {
+app.listen(process.env.PORT, '0.0.0.0',() => {
     console.log(`Express running on the ${process.env.PORT}`);
 })
 }

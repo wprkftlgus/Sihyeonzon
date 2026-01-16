@@ -16,7 +16,17 @@ function Login(){
      <div>Enter your ID</div>
      <input placeholder='ID' className='rounded p-1 border border-black'></input>
      <input placeholder='Password' className='rounded p-1 border border-black'></input>
-     <div className='bg-yellow-300 hover:cursor-pointer hover:bg-yellow-400 max-w-13'>Sign In</div>
+     <div onClick={async () => {
+        try {
+          const response = await fetch('http://54.252.148.65:3000/api/login')
+          const result = await response.json()
+          if(result.ok){
+            console.log(result);
+          }} catch (err){
+            console.error(err);
+          }
+     }} 
+     className='bg-yellow-300 hover:cursor-pointer hover:bg-yellow-400 max-w-13'>Sign In</div>
      <div>You don't have account yet?</div>
      <div onClick={() => navigate('/register')}
      className='text-blue-700 hover:cursor-pointer hover:text-blue-900 hover:underline'>Create New Account</div>
