@@ -1,9 +1,35 @@
 import amazon from '../assets/amazon.png'
 import '../App.css'
 import { Navigate, useNavigate } from 'react-router-dom'
+import { useState } from 'react' 
+import { error } from 'console'
 
 function Register(){
     const navigate = useNavigate()
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [errors, setErrors] = useState({});
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        let newErrors = {};
+
+        if (!username) newErrors.username = "Username Required!"
+        if (!password) newErrors.password = "Password Required!"
+
+        setErrors(newErrors);
+
+        if(Object.keys(newErrors).length > 0) return ;
+
+        const res = await fetch("http://localhost:3000/api/register",{
+            method: "POST",
+            headers: { "Content-Type" : "application/json"},
+            body: JSON.stringify({username, password}),
+            credentials: "include"
+        });
+        const data = await res.json();
+        alert(data.message);
+    }
+
     return(
     <div>
      <div onClick={() => navigate('/')} className='flex flex-col hover:cursor-pointer'>
@@ -14,9 +40,15 @@ function Register(){
      <div className='border border-gray-300'>
      <div className=''>Create new account</div>
      <div>Enter your ID</div>
-     <input placeholder='ID' className='rounded p-1 border border-black'></input>
-     <input placeholder='Password' className='rounded p-1 border border-black'></input>
-     <div className='bg-yellow-300 hover:cursor-pointer hover:bg-yellow-400 max-w-13'>Make New Account</div>
+     <form onSubmit={handleSubmit}>
+     <input value={username} onChange={(e) => setUsername(e.target.value)} placeholder='ID' className='rounded p-1 border border-black'></input>
+     {errors.username && <div className=' text-red-500'>{errors.username}</div>}
+     <input value={password} onChange={(e) => setPassword(e.target.value)} placeholder='Password' className='rounded p-1 border border-black'></input>
+     {errors.password && <div className=' text-red-500'>{errors.password}</div>}
+     <button type="submit" className='bg-yellow-300 hover:cursor-pointer hover:bg-yellow-400 max-w-13'>
+     Make New Account
+     </button>
+     </form>
      <div>Do you already have account?</div>
      <div onClick={() => navigate('/login')} 
      className=' text-blue-700 hover:cursor-pointer hover:text-blue-900 hover:underline'>Go back to login</div>
