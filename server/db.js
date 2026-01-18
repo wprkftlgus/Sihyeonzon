@@ -24,5 +24,11 @@ await db.execute(`
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )
 `);
+try {
+  const [rows] = await db.execute('SELECT 1 AS test');
+  console.log('DB 연결 OK:', rows);
+} catch(err) {
+  console.error('DB 연결 실패:', err);
+}
 
 export default db

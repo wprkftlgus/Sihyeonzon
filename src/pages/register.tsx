@@ -1,17 +1,23 @@
 import amazon from '../assets/amazon.png'
 import '../App.css'
-import { Navigate, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useState } from 'react' 
-import { error } from 'console'
+
+interface FormErrors {
+    username?: string,
+    password?: string
+}
 
 function Register(){
     const navigate = useNavigate()
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [errors, setErrors] = useState({});
-    const handleSubmit = async (e) => {
+    const [errors, setErrors] = useState<FormErrors>({});
+    const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        let newErrors = {};
+        let newErrors: FormErrors = {};
 
         if (!username) newErrors.username = "Username Required!"
         if (!password) newErrors.password = "Password Required!"
@@ -20,7 +26,7 @@ function Register(){
 
         if(Object.keys(newErrors).length > 0) return ;
 
-        const res = await fetch("http://localhost:3000/api/register",{
+        const res = await fetch(`${API_BASE_URL}/api/register`,{
             method: "POST",
             headers: { "Content-Type" : "application/json"},
             body: JSON.stringify({username, password}),

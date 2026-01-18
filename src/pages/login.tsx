@@ -1,24 +1,30 @@
 import amazon from '../assets/amazon.png'
 import '../App.css'
 import { useState } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+
+interface FormErrors {
+  username?: string,
+  password?: string
+}
 
 function Login(){
     const navigate = useNavigate();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [errors, setErrors] = useState({});
+    const [errors, setErrors] = useState<FormErrors>({});
+    const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      let newErrors = {};
+      let newErrors: FormErrors = {};
 
       if (!username) newErrors.username = "Username Required!"
       if (!password) newErrors.password = "Password Required!"
 
       setErrors(newErrors);
       try{
-      const res = await fetch("http://localhost:3000/api/login",{
+      const res = await fetch(`${API_BASE_URL}/api/login`,{
         method : "POST",
         headers : { "Content-Type" : "application/json"},
         body : JSON.stringify({username, password}),
