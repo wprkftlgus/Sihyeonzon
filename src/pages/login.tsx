@@ -51,27 +51,38 @@ function Login(){
     }
     return(
     <div>
-     <div onClick={() => navigate('/')} className='flex flex-col hover:cursor-pointer'>
-      <div>SihyeonZon</div>
-      <div style={{backgroundImage: `url(${amazon})`, backgroundPosition: 'center',
-    backgroundSize: '90px 70px',backgroundRepeat: 'no-repeat',  width: 90, height:70}}></div>
+     <div onClick={() => navigate('/')} className='mx-auto max-w-32 flex flex-col hover:cursor-pointer'>
+      <div className='font-bold text-2xl'>SihyeonZon</div>
+      <div className='relative bottom-1' style={{backgroundImage: `url(${amazon})`, backgroundPosition: 'center',
+    backgroundSize: '120px 70px',backgroundRepeat: 'no-repeat',  width: 120, height:20}}></div>
      </div>
-     <div className='border border-gray-300'>
-     <div className=''>Sign in or create account</div>
+     <div className='mx-auto rounded-xl max-w-96 border border-gray-300 p-5'>
+     <div className='pb-2'>Sign in or create account</div>
      <div>Enter your ID</div>
      <form onSubmit={handleSubmit}>
      {data && <div className=' text-red-500'>{data}</div>}
-     <input value={username} onChange={handleUsernameChange} placeholder='ID' className='rounded p-1 border border-black'></input>
+     <div className='flex flex-col'>
+     <input value={username} onChange={handleUsernameChange} placeholder='ID' className='mb-2 rounded p-1 border border-black'></input>
      {errors.username && <div className=' text-red-500'>{errors.username}</div>}
-     <input value={password} onChange={(e) => setPassword(e.target.value)} placeholder='Password' className='rounded p-1 border border-black'></input>
+     <input value={password} onChange={(e) => setPassword(e.target.value)} placeholder='Password' className='mb-2 rounded p-1 border border-black'></input>
      {errors.password && <div className=' text-red-500'>{errors.password}</div>}
-     <button type="submit" className='bg-yellow-300 hover:cursor-pointer hover:bg-yellow-400 max-w-13'>
+     </div>
+     <button type="submit" className='mb-4 rounded-2xl pt-2 pb-2 w-full bg-yellow-300 hover:cursor-pointer hover:bg-yellow-400 max-w-30'>
      Sign In
      </button>
      </form>
-     <div>You don't have account yet?</div>
+     <div className='pb-5 border-b border-gray-400'>By continuing, you agree to Sihyeonzon's Conditions of Use and Privacy Notice.</div>
+     <div className='pt-2'>You don't have account yet?</div>
      <div onClick={() => navigate('/register')}
-     className='text-blue-700 hover:cursor-pointer hover:text-blue-900 hover:underline'>Create New Account</div>
+     className='inline-block text-blue-700 hover:cursor-pointer hover:text-blue-900 hover:underline'>Create New Account</div>
+     </div>
+     <div className=' w-full text-center mt-14 border-t-2  border-gray-300'>
+     <div className='justify-center flex gap-4 text-blue-700 pt-5 pb-2'>
+      <div className=' cursor-pointer hover:underline'>Condition of Use</div>
+      <div className=' cursor-pointer hover:underline'>Privacy Notice</div>
+      <div className=' cursor-pointer hover:underline'>Help</div>
+     </div>
+     <div className=' text-gray-600'>© 1996-2026, Sihyeonzon.com, Inc. or its affiliates</div>
      </div>
     </div>
     )

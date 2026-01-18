@@ -24,6 +24,14 @@ await db.execute(`
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )
 `);
+await db.execute(`
+  CREATE TABLE IF NOT EXISTS posts (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  title VARCHAR(255) NOT NULL,
+  content TEXT NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  )
+`)
 try {
   const [rows] = await db.execute('SELECT 1 AS test');
   console.log('DB 연결 OK:', rows);

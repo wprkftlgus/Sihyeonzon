@@ -50,6 +50,7 @@ function Main() {
         </div>
       </div>
       <div className='bg-gray-100'>ads</div>
+      <div onClick={() => navigate('/createpost')} className='cursor-pointer bg-yellow-300 p-2 max-w-20'>create post</div>
     </div>
   )
 }
