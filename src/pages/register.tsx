@@ -1,17 +1,19 @@
 import amazon from '../assets/amazon.png'
 import '../App.css'
 import { useNavigate } from 'react-router-dom'
-import { useState } from 'react' 
+import React, { useState } from 'react' 
 
 interface FormErrors {
     username?: string,
-    password?: string
+    password?: string,
+    data?: string
 }
 
 function Register(){
     const navigate = useNavigate()
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [data, setData] = useState('');
     const [errors, setErrors] = useState<FormErrors>({});
     const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -25,17 +27,28 @@ function Register(){
         setErrors(newErrors);
 
         if(Object.keys(newErrors).length > 0) return ;
-
-        const res = await fetch(`${API_BASE_URL}/api/register`,{
+        try{
+            const res = await fetch(`${API_BASE_URL}/api/register`,{
             method: "POST",
             headers: { "Content-Type" : "application/json"},
             body: JSON.stringify({username, password}),
             credentials: "include"
         });
         const data = await res.json();
-        alert(data.message);
-    }
+        setData(data.message);
+        if(data.message === 'User registered successfully'){
+            navigate('/');
+        }
+        } catch(err){
+            console.error(err);
+        }}
 
+    const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setUsername(e.target.value);
+        if(data === 'Username already exists'){
+            setData('');
+        }
+    }
     return(
     <div>
      <div onClick={() => navigate('/')} className='flex flex-col hover:cursor-pointer'>
@@ -46,8 +59,9 @@ function Register(){
      <div className='border border-gray-300'>
      <div className=''>Create new account</div>
      <div>Enter your ID</div>
+     {data && <div className=' text-red-500'>{data}</div>}
      <form onSubmit={handleSubmit}>
-     <input value={username} onChange={(e) => setUsername(e.target.value)} placeholder='ID' className='rounded p-1 border border-black'></input>
+     <input value={username}  onChange={handleUsernameChange} placeholder='ID' className='rounded p-1 border border-black'></input>
      {errors.username && <div className=' text-red-500'>{errors.username}</div>}
      <input value={password} onChange={(e) => setPassword(e.target.value)} placeholder='Password' className='rounded p-1 border border-black'></input>
      {errors.password && <div className=' text-red-500'>{errors.password}</div>}

@@ -1,17 +1,19 @@
 import amazon from '../assets/amazon.png'
 import '../App.css'
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'
 
 interface FormErrors {
   username?: string,
-  password?: string
+  password?: string,
+  setData?: string
 }
 
 function Login(){
     const navigate = useNavigate();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [data, setData] = useState('');
     const [errors, setErrors] = useState<FormErrors>({});
     const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -21,6 +23,7 @@ function Login(){
 
       if (!username) newErrors.username = "Username Required!"
       if (!password) newErrors.password = "Password Required!"
+      
 
       setErrors(newErrors);
       try{
@@ -34,10 +37,17 @@ function Login(){
       if(res.ok){
         navigate('/');
       } else{
-          alert(data.message);
+          setData(data.message);
         }}catch(err){
           console.error(err);
         }
+    }
+
+    const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      setUsername(e.target.value);
+      if(data === 'Incorrect username or password.'){
+        setData('');
+      }
     }
     return(
     <div>
@@ -50,7 +60,8 @@ function Login(){
      <div className=''>Sign in or create account</div>
      <div>Enter your ID</div>
      <form onSubmit={handleSubmit}>
-     <input value={username} onChange={(e) => setUsername(e.target.value)} placeholder='ID' className='rounded p-1 border border-black'></input>
+     {data && <div className=' text-red-500'>{data}</div>}
+     <input value={username} onChange={handleUsernameChange} placeholder='ID' className='rounded p-1 border border-black'></input>
      {errors.username && <div className=' text-red-500'>{errors.username}</div>}
      <input value={password} onChange={(e) => setPassword(e.target.value)} placeholder='Password' className='rounded p-1 border border-black'></input>
      {errors.password && <div className=' text-red-500'>{errors.password}</div>}

@@ -6,9 +6,7 @@ const loginRouter = express.Router();
 
 loginRouter.post("/login", async (req,res) => {
     const {username, password} = req.body;
-    if(!username || !password){
-        return res.status(400).json({ message : "Missing Field"});
-    }  
+    
     try{
       const [rows] = await db.execute(
         "SELECT * FROM users WHERE username = ?", 
@@ -16,13 +14,13 @@ loginRouter.post("/login", async (req,res) => {
       );
 
       if(rows.length === 0){
-        return res.status(401).json({ message: "Invalid credentials"})
+        return res.status(401).json({ message: "Incorrect username or password."})
       }
       const user = rows[0]
 
       const isMatch = await bcrypt.compare(password, user.password);
       if(!isMatch){
-        return res.status(401).json({ message: "Invalid credentials"})
+        return res.status(401).json({ message: "Incorrect username or password."})
       }
        res.cookie("userId", user.id, {
       httpOnly: true, 

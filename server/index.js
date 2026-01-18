@@ -2,6 +2,7 @@ import cors from 'cors'
 import express from 'express'
 import mysql from 'mysql2/promise'
 import dotenv from 'dotenv'
+import meRouter from './routes/me.js'
 import loginRouter from './routes/login.js'
 import RegisterRouter from './routes/register.js'
 import db from "./db.js"
@@ -20,6 +21,7 @@ app.use(cors({
 app.use(express.json());
 app.use(cookieParser());
 
+app.use('/api' ,meRouter);
 app.use('/api' ,loginRouter);
 app.use('/api' ,RegisterRouter);
 
