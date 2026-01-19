@@ -4,9 +4,18 @@ import search from '../assets/cart.png'
 import cart from '../assets/search.png'
 import { useNavigate } from 'react-router-dom'
 
+interface Post {
+  id: number;
+  user_id: number;
+  title: string;
+  content: string;
+  image_url: string;
+}
+
 function Main() {
   const navigate = useNavigate();
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+  const [posts, setPosts] = useState<Post[]>([]);
 
   const [user, setUser] = useState<{ username: string } | null>(null);
   useEffect(() => {
@@ -25,6 +34,20 @@ function Main() {
     }}
 
     fetchUser();
+  },[])
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try{
+        const res = await fetch(`${API_BASE_URL}/api/getposts`)
+        const data = await res.json();
+        setPosts(data);
+
+      } catch(err){
+        console.log(err);
+      }
+    } 
+    fetchPosts();
   },[])
 
   return (
@@ -49,7 +72,15 @@ function Main() {
         <div className='mt-4'>Cart</div>
         </div>
       </div>
-      <div className='bg-gray-100'>ads</div>
+      <div>
+        {posts.map((post: any) => (
+          <div key={post.id}>
+            <div>{post.title}</div>
+            <div>{post.content}</div>
+            <img src={``} />
+          </div>
+        ))}
+      </div>
       <div onClick={() => navigate('/createpost')} className='cursor-pointer bg-yellow-300 p-2 max-w-20'>create post</div>
     </div>
   )

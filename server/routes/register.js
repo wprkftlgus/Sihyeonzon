@@ -1,6 +1,10 @@
 import express from 'express';
 import db from '../db.js'
 import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
+import dotenv from 'dotenv'
+
+dotenv.config();
 
 const RegisterRouter = express.Router();
 
@@ -12,13 +16,19 @@ RegisterRouter.post('/register', async (req,res) => {
 
     try{
         const hashedPassword = await bcrypt.hash(password, 10);
+
         const [result] = await db.execute(
             "INSERT INTO users (username, password) VALUES (?, ?)",
             [username, hashedPassword]
         );
         const userId = result.insertId;
+        const token = jwt.sign(
+            {id : userId},
+            process.env.JWT_SECRET,
+            {expiresIn: '1d'}
+        )
 
-        res.cookie("userId", userId, {
+        res.cookie("token", token, {
             httpOnly: true,
             secure: false,
             maxAge: 24 * 60 * 60 * 1000

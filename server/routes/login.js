@@ -1,6 +1,10 @@
 import express from 'express';
 import db from '../db.js';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const loginRouter = express.Router();
 
@@ -22,7 +26,12 @@ loginRouter.post("/login", async (req,res) => {
       if(!isMatch){
         return res.status(401).json({ message: "Incorrect username or password."})
       }
-       res.cookie("userId", user.id, {
+      const token = jwt.sign(
+        {id: user.id},
+        process.env.JWT_SECRET,
+        { expiresIn: '1d'}
+      )
+      res.cookie("token", token, {
       httpOnly: true, 
       secure: false, 
       maxAge: 24 * 60 * 60 * 1000, 

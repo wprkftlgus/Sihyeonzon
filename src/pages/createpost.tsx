@@ -7,7 +7,7 @@ function Createpost (){
     const navigate = useNavigate();
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
-    const API_BASE_URL = import.meta.env.Vite_API_BASE_URL;
+    const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
     const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -18,9 +18,9 @@ function Createpost (){
             body: JSON.stringify({title, content})
          })
          const data = await res.json();
-
+         alert(data.message)
         } catch(err){
-
+         console.error(err)
         }
     }
     return(
@@ -32,8 +32,8 @@ function Createpost (){
     </div>
     <div className="text-2xl">Create Post</div>
     <form onSubmit={handleSubmit}>
-    <input value={title} className="p-2 border border-solid border-gray-400 rounded" placeholder="Title"></input>
-    <textarea value={content} className="p-2 border border-solid border-gray-400 rounded" placeholder="Content"></textarea>
+    <input value={title} onChange={(e) => setTitle(e.target.value)} className="p-2 border border-solid border-gray-400 rounded" placeholder="Title"></input>
+    <textarea value={content} onChange={(e) => setContent(e.target.value)} className="p-2 border border-solid border-gray-400 rounded" placeholder="Content"></textarea>
     
     <button className="">Submit</button>
     </form>

@@ -1,8 +1,7 @@
 import cors from 'cors'
 import express from 'express'
-import mysql from 'mysql2/promise'
 import dotenv from 'dotenv'
-import createpostRouter from './routes/createpost.js'
+import postRouter from './routes/posts.js'
 import meRouter from './routes/me.js'
 import loginRouter from './routes/login.js'
 import RegisterRouter from './routes/register.js'
@@ -23,7 +22,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use('/api' ,meRouter);
-app.use('/api' ,createpostRouter);
+app.use('/api' ,postRouter);
 app.use('/api' ,loginRouter);
 app.use('/api' ,RegisterRouter);
 
