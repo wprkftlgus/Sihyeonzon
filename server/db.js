@@ -28,7 +28,7 @@ await db.execute(`
   CREATE TABLE IF NOT EXISTS posts (
   id INT AUTO_INCREMENT PRIMARY KEY,
   user_id INT NOT NULL,
-  image_url VARCHAT(255),
+  image_url VARCHAR(255),
   title VARCHAR(255) NOT NULL,
   content TEXT NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

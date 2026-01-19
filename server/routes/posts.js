@@ -1,7 +1,7 @@
 import express from 'express'
-import db from '../db'
-import { authMiddleware } from '../middleware/middleware';
-import upload from '../middleware/upload'
+import db from '../db.js'
+import { authMiddleware } from '../middleware/middleware.js';
+import upload from '../middleware/upload.js'
 
 const postRouter = express.Router();
 
