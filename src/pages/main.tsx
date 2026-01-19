@@ -16,8 +16,9 @@ function Main() {
   const navigate = useNavigate();
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const [posts, setPosts] = useState<Post[]>([]);
-
   const [user, setUser] = useState<{ username: string } | null>(null);
+  const [hidden, setHidden] =useState(false); 
+
   useEffect(() => {
     const fetchUser = async () => {
       try{
@@ -32,7 +33,7 @@ function Main() {
     } catch(err){
       console.error(err);
     }}
-
+    console.log(user);
     fetchUser();
   },[])
 
@@ -50,6 +51,19 @@ function Main() {
     fetchPosts();
   },[])
 
+  const handleLogout = async () => {
+    try{
+      const res = await fetch(`${API_BASE_URL}/api/logout`,{
+        method: 'POST',
+        credentials: 'include'
+      })
+      const data = await res.json();
+      alert(data.message);
+    } catch(err){
+      console.log(err);
+    }
+  }
+
   return (
     <div className="">
       <div className='bg-[#131921] text-white flex gap-5 p-1'>
@@ -65,13 +79,36 @@ function Main() {
         <div>Account & Lists</div>
         </div>
          : 
-         <div>{user.username}</div>}
+         <div onMouseEnter={() => setHidden(true)} onMouseLeave={() => setHidden(false)} className=' cursor-pointer'>{user.username}</div>}
         <div className='flex items-center cursor-pointer border border-[#131921] hover:border-white'>
         <div className='invert' style={{backgroundImage: `url(${cart})`, backgroundPosition: 'center',
     backgroundSize: '50px 50px', backgroundRepeat: 'no-repeat',  width: 50, height:50}}></div>
         <div className='mt-4'>Cart</div>
         </div>
       </div>
+      {hidden && 
+        <div className='relative bg-white' onMouseEnter={() => setHidden(true)}>
+         <div onClick={() => {handleLogout(); setUser(null); setHidden(false);}} className='text-center text-black cursor-pointer mb-4 rounded-2xl pt-2 pb-2 w-full bg-yellow-300'>Log out</div>
+         
+         <div className='flex'>
+         <div className='flex flex-col text-gray-700'>
+         <div className='text-black font-bold'>Your Lists</div>
+         <div>Create a List</div>
+         <div>Find a List or Registry</div>
+         </div>
+
+         <div className='flex flex-col text-gray-700'>
+         <div className='text-black font-bold'>Your Account</div>
+         <div>Account</div>
+         <div>Orders</div>
+         <div>Recommendations</div>
+         <div>Browsing History</div>
+         <div>Your Shopping preferences</div>
+         <div>Watchlist</div>
+         <div>Video Purchases & Rentals</div>
+         </div> 
+         </div>
+        </div>}
       <div>
         {posts.map((post: any) => (
           <div key={post.id}>
@@ -81,7 +118,14 @@ function Main() {
           </div>
         ))}
       </div>
-      <div onClick={() => navigate('/createpost')} className='cursor-pointer bg-yellow-300 p-2 max-w-20'>create post</div>
+      <div onClick={() => {
+        if(!user){
+          alert("You need to login!");
+          navigate('/login');
+          return ;
+        } 
+        navigate('/createpost')}} 
+        className='cursor-pointer bg-yellow-300 p-2 max-w-20'>create post</div>
     </div>
   )
 }

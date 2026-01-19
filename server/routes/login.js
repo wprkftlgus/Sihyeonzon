@@ -42,4 +42,17 @@ loginRouter.post("/login", async (req,res) => {
     }
 })
 
+loginRouter.post('/logout', async(req, res) => {
+  try{
+    res.clearCookie('token', {
+      httpOnly: true,
+      secure: false
+    })
+    res.json({ message: 'Logged out successfully'})
+
+  } catch(err){
+    res.status(500).json({ message: 'Server Error'})
+  }
+})
+
 export default loginRouter
