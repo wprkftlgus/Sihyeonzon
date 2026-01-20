@@ -17,12 +17,13 @@ app.use(cors({
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   credentials: true,
 }));
-
-app.use(express.json());
 app.use(cookieParser());
 
+app.use('/api/posts' ,postRouter);
+
+app.use(express.json());
+
 app.use('/api' ,meRouter);
-app.use('/api' ,postRouter);
 app.use('/api' ,loginRouter);
 app.use('/api' ,RegisterRouter);
 

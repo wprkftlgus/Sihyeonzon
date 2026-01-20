@@ -20,7 +20,7 @@ function Createpost (){
         formData.append('image', image);
 
         try{
-         const res = await fetch(`${API_BASE_URL}/api/createpost`,{
+         const res = await fetch(`${API_BASE_URL}/api/posts/createpost`,{
             method: "POST",
             body: formData,
             credentials: 'include'

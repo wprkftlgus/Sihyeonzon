@@ -31,22 +31,20 @@ function Main() {
       const data = await res.json();
       if(res.ok){
         setUser(data);
-        console.log(data);
       }
     } catch(err){
       console.error(err);
     }}
-    console.log(user);
     fetchUser();
   },[])
 
   useEffect(() => {
     const fetchPosts = async () => {
       try{
-        const res = await fetch(`${API_BASE_URL}/api/getposts`)
+        const res = await fetch(`${API_BASE_URL}/api/posts/getposts`)
         const data = await res.json();
+        console.log(data);
         setPosts(data);
-
       } catch(err){
         console.log(err);
       }

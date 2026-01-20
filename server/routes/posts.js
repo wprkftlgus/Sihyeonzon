@@ -5,16 +5,18 @@ import upload from '../middleware/upload.js'
 
 const postRouter = express.Router();
 
-postRouter.post('/createpost', authMiddleware, upload.single('image'), async (req,res) => {
+postRouter.post('/createpost', upload.single('image'), authMiddleware, async (req,res) => {
     try {
         const {title, content} = req.body; 
         const userId = req.user.id;
+        
         const imageKey = req.file?.key || null;
         const imageUrl = req.file?.location || null;
+        console.log('req.file:', req.file);
 
-        if(!title || !content || !imageKey || !imageUrl){
-           return res.status(401).json({ message: 'One of factors missing'});
-        }
+        // if(!title || !content || !imageKey || !imageUrl){
+        //    return res.status(401).json({ message: 'One of factors missing'});
+        // }
         if(!db){
             return res.status(401).json({ message: 'DB is missing'});
         }
@@ -24,6 +26,7 @@ postRouter.post('/createpost', authMiddleware, upload.single('image'), async (re
         res.json({ message: 'Post Uploaded!'})
 
     } catch(err){
+        console.log(err);
         res.status(500).json({ message: 'Server Error' })
     }
 })
