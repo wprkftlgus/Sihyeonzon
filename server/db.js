@@ -29,15 +29,16 @@ await db.execute(`
   id INT AUTO_INCREMENT PRIMARY KEY,
   user_id INT NOT NULL,
   image_url VARCHAR(255),
+  image_key VARCHAR(255),
   title VARCHAR(255) NOT NULL,
   content TEXT NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (user_id) REFERENCES users(id)
   )
-`)
+`);
 try {
-  const [rows] = await db.execute('SELECT 1 AS test');
-  console.log('DB 연결 OK:', rows);
+  const [rows] = await db.execute('SELECT * FROM posts');
+  console.log(rows);
 } catch(err) {
   console.error('DB 연결 실패:', err);
 }

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import '../App.css'
 import search from '../assets/cart.png'
 import cart from '../assets/search.png'
@@ -18,6 +18,7 @@ function Main() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [user, setUser] = useState<{ username: string } | null>(null);
   const [hidden, setHidden] =useState(false); 
+  const timeoutRef = useRef<number | null>(null);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -64,6 +65,18 @@ function Main() {
     }
   }
 
+  const handleMouseLeave = () => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    timeoutRef.current = setTimeout(() => {
+      setHidden(false);
+    }, 800);
+  }
+
+  const handleMouseEnter = () => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    setHidden(true);
+  }
+
   return (
     <div className="">
       <div className='bg-[#131921] text-white flex gap-5 p-1'>
@@ -79,7 +92,7 @@ function Main() {
         <div>Account & Lists</div>
         </div>
          : 
-         <div onMouseEnter={() => setHidden(true)} onMouseLeave={() => setHidden(false)} className=' cursor-pointer'>{user.username}</div>}
+         <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className=' cursor-pointer'>{user.username}</div>}
         <div className='flex items-center cursor-pointer border border-[#131921] hover:border-white'>
         <div className='invert' style={{backgroundImage: `url(${cart})`, backgroundPosition: 'center',
     backgroundSize: '50px 50px', backgroundRepeat: 'no-repeat',  width: 50, height:50}}></div>
@@ -87,7 +100,7 @@ function Main() {
         </div>
       </div>
       {hidden && 
-        <div className='relative bg-white' onMouseEnter={() => setHidden(true)}>
+        <div className='relative bg-white' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
          <div onClick={() => {handleLogout(); setUser(null); setHidden(false);}} className='text-center text-black cursor-pointer mb-4 rounded-2xl pt-2 pb-2 w-full bg-yellow-300'>Log out</div>
          
          <div className='flex'>

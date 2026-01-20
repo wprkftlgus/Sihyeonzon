@@ -7,15 +7,22 @@ function Createpost (){
     const navigate = useNavigate();
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
+    const [image, setImage] = useState<File | null>(null);
     const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
     const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
+        const formData = new FormData();
+        formData.append('title', title);
+        formData.append('content', content);
+        if(image)
+        formData.append('image', image);
+
         try{
          const res = await fetch(`${API_BASE_URL}/api/createpost`,{
             method: "POST",
-            headers: {"Content-Type" : "application/json"},
-            body: JSON.stringify({title, content}),
+            body: formData,
             credentials: 'include'
          })
          const data = await res.json();
@@ -24,6 +31,7 @@ function Createpost (){
          console.error(err)
         }
     }
+
     return(
     <div>
     <div onClick={() => navigate('/')} className='mx-auto max-w-32 flex flex-col hover:cursor-pointer'>
@@ -35,7 +43,7 @@ function Createpost (){
     <form onSubmit={handleSubmit}>
     <input value={title} onChange={(e) => setTitle(e.target.value)} className="p-2 border border-solid border-gray-400 rounded" placeholder="Title"></input>
     <textarea value={content} onChange={(e) => setContent(e.target.value)} className="p-2 border border-solid border-gray-400 rounded" placeholder="Content"></textarea>
-    
+    <input type="file" accept="image/*" onChange={(e) => {if(e.target.files){setImage(e.target.files[0])}}}></input>
     <button className="">Submit</button>
     </form>
     </div>
