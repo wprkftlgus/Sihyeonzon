@@ -3,6 +3,8 @@ import '../App.css'
 import search from '../assets/cart.png'
 import cart from '../assets/search.png'
 import { useNavigate } from 'react-router-dom'
+import amazon from '../assets/amazon.png'
+import greenbackground from '../assets/greenbackground.jpg'
 
 interface Post {
   id: number;
@@ -79,14 +81,19 @@ function Main() {
 
   return (
     <div className="">
-      <div className='bg-[#131921] text-white flex gap-5 p-1'>
+      <div className='pl-5 pr-5 bg-[#131921] text-white flex gap-5'>
+        <div onClick={() => navigate('/')} className='p-1 flex flex-col hover:cursor-pointer border border-[#131921] hover:border-white'>
+        <div className='font-bold text-2xl'>SihyeonZon</div>
+        <div className='relative bottom-1' style={{backgroundImage: `url(${amazon})`, backgroundPosition: 'center',
+        backgroundSize: '120px 70px',backgroundRepeat: 'no-repeat',  width: 120, height:20}}></div>
+        </div>
         <div className='flex items-center'>
         <input className='h-10 p-2' placeholder='Search Sihyeonzon'></input>
         <div className='bg-yellow-500 cursor-pointer p-1  ' style={{backgroundImage: `url(${search})`, backgroundPosition: 'center',
     backgroundSize: '40px 40px',backgroundRepeat: 'no-repeat',  width: 40, height:40}}></div>
         </div>
         {!user ? 
-        <div className='flex flex-col cursor-pointer border border-[#131921] hover:border-white'
+        <div className='p-1 flex flex-col cursor-pointer border border-[#131921] hover:border-white'
         onClick={() => navigate('/login')}>
         <div>Hello, sign in</div>
         <div>Account & Lists</div>
@@ -96,7 +103,7 @@ function Main() {
         <div className='flex items-center cursor-pointer border border-[#131921] hover:border-white'>
         <div className='invert' style={{backgroundImage: `url(${cart})`, backgroundPosition: 'center',
     backgroundSize: '50px 50px', backgroundRepeat: 'no-repeat',  width: 50, height:50}}></div>
-        <div className='mt-4'>Cart</div>
+        <div className='p-1 mt-4'>Cart</div>
         </div>
       </div>
       {hidden && 
@@ -122,6 +129,11 @@ function Main() {
          </div> 
          </div>
         </div>}
+      <div className='bg-[#192d41]'>s</div>
+      <div className='-z-1 relative w-full h-[600px]'>
+      <div className='absolute inset-0' style={{backgroundImage: `url(${greenbackground})`, backgroundSize: 'cover',backgroundRepeat: 'no-repeat' ,backgroundPosition: 'center'}}></div>
+      <div className='relative p-2 bg-white'>Additional customs documents are required for your destination.<div className='pl-2 inline-block text-blue-700 cursor-pointer hover:underline hover:text-blue-900'>Please click here to learn more.</div></div>
+      </div>
       <div>
         {posts.map((post: any) => (
           <div key={post.id}>
@@ -139,6 +151,56 @@ function Main() {
         } 
         navigate('/createpost')}} 
         className='cursor-pointer bg-yellow-300 p-2 max-w-20'>create post</div>
+    <div className='bg-[#142535]'>
+    <div className='flex gap-10 max-w-[1000px] pt-10 pb-14 mx-auto bg-[#142535] text-[#DDD]'>
+     <div>
+     <div className='text-white'>Get to Know Us</div>
+     <div>Careers</div>
+     <div>Blog</div>
+     <div>About Amazon</div>
+     <div>Investor Relations</div>
+     <div>Amazon Devices</div>
+     <div>Amazon Science</div>
+     </div>
+     <div>
+     <div className='text-white'>Make Money with Us</div>
+     <div>Sell products on Amazon</div>
+     <div>Sell on Amazon Business</div>
+     <div>Sell apps on Amazon</div>
+     <div>Become an Affiliate</div>
+     <div>Advertise Your Products</div>
+     <div>Self-Publish with Us</div>
+     <div>Host an Amazon Hub</div>
+     <div>›See More Make Money with Us</div>
+     </div>
+     <div>
+     <div className='text-white'>Amazon Payment Products</div>
+     <div>Amazon Business Card</div>
+     <div>Shop with Points</div>
+     <div>Reload Your Balance</div>
+     <div>Amazon Currency Converter</div>
+     </div>
+     <div>
+     <div className='text-white'>Let Us Help You</div>
+     <div>Amazon and COVID-19</div>
+     <div>Your Account</div>
+     <div>Your Orders</div>
+     <div>Shipping Rates & Policies</div>
+     <div>Returns & Replacements</div>
+     <div>Manage Your Content and Devices</div>
+     <div>Help</div>
+     </div>
+    </div>
+
+    <div className='flex border-t border-gray-500  text-[#DDD]'>
+    <div onClick={() => navigate('/')} className='p-1 flex flex-col hover:cursor-pointer'>
+        <div className='text-white font-bold text-2xl'>SihyeonZon</div>
+        <div className='relative bottom-1' style={{backgroundImage: `url(${amazon})`, backgroundPosition: 'center',
+        backgroundSize: '120px 70px',backgroundRepeat: 'no-repeat',  width: 120, height:20}}></div>
+    </div>
+    <div>s</div>
+    </div>
+    </div>
     </div>
   )
 }
