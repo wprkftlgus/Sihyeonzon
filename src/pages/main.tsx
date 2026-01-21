@@ -33,6 +33,7 @@ function Main() {
       if(res.ok){
         setUser(data);
       }
+      console.log(user);
     } catch(err){
       console.error(err);
     }}
