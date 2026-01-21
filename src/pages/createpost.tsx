@@ -27,6 +27,7 @@ function Createpost (){
          })
          const data = await res.json();
          alert(data.message)
+         navigate('/');
         } catch(err){
          console.error(err)
         }

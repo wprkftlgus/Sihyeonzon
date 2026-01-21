@@ -40,4 +40,14 @@ postRouter.get('/getposts', async (req, res) => {
     }
 })
 
+postRouter.delete('/deletepost/:id', authMiddleware, async(req, res) => {
+    const { id } = req.params;
+    try{
+    await db.execute('DELETE FROM posts WHERE id = ?', [id]);
+    res.json({ message: "Post deleted successfully!"});
+    } catch(err){
+    res.status(500).json({ message: "Server Error"});
+    }
+})
+
 export default postRouter

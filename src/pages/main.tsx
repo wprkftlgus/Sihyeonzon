@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import '../App.css'
 import search from '../assets/cart.png'
 import cart from '../assets/search.png'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import amazon from '../assets/amazon.png'
 import greenbackground from '../assets/greenbackground.jpg'
 
@@ -21,6 +21,7 @@ function Main() {
   const [user, setUser] = useState<{ username: string } | null>(null);
   const [hidden, setHidden] =useState(false); 
   const timeoutRef = useRef<number | null>(null);
+ 
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -65,6 +66,20 @@ function Main() {
     }
   }
 
+  const handleDeletepost = async (id: number | string) => {
+    
+    try{
+      const res = await fetch(`${API_BASE_URL}/api/posts/deletepost/${id}`,{
+        method: 'DELETE',
+        credentials: 'include'
+      })
+      const data = await res.json();
+      alert(data.message);
+      setPosts(prev => prev.filter(post => post.id !== id));
+    } catch(err){
+      console.log(err);
+    }
+  }
   const handleMouseLeave = () => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
     timeoutRef.current = setTimeout(() => {
@@ -97,7 +112,7 @@ function Main() {
         <div>Account & Lists</div>
         </div>
          : 
-         <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className=' cursor-pointer'>{user.username}</div>}
+         <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className=' text-xl border border-[#131921] hover:border-white cursor-pointer'>{user.username}</div>}
         <div className='flex items-center cursor-pointer border border-[#131921] hover:border-white'>
         <div className='invert' style={{backgroundImage: `url(${cart})`, backgroundPosition: 'center',
     backgroundSize: '50px 50px', backgroundRepeat: 'no-repeat',  width: 50, height:50}}></div>
@@ -105,17 +120,17 @@ function Main() {
         </div>
       </div>
       {hidden && 
-        <div className='relative bg-white' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+        <div className='max-w-[400px] rounded-lg absolute z-10 p-5 bg-white' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
          <div onClick={() => {handleLogout(); setUser(null); setHidden(false);}} className='text-center text-black cursor-pointer mb-4 rounded-2xl pt-2 pb-2 w-full bg-yellow-300'>Log out</div>
          
-         <div className='flex'>
-         <div className='flex flex-col text-gray-700'>
+         <div className='flex gap-5 border-t border-gray-300 pt-4'>
+         <div className='flex flex-col text-gray-700 pr-3'>
          <div className='text-black font-bold'>Your Lists</div>
          <div>Create a List</div>
          <div>Find a List or Registry</div>
          </div>
 
-         <div className='flex flex-col text-gray-700'>
+         <div className='flex flex-col text-gray-700 border-l border-gray-300 pl-3'>
          <div className='text-black font-bold'>Your Account</div>
          <div>Account</div>
          <div>Orders</div>
@@ -134,10 +149,11 @@ function Main() {
       </div>
       <div>
         {posts.map((post: any) => (
-          <div key={post.id}>
+          <div className=' border-2 border-black m-5 p-5' key={post.id}>
             <div>{post.title}</div>
             <div>{post.content}</div>
-            <img src={``} />
+            <img className='w-52' src={`${post.image_url}`} />
+            <button onClick={() => {handleDeletepost(post.id);}} className='bg-gray-400'>Delete</button>
           </div>
         ))}
       </div>
@@ -189,14 +205,145 @@ function Main() {
      <div>Help</div>
      </div>
     </div>
-
-    <div className='flex border-t border-gray-500  text-[#DDD]'>
+    
+    <div className='border-t border-gray-500  text-[#DDD]'>
+    <div className='max-w-[800px] mx-auto flex pt-5 pb-10'>
     <div onClick={() => navigate('/')} className='p-1 flex flex-col hover:cursor-pointer'>
         <div className='text-white font-bold text-2xl'>SihyeonZon</div>
         <div className='relative bottom-1' style={{backgroundImage: `url(${amazon})`, backgroundPosition: 'center',
         backgroundSize: '120px 70px',backgroundRepeat: 'no-repeat',  width: 120, height:20}}></div>
     </div>
     <div>s</div>
+    </div>
+    </div>
+    <div className='bg-[#131921]'>
+    <div className="max-w-[1050px] mx-auto bg-[#131921] pt-10 pb-10 text-gray-400 text-sm flex flex-wrap justify-between">
+    <div className="flex flex-col gap-6 max-w-32">
+    <div>
+    <div className='text-white'>Amazon Music</div>
+    <div>Stream millions of songs</div>
+    </div>
+    <div>
+    <div className='text-white'>Amazon Business</div>
+    <div>Everything For Your Business</div>
+    </div>
+    <div>    
+    <div className='text-white'>IMDbPro</div>
+    <div>Get Info Entertainment Professionals Need</div>
+    </div>
+    </div>    
+    
+    <div className="flex flex-col gap-6 max-w-32">
+    <div>  
+    <div className='text-white'>Amazon Ads</div>
+    <div>Reach customers wherever they spend their time</div>
+    </div>
+    <div>
+    <div className='text-white'>AmazonGlobal</div>
+    <div>Ship Orders Internationally</div>
+    </div>
+    <div>
+    <div className='text-white'>Kindle Direct Publishing</div>
+    <div>Indie Digital & Print Publishing Made Easy</div>
+    </div>
+    <div>
+    <div className='text-white'>eero WiFi</div>
+    <div>Stream 4K Video in Every Room</div>
+    </div>
+    </div>
+ 
+    <div className="flex flex-col gap-6 max-w-32">
+    <div>
+    <div className='text-white'>6pm</div>
+    <div>Score deals on fashion brands</div>
+    </div>
+    <div>
+    <div className='text-white'>Amazon Web Services</div>
+    <div>Scalable Cloud Computing Services</div>
+    </div>
+    <div>
+    <div className='text-white'>Prime Video Direct</div>
+    <div>Video Distribution Made Easy</div>
+    </div>
+    <div>
+    <div className='text-white'>Blink</div>
+    <div>Smart Security for Every Home</div>
+    </div>
+    </div>
+
+    <div className="flex flex-col gap-6 max-w-32">
+    <div>
+    <div className='text-white'>ABeBooks</div>
+    <div>Books, Gifts & collectibles</div>
+    </div>
+    <div>
+    <div className='text-white'>Audible</div>
+    <div>Listen to Books & Original Audio Performances</div>
+    </div>
+    <div>
+    <div className='text-white'>Shopbop</div>
+    <div>Designer Fashion Brands</div>
+    </div>
+    <div>
+    <div className='text-white'>Neighbors App</div>
+    <div>Real-Time Crime & Safety Alerts</div>
+    </div>
+    </div>
+
+ 
+    <div className="flex flex-col gap-6 max-w-32">
+    <div>
+    <div className='text-white'>ACX</div>
+    <div>Audiobook Publishing Made Easy</div>
+    </div>
+    <div>
+    <div className='text-white'>Box Office Mojo</div>
+    <div>Find Movie Box Office Data</div>
+    </div>
+    <div>
+    <div className='text-white'>Woot!</div>
+    <div>Deals and Shenanigans</div>
+    </div>
+    <div>
+    <div className='text-white'>Amazon Subscription Boxes</div>
+    <div>Top subscription boxes – right to your door</div>
+    </div>
+    </div>
+    <div className="flex flex-col gap-6 max-w-32">
+    <div>
+    <div className='text-white'>Sell on Amazon</div>
+    <div>Start a Selling Account</div>
+    </div>
+    <div>
+    <div className='text-white'>Goodreads</div>
+    <div>Book reviews & recommendations</div>
+    </div>
+    <div>
+    <div className='text-white'>Zappos</div>
+    <div>Shoes & Clothing</div>
+    </div>
+    <div>
+    <div className='text-white'>PillPack</div>
+    <div>Pharmacy Simplified</div>
+    </div>
+    </div>
+
+
+    <div className="flex flex-col gap-6 max-w-32">
+    <div>
+    <div className='text-white'>Veeqo</div>
+    <div>Shipping Software Inventory Management</div>
+    </div>
+    <div>
+    <div className='text-white'>IMDb</div>
+    <div>Movies, TV & Celebrities</div>
+    </div>
+    <div>
+    <div className='text-white'>Ring</div>
+    <div>Smart Home Security Systems</div>
+    </div>
+    </div>
+    </div>
     </div>
     </div>
     </div>
