@@ -44,8 +44,8 @@ function Main() {
       try{
         const res = await fetch(`${API_BASE_URL}/api/posts/getposts`)
         const data = await res.json();
-        console.log(data);
         setPosts(data);
+        console.log(posts);
       } catch(err){
         console.log(err);
       }
@@ -75,7 +75,10 @@ function Main() {
       })
       const data = await res.json();
       alert(data.message);
-      setPosts(prev => prev.filter(post => post.id !== id));
+      if(res.ok){
+        setPosts(prev => prev.filter(post => post.id !== id));
+      }
+
     } catch(err){
       console.log(err);
     }

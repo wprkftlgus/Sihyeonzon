@@ -12,11 +12,7 @@ postRouter.post('/createpost', upload.single('image'), authMiddleware, async (re
         
         const imageKey = req.file?.key || null;
         const imageUrl = req.file?.location || null;
-        console.log('req.file:', req.file);
 
-        // if(!title || !content || !imageKey || !imageUrl){
-        //    return res.status(401).json({ message: 'One of factors missing'});
-        // }
         if(!db){
             return res.status(401).json({ message: 'DB is missing'});
         }
@@ -42,6 +38,15 @@ postRouter.get('/getposts', async (req, res) => {
 
 postRouter.delete('/deletepost/:id', authMiddleware, async(req, res) => {
     const { id } = req.params;
+    const userId = req.user.id;
+    const [rows] = await db.execute('SELECT user_id FROM posts WHERE id = ?',[id])
+    if(rows.length === 0 ){
+        res.status(404).json({ message: 'Post not found!'});
+    }
+    const postOwnerId = rows[0].user_id;
+    if(userId !== postOwnerId ){
+        return res.status(403).json({ message: 'You are not allowed to delete other person post!'});
+    }
     try{
     await db.execute('DELETE FROM posts WHERE id = ?', [id]);
     res.json({ message: "Post deleted successfully!"});
