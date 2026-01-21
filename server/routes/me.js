@@ -8,8 +8,8 @@ dotenv.config();
 const meRouter = express.Router();
 
 meRouter.get('/me', async(req, res) => {
-    // const token = req.cookies.token; 
-    //     if(!token) return res.json(null);
+    const token = req.cookies.token; 
+        if(!token) return res.json(null);
     try{
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         const userId = decoded.id;
