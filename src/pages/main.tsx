@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import '../App.css'
 import search from '../assets/cart.png'
 import cart from '../assets/search.png'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import amazon from '../assets/amazon.png'
 import greenbackground from '../assets/greenbackground.jpg'
 
