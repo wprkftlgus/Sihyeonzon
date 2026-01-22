@@ -16,9 +16,8 @@ const s3 = new S3Client({
 
 postRouter.post('/createpost', upload.single('image'), authMiddleware, async (req,res) => {
     try {
-        const {title, content} = req.body; 
+        const {title, content, category, price} = req.body; 
         const userId = req.user.id;
-        
         const imageKey = req.file?.key || null;
         const imageUrl = req.file?.location || null;
 
@@ -26,8 +25,8 @@ postRouter.post('/createpost', upload.single('image'), authMiddleware, async (re
             return res.status(401).json({ message: 'DB is missing'});
         }
         await db.execute(
-            "INSERT INTO posts (user_id ,title, content, image_url, image_key) VALUES (?, ? ,? ,?, ?)",
-        [userId ,title, content, imageUrl , imageKey])
+            "INSERT INTO posts (user_id ,title, content, category, price, image_url, image_key) VALUES (?, ? ,? ,?, ?, ?, ?)",
+        [userId ,title, content, category, price, imageUrl , imageKey])
         res.json({ message: 'Post Uploaded!'})
 
     } catch(err){
@@ -40,6 +39,16 @@ postRouter.get('/getposts', async (req, res) => {
     
     try{
     const [rows] = await db.execute('SELECT * FROM posts ORDER BY created_at DESC')
+    res.json(rows);
+    } catch(err){
+    res.status(500).json({ message: 'Server Error'});
+    }
+})
+
+postRouter.get('/postdetail/:id', async (req, res) => {
+    const { id } = req.params;
+    try{
+    const [rows] = await db.execute('SELECT id, title, content, image_url, price, category, created_at FROM posts WHERE id = ?', [id]);
     res.json(rows);
     } catch(err){
     res.status(500).json({ message: 'Server Error'});

@@ -1,25 +1,32 @@
+import React from "react";
+import '../App.css'
+import { useNavigate } from 'react-router-dom'
 import { useEffect, useRef, useState } from 'react';
+import { useParams } from "react-router-dom";
 import '../App.css'
 import search from '../assets/cart.png'
 import cart from '../assets/search.png'
-import { useNavigate } from 'react-router-dom'
 import amazon from '../assets/amazon.png'
-import greenbackground from '../assets/greenbackground.jpg'
 
 interface Post {
   id: number;
   user_id: number;
   title: string;
   content: string;
+  price: string;
+  category: string;
   image_url: string;
 }
 
-function Main() {
+function Postdetail(){
+  const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-  const [posts, setPosts] = useState<Post[]>([]);
+  const [post, setPost] = useState<Post[]>([]);
   const [user, setUser] = useState<{ username: string } | null>(null);
   const [hidden, setHidden] =useState(false); 
+  const [hiddenDetail1, setHiddenDetail1] =useState(false); 
+  const [hiddenDetail2, setHiddenDetail2] =useState(false); 
   const timeoutRef = useRef<number | null>(null);
  
 
@@ -39,19 +46,21 @@ function Main() {
     }}
     fetchUser();
   },[])
-
+  
   useEffect(() => {
-    const fetchPosts = async () => {
-      try{
-        const res = await fetch(`${API_BASE_URL}/api/posts/getposts`)
+    const fetchpost = async () => {
+        try{
+        const res = await fetch(`${API_BASE_URL}/api/posts/postdetail/${id}`);
         const data = await res.json();
-        setPosts(data);
-        console.log(posts);
-      } catch(err){
+        if(res.ok){
+            setPost(data);
+            console.log(data);
+        }
+        } catch(err){
         console.log(err);
-      }
-    } 
-    fetchPosts();
+        }
+    }
+    fetchpost();
   },[])
 
   const handleLogout = async () => {
@@ -67,33 +76,46 @@ function Main() {
     }
   }
 
-  const handleDeletepost = async (id: number | string) => {
-    
-    try{
-      const res = await fetch(`${API_BASE_URL}/api/posts/deletepost/${id}`,{
-        method: 'DELETE',
-        credentials: 'include'
-      })
-      const data = await res.json();
-      alert(data.message);
-      if(res.ok){
-        setPosts(prev => prev.filter(post => post.id !== id));
-      }
-
-    } catch(err){
-      console.log(err);
-    }
-  }
   const handleMouseLeave = () => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
     timeoutRef.current = setTimeout(() => {
       setHidden(false);
+      
     }, 800);
   }
 
   const handleMouseEnter = () => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
     setHidden(true);
+    
+  }
+
+  const handleMouseLeaveDetail1 = () => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    timeoutRef.current = setTimeout(() => {
+      setHiddenDetail1(false);
+    }, 800);
+  }
+
+  const handleMouseEnterDetail1 = () => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    setHiddenDetail1(true);
+  }
+
+  const handleMouseLeaveDetail2 = () => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    timeoutRef.current = setTimeout(() => {
+      setHiddenDetail2(false);
+    }, 800);
+  }
+
+  const handleMouseEnterDetail2 = () => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    setHiddenDetail2(true);
+  }
+
+  if (post.length === 0) {
+    return <div>Loading...</div>;
   }
 
   return (
@@ -146,29 +168,104 @@ function Main() {
          </div> 
          </div>
         </div>}
-      <div className='bg-[#192d41]'>s</div>
-      <div className='-z-1 relative w-full h-[600px]'>
-      <div className='absolute inset-0' style={{backgroundImage: `url(${greenbackground})`, backgroundSize: 'cover',backgroundRepeat: 'no-repeat' ,backgroundPosition: 'center'}}></div>
-      <div className='relative p-2 bg-white'>Additional customs documents are required for your destination.<div className='pl-2 inline-block text-blue-700 cursor-pointer hover:underline hover:text-blue-900'>Please click here to learn more.</div></div>
+
+
+    <div className='bg-white mt-10 mb-80 ml-5 mr-5'>
+     <div className="text-gray-600 mb-10 ml-28">{'>'} <div className="inline-block cursor-pointer hover:underline">{post[0].category}</div></div>
+     <div className="flex">
+     <div>
+     <img className='max-w-[450px] p-2' src={`${post[0].image_url}`} />
+     </div>
+     <div className="flex flex-col pr-5 pl-5">
+     <div className="border-b border-gray-400">
+     <div className="font-bold text-2xl">{post[0].title}</div>
+     <div className="font-bold">5.0 ⭐⭐⭐⭐⭐</div>
+     <div className="text-white bg-black max-w-40 text-center rounded-md mt-2 mb-3">Sihyeonzon's Choice</div>
+     <div><div className="font-bold inline-block pb-1">300+ bought</div> in past month</div>
+     </div>
+     <div className="border-b border-gray-400">
+     <div className="mt-4 bg-red-600 text-white max-w-36 text-center p-1 rounded-md">Limited time deal</div>
+     <div className="font-bold mb-3"><div className="font-normal inline-block">GBP</div> <div className="text-3xl inline-block">{post[0].price}</div></div>
+     <div className="mb-2">No Import Charges & 
+        <div className="font-bold inline-block ml-2 mr-2">FREE Shipping</div>to United Kingdom 
+        <div onMouseEnter={handleMouseEnterDetail1} onMouseLeave={handleMouseLeaveDetail1} className="ml-2 inline-block text-blue-700 cursor-pointer hover:underline hover:text-blue-900">Details</div>
+        {hiddenDetail1 && 
+        <div onMouseEnter={handleMouseEnterDetail1} onMouseLeave={handleMouseLeaveDetail1} className="rounded-xl max-w-[400px] p-5 border border-gray-400">
+        <div className="font-bold border-b border-gray-400 pb-3">Shipping & Fee Details</div>
+        <div className="flex flex-col pt-5 pb-3 border-b border-gray-400">
+        <div className="flex justify-between">
+        <div>Price</div>
+        <div className="font-bold">GBP {post[0].price}</div>    
+        </div>
+        <div className="flex justify-between">
+        <div>SihyeonzonGlobal Shipping</div>
+        <div className="font-bold">GBP 0</div>
+        </div>
+        <div className="flex justify-between">
+        <div className="text-blue-700 cursor-pointer hover:underline hover:text-blue-900">Estimated Import Charges</div>
+        <div className="font-bold">GBP 0</div>
+        </div>
+        </div>
+        <div className="flex justify-between pt-3">
+        <div>Total</div>
+        <div className="font-bold">GBP {post[0].price}</div>    
+        </div>
+        </div>}
+     </div>
+     </div>
+     <div>
+     <div className="mt-3 font-bold text-2xl">About this item</div>
+     <div className="pt-1 whitespace-pre-line">{post[0].content}</div>
+     </div>
+     </div>
+     <div className="border border-gray-300 rounded-md p-5">
+      <div className="font-bold mb-3"><div className="font-normal inline-block">GBP</div> <div className="text-3xl inline-block">{post[0].price}</div></div>  
+      <div className="mb-2">No Import Charges & 
+        <div className="font-bold inline-block">FREE Shipping</div>to United Kingdom 
+        <div onMouseEnter={handleMouseEnterDetail2} onMouseLeave={handleMouseLeaveDetail2} className="inline-block text-blue-700 cursor-pointer hover:underline hover:text-blue-900">Details</div>
+        {hiddenDetail2 && 
+        <div onMouseEnter={handleMouseEnterDetail2} onMouseLeave={handleMouseLeaveDetail2} className="rounded-xl max-w-[400px] p-5 border border-gray-400">
+        <div className="font-bold border-b border-gray-400 pb-3">Shipping & Fee Details</div>
+        <div className="flex flex-col pt-5 pb-3 border-b border-gray-400">
+        <div className="flex justify-between">
+        <div>Price</div>
+        <div className="font-bold">GBP {post[0].price}</div>    
+        </div>
+        <div className="flex justify-between">
+        <div>SihyeonzonGlobal Shipping</div>
+        <div className="font-bold">GBP 0</div>
+        </div>
+        <div className="flex justify-between">
+        <div className="text-blue-700 cursor-pointer hover:underline hover:text-blue-900">Estimated Import Charges</div>
+        <div className="font-bold">GBP 0</div>
+        </div>
+        </div>
+        <div className="flex justify-between pt-3">
+        <div>Total</div>
+        <div className="font-bold">GBP {post[0].price}</div>    
+        </div>
+        </div>}
+     </div>
+      <div className="text-green-600 text-2xl">In Stock</div>
+      <div className="w-full p-2 mt-2 mb-2 text-center bg-yellow-300 rounded-2xl cursor-pointer hover:bg-yellow-400">Add to cart</div>
+      <div className="w-full p-2 mt-2 mb-2 text-center bg-orange-400 rounded-2xl cursor-pointer hover:bg-orange-500">Buy Now</div>
+      <div className="flex flex-col">
+      <div className="text-xs">
+      <div className="flex justify-between">
+      <div>Returns</div>
+      <div className="text-blue-700 cursor-pointer hover:underline hover:text-blue-900">30-days refund / replacement</div>
       </div>
-      <div>
-        {posts.map((post: any) => (
-          <div onClick={() => {navigate(`/postdetail/${post.id}`)}} className='cursor-pointer border-2 border-black m-5 p-5' key={post.id}>
-            <div>{post.title}</div>
-            <div>{post.content}</div>
-            <img className='w-52' src={`${post.image_url}`} />
-            <button onClick={(e) => {e.stopPropagation(); handleDeletepost(post.id);}} className='bg-gray-400'>Delete</button>
-          </div>
-        ))}
+      <div className="flex justify-between">
+      <div>Payment</div>
+      <div className="text-blue-700 cursor-pointer hover:underline hover:text-blue-900">Secure transaction</div>
       </div>
-      <div onClick={() => {
-        if(!user){
-          alert("You need to login!");
-          navigate('/login');
-          return ;
-        } 
-        navigate('/createpost')}} 
-        className='cursor-pointer bg-yellow-300 p-2 max-w-20'>create post</div>
+      </div>
+      </div>
+     </div>
+     </div>
+    </div>
+
+
     <div className='bg-[#142535]'>
     <div className='flex gap-10 max-w-[1000px] pt-10 pb-14 mx-auto bg-[#142535] text-[#DDD]'>
      <div>
@@ -351,7 +448,11 @@ function Main() {
     </div>
     </div>
     </div>
-  )
-}
 
-export default Main
+)}
+
+export default Postdetail
+
+
+
+

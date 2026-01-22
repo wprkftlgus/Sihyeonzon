@@ -7,6 +7,8 @@ function Createpost (){
     const navigate = useNavigate();
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
+    const [price, setPrice] = useState('');
+    const [category, setCategory] = useState('Clothing');
     const [image, setImage] = useState<File | null>(null);
     const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -16,6 +18,8 @@ function Createpost (){
         const formData = new FormData();
         formData.append('title', title);
         formData.append('content', content);
+        formData.append('price', price);
+        formData.append('category', category);
         if(image)
         formData.append('image', image);
 
@@ -42,8 +46,14 @@ function Createpost (){
     </div>
     <div className="text-2xl">Create Post</div>
     <form onSubmit={handleSubmit}>
+    <select value={category} onChange={(e) => setCategory(e.target.value)}>
+     <option value="Clothing">Clothing</option>
+     <option value="Electronics">Electronics</option>
+     <option value="Food">Food</option>
+    </select>
     <input value={title} onChange={(e) => setTitle(e.target.value)} className="p-2 border border-solid border-gray-400 rounded" placeholder="Title"></input>
     <textarea value={content} onChange={(e) => setContent(e.target.value)} className="p-2 border border-solid border-gray-400 rounded" placeholder="Content"></textarea>
+    <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} className="p-2 border border-solid border-gray-400 rounded" placeholder="Price"></input>
     <input type="file" accept="image/*" onChange={(e) => {if(e.target.files){setImage(e.target.files[0])}}}></input>
     <button className="">Submit</button>
     </form>

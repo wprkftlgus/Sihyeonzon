@@ -32,6 +32,8 @@ await db.execute(`
   image_key VARCHAR(255),
   title VARCHAR(255) NOT NULL,
   content TEXT NOT NULL,
+  price VARCHAR(50) NOT NULL,
+  category VARCHAR(50) NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (user_id) REFERENCES users(id)
   )
