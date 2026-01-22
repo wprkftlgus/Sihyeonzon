@@ -10,8 +10,6 @@ import cookieParser from 'cookie-parser';
 
 dotenv.config() 
 
-const app = express();
-
 app.use(cors({
   origin: [
     'http://localhost:5173',
@@ -23,6 +21,8 @@ app.use(cors({
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   credentials: true
 }));
+const app = express();
+
 app.use(cookieParser());
 
 app.use('/api/posts' ,postRouter);
