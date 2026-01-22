@@ -9,6 +9,8 @@ import db from "./db.js"
 import cookieParser from 'cookie-parser';
 
 dotenv.config() 
+const app = express();
+app.use(express.json());
 
 app.use(cors({
   origin: [
@@ -22,14 +24,10 @@ app.use(cors({
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   credentials: true
 }));
-const app = express();
 
 app.use(cookieParser());
 
 app.use('/api/posts' ,postRouter);
-
-app.use(express.json());
-
 app.use('/api' ,meRouter);
 app.use('/api' ,loginRouter);
 app.use('/api' ,RegisterRouter);
