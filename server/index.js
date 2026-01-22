@@ -16,6 +16,7 @@ app.use(cors({
   origin: [
     'https://www.sihyeonzon.online',
     'https://api.sihyeonzon.online',
+    'https://subtle-hummingbird-788d7e.netlify.app',
     'http://localhost:5173',
     'http://localhost:4173',
     'https://sihyeonzon.online', 
