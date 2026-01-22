@@ -16,7 +16,8 @@ app.use(cors({
   origin: [
     'http://localhost:5173',
     'http://localhost:4173',
-    'https://sihyeonzon.online',          
+    'https://sihyeonzon.online', 
+    'sihyeonzon.online',         
     'https://www.sihyeonzon.online'      
   ],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],

@@ -26,7 +26,7 @@ function Main() {
   useEffect(() => {
     const fetchUser = async () => {
       try{
-      const res = await fetch(`${API_BASE_URL}/api/me`, {
+      const res = await fetch(`${API_BASE_URL}/me`, {
       credentials: 'include'
     })
       const data = await res.json();
@@ -43,7 +43,7 @@ function Main() {
   useEffect(() => {
     const fetchPosts = async () => {
       try{
-        const res = await fetch(`${API_BASE_URL}/api/posts/getposts`)
+        const res = await fetch(`${API_BASE_URL}/posts/getposts`)
         const data = await res.json();
         setPosts(data);
         console.log(posts);
@@ -56,7 +56,7 @@ function Main() {
 
   const handleLogout = async () => {
     try{
-      const res = await fetch(`${API_BASE_URL}/api/logout`,{
+      const res = await fetch(`${API_BASE_URL}/logout`,{
         method: 'POST',
         credentials: 'include'
       })
@@ -70,7 +70,7 @@ function Main() {
   const handleDeletepost = async (id: number | string) => {
     
     try{
-      const res = await fetch(`${API_BASE_URL}/api/posts/deletepost/${id}`,{
+      const res = await fetch(`${API_BASE_URL}/posts/deletepost/${id}`,{
         method: 'DELETE',
         credentials: 'include'
       })
