@@ -12,11 +12,12 @@ dotenv.config()
 
 app.use(cors({
   origin: [
+    'https://www.sihyeonzon.online',
+    'https://api.sihyeonzon.online',
     'http://localhost:5173',
     'http://localhost:4173',
     'https://sihyeonzon.online', 
-    'sihyeonzon.online',         
-    'https://www.sihyeonzon.online'
+    'sihyeonzon.online'
   ],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   credentials: true
