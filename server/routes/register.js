@@ -29,9 +29,10 @@ RegisterRouter.post('/register', async (req,res) => {
         )
 
         res.cookie("token", token, {
-            httpOnly: true,
-            secure: false,
-            maxAge: 24 * 60 * 60 * 1000
+            httpOnly: true, 
+            secure: true, 
+            sameSite: "None",
+            maxAge: 24 * 60 * 60 * 1000, 
         });
 
         res.status(201).json({ message : "User registered successfully"})
