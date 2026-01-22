@@ -32,7 +32,7 @@ function Postdetail(){
   useEffect(() => {
     const fetchUser = async () => {
       try{
-      const res = await fetch(`${API_BASE_URL}/me`, {
+      const res = await fetch(`${API_BASE_URL}/api/me`, {
       credentials: 'include'
     })
       const data = await res.json();
@@ -49,7 +49,7 @@ function Postdetail(){
   useEffect(() => {
     const fetchpost = async () => {
         try{
-        const res = await fetch(`${API_BASE_URL}/api/posts/postdetail/${id}`);
+        const res = await fetch(`${API_BASE_URL}/api/postdetail/${id}`);
         const data = await res.json();
         if(res.ok){
             setPost(data);
@@ -64,7 +64,7 @@ function Postdetail(){
 
   const handleLogout = async () => {
     try{
-      const res = await fetch(`${API_BASE_URL}/logout`,{
+      const res = await fetch(`${API_BASE_URL}/api/logout`,{
         method: 'POST',
         credentials: 'include'
       })

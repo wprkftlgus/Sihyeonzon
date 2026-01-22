@@ -9,12 +9,14 @@ dotenv.config();
 
 const postRouter = express.Router();
 const s3 = new S3Client({
+  region: process.env.MY_AWS_REGION,
+  credentials: {
     accessKeyId: process.env.MY_AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.MY_AWS_SECRET_ACCESS_KEY,
-    region: process.env.MY_AWS_REGION
-})
+  },
+});
 
-postRouter.post('/createpost', upload.single('image'), authMiddleware, async (req,res) => {
+postRouter.post('/createpost', authMiddleware, upload.single('image'), async (req,res) => {
     try {
         const {title, content, category, price} = req.body; 
         const userId = req.user.id;
@@ -78,6 +80,7 @@ postRouter.delete('/deletepost/:id', authMiddleware, async(req, res) => {
     await db.execute('DELETE FROM posts WHERE id = ?', [id]);
     res.json({ message: "Post deleted successfully!"});
     } catch(err){
+    console.error(err);
     res.status(500).json({ message: "Server Error"});
     }
 })

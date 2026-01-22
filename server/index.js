@@ -28,7 +28,7 @@ app.use(cors({
 
 app.use(cookieParser());
 
-app.use('/api/posts' ,postRouter);
+app.use('/api' ,postRouter);
 app.use('/api' ,meRouter);
 app.use('/api' ,loginRouter);
 app.use('/api' ,RegisterRouter);
