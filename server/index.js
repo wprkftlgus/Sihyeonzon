@@ -18,10 +18,10 @@ app.use(cors({
     'http://localhost:4173',
     'https://sihyeonzon.online', 
     'sihyeonzon.online',         
-    'https://www.sihyeonzon.online'      
+    'https://www.sihyeonzon.online'
   ],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  credentials: true,
+  credentials: true
 }));
 app.use(cookieParser());
 
