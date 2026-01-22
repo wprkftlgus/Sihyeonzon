@@ -49,7 +49,7 @@ function Postdetail(){
   useEffect(() => {
     const fetchpost = async () => {
         try{
-        const res = await fetch(`${API_BASE_URL}/posts/postdetail/${id}`);
+        const res = await fetch(`${API_BASE_URL}/api/posts/postdetail/${id}`);
         const data = await res.json();
         if(res.ok){
             setPost(data);
