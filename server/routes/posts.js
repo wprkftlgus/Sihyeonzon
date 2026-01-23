@@ -47,6 +47,17 @@ postRouter.get('/getposts', async (req, res) => {
     }
 })
 
+postRouter.get('/getsearchedpost/:id', async (req, res) => {
+    try{
+    const {id} = req.params;
+    const [rows] = await db.execute('SELECT id, title, content, image_url, price, category FROM posts WHERE title LIKE ? OR content LIKE ? OR category LIKE ?',[`%${id}%`, `%${id}%`, `%${id}%`]);
+    res.json(rows);
+    } catch(err){
+    console.log(err);
+    res.status(500).json({ message: 'Server Error'});
+    }
+})
+
 postRouter.get('/postdetail/:id', async (req, res) => {
     const { id } = req.params;
     try{

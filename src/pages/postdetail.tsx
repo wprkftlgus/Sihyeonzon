@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useEffect, useRef, useState } from 'react';
 import { useParams } from "react-router-dom";
 import '../App.css'
-import search from '../assets/cart.png'
+import searchimg from '../assets/cart.png'
 import cart from '../assets/search.png'
 import amazon from '../assets/amazon.png'
 
@@ -27,7 +27,7 @@ function Postdetail(){
   const [hiddenDetail1, setHiddenDetail1] =useState(false); 
   const [hiddenDetail2, setHiddenDetail2] =useState(false); 
   const timeoutRef = useRef<number | null>(null);
- 
+  const [search, setSearch] = useState<string>('');
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -77,7 +77,7 @@ function Postdetail(){
 
   const handleMouseLeave = () => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    timeoutRef.current = setTimeout(() => {
+    timeoutRef.current = window.setTimeout(() => {
       setHidden(false);
       
     }, 800);
@@ -91,7 +91,7 @@ function Postdetail(){
 
   const handleMouseLeaveDetail1 = () => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    timeoutRef.current = setTimeout(() => {
+    timeoutRef.current = window.setTimeout(() => {
       setHiddenDetail1(false);
     }, 800);
   }
@@ -103,7 +103,7 @@ function Postdetail(){
 
   const handleMouseLeaveDetail2 = () => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    timeoutRef.current = setTimeout(() => {
+    timeoutRef.current = window.setTimeout(() => {
       setHiddenDetail2(false);
     }, 800);
   }
@@ -111,6 +111,12 @@ function Postdetail(){
   const handleMouseEnterDetail2 = () => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
     setHiddenDetail2(true);
+  }
+
+  const handleSearch = () => {
+      setSearch(search);
+      if(search === '') return window.location.reload();
+      navigate(`/searchresult/${search}`)
   }
 
   if (post.length === 0) {
@@ -125,9 +131,9 @@ function Postdetail(){
         <div className='relative bottom-1' style={{backgroundImage: `url(${amazon})`, backgroundPosition: 'center',
         backgroundSize: '120px 70px',backgroundRepeat: 'no-repeat',  width: 120, height:20}}></div>
         </div>
-        <div className='flex items-center'>
-        <input className='h-10 p-2' placeholder='Search Sihyeonzon'></input>
-        <div className='bg-yellow-500 cursor-pointer p-1  ' style={{backgroundImage: `url(${search})`, backgroundPosition: 'center',
+        <div className='relative flex items-center'>
+        <input value={search} onChange={(e) => setSearch(e.target.value)} onKeyDown={(e) => {if(e.key === 'Enter'){handleSearch();}}} className='focus:ring-4 focus:ring-orange-400 focus:outline-none rounded-md h-10 p-2 text-black' placeholder='Search Sihyeonzon'></input>
+        <div onClick={handleSearch} className='absolute right-0 rounded-r-lg bg-yellow-500 cursor-pointer p-1  ' style={{backgroundImage: `url(${searchimg})`, backgroundPosition: 'center',
     backgroundSize: '40px 40px',backgroundRepeat: 'no-repeat',  width: 40, height:40}}></div>
         </div>
         {!user ? 
@@ -271,32 +277,32 @@ function Postdetail(){
      <div className='text-white'>Get to Know Us</div>
      <div>Careers</div>
      <div>Blog</div>
-     <div>About Amazon</div>
+     <div>About Sihyeonzon</div>
      <div>Investor Relations</div>
-     <div>Amazon Devices</div>
-     <div>Amazon Science</div>
+     <div>Sihyeonzon Devices</div>
+     <div>Sihyeonzon Science</div>
      </div>
      <div>
      <div className='text-white'>Make Money with Us</div>
-     <div>Sell products on Amazon</div>
-     <div>Sell on Amazon Business</div>
-     <div>Sell apps on Amazon</div>
+     <div>Sell products on Sihyeonzon</div>
+     <div>Sell on Sihyeonzon Business</div>
+     <div>Sell apps on Sihyeonzon</div>
      <div>Become an Affiliate</div>
      <div>Advertise Your Products</div>
      <div>Self-Publish with Us</div>
-     <div>Host an Amazon Hub</div>
+     <div>Host an Sihyeonzon Hub</div>
      <div>›See More Make Money with Us</div>
      </div>
      <div>
-     <div className='text-white'>Amazon Payment Products</div>
-     <div>Amazon Business Card</div>
+     <div className='text-white'>Sihyeonzon Payment Products</div>
+     <div>Sihyeonzon Business Card</div>
      <div>Shop with Points</div>
      <div>Reload Your Balance</div>
-     <div>Amazon Currency Converter</div>
+     <div>Sihyeonzon Currency Converter</div>
      </div>
      <div>
      <div className='text-white'>Let Us Help You</div>
-     <div>Amazon and COVID-19</div>
+     <div>Sihyeonzon and COVID-19</div>
      <div>Your Account</div>
      <div>Your Orders</div>
      <div>Shipping Rates & Policies</div>
@@ -320,11 +326,11 @@ function Postdetail(){
     <div className="max-w-[1050px] mx-auto bg-[#131921] pt-10 pb-10 text-gray-400 text-sm flex flex-wrap justify-between">
     <div className="flex flex-col gap-6 max-w-32">
     <div>
-    <div className='text-white'>Amazon Music</div>
+    <div className='text-white'>Sihyeonzon Music</div>
     <div>Stream millions of songs</div>
     </div>
     <div>
-    <div className='text-white'>Amazon Business</div>
+    <div className='text-white'>Sihyeonzon Business</div>
     <div>Everything For Your Business</div>
     </div>
     <div>    
@@ -335,11 +341,11 @@ function Postdetail(){
     
     <div className="flex flex-col gap-6 max-w-32">
     <div>  
-    <div className='text-white'>Amazon Ads</div>
+    <div className='text-white'>Sihyeonzon Ads</div>
     <div>Reach customers wherever they spend their time</div>
     </div>
     <div>
-    <div className='text-white'>AmazonGlobal</div>
+    <div className='text-white'>Sihyeonzon Global</div>
     <div>Ship Orders Internationally</div>
     </div>
     <div>
@@ -358,7 +364,7 @@ function Postdetail(){
     <div>Score deals on fashion brands</div>
     </div>
     <div>
-    <div className='text-white'>Amazon Web Services</div>
+    <div className='text-white'>Sihyeonzon Web Services</div>
     <div>Scalable Cloud Computing Services</div>
     </div>
     <div>
@@ -405,13 +411,13 @@ function Postdetail(){
     <div>Deals and Shenanigans</div>
     </div>
     <div>
-    <div className='text-white'>Amazon Subscription Boxes</div>
+    <div className='text-white'>Sihyeonzon Subscription Boxes</div>
     <div>Top subscription boxes – right to your door</div>
     </div>
     </div>
     <div className="flex flex-col gap-6 max-w-32">
     <div>
-    <div className='text-white'>Sell on Amazon</div>
+    <div className='text-white'>Sell on Sihyeonzon</div>
     <div>Start a Selling Account</div>
     </div>
     <div>

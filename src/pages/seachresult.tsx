@@ -4,25 +4,39 @@ import searchimg from '../assets/cart.png'
 import cart from '../assets/search.png'
 import { useNavigate, useParams } from 'react-router-dom'
 import amazon from '../assets/amazon.png'
-import greenbackground from '../assets/greenbackground.jpg'
 
 interface Post {
   id: number;
-  user_id: number;
+  category: string;
   title: string;
+  price: string;
   content: string;
   image_url: string;
 }
 
-function Main() {
+function Searchresult() {
   const navigate = useNavigate();
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-  const [posts, setPosts] = useState<Post[]>([]);
   const [user, setUser] = useState<{ username: string } | null>(null);
   const [hidden, setHidden] =useState(false); 
   const timeoutRef = useRef<number | null>(null);
   const [search, setSearch] = useState<string>('');
- 
+  const { id } = useParams<{ id: string }>();
+  const [posts, setPosts] = useState<Post[]>([]);
+
+    useEffect(() => {
+    const fetchPost = async() => {
+        try{
+            const res = await fetch(`${API_BASE_URL}/api/getsearchedpost/${id}`);
+            const data = await res.json();
+            setPosts(data);
+            console.log(data);
+        } catch(err){
+            console.log(err);
+        } 
+    } 
+    if(id) fetchPost();
+    },[id]) 
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -41,19 +55,6 @@ function Main() {
     fetchUser();
   },[])
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try{
-        const res = await fetch(`${API_BASE_URL}/api/getposts`)
-        const data = await res.json();
-        setPosts(data);
-      } catch(err){
-        console.log(err);
-      }
-    } 
-    fetchPosts();
-  },[])
-console.log(posts);
   const handleLogout = async () => {
     try{
       const res = await fetch(`${API_BASE_URL}/api/logout`,{
@@ -67,23 +68,6 @@ console.log(posts);
     }
   }
 
-  const handleDeletepost = async (id: number | string) => {
-    
-    try{
-      const res = await fetch(`${API_BASE_URL}/api/deletepost/${id}`,{
-        method: 'DELETE',
-        credentials: 'include'
-      })
-      const data = await res.json();
-      alert(data.message);
-      if(res.ok){
-        setPosts(prev => prev.filter(post => post.id !== id));
-      }
-
-    } catch(err){
-      console.log(err);
-    }
-  }
   const handleMouseLeave = () => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
     timeoutRef.current = window.setTimeout(() => {
@@ -111,7 +95,7 @@ console.log(posts);
         backgroundSize: '120px 70px',backgroundRepeat: 'no-repeat',  width: 120, height:20}}></div>
         </div>
         <div className='relative flex items-center'>
-        <input value={search} onChange={(e) => setSearch(e.target.value)} onKeyDown={(e) => {if(e.key === 'Enter'){handleSearch();}}} className='focus:ring-4 focus:ring-orange-400 focus:outline-none rounded-md h-10 p-2 text-black' placeholder='Search Sihyeonzon'></input>
+        <input value={search} onKeyDown={(e) => {if(e.key === 'Enter'){handleSearch();}}} onChange={(e) => setSearch(e.target.value)} className='focus:ring-4 focus:ring-orange-400 focus:outline-none rounded-md h-10 p-2 text-black' placeholder='Search Sihyeonzon'></input>
         <div onClick={handleSearch} className='absolute right-0 rounded-r-lg bg-yellow-500 cursor-pointer p-1  ' style={{backgroundImage: `url(${searchimg})`, backgroundPosition: 'center',
     backgroundSize: '40px 40px',backgroundRepeat: 'no-repeat',  width: 40, height:40}}></div>
         </div>
@@ -152,36 +136,37 @@ console.log(posts);
          </div> 
          </div>
         </div>}
-      <div className='bg-[#192d41]'>s</div>
-      <div className='-z-1 relative w-full h-[600px]'>
-      <div className='absolute inset-0' style={{backgroundImage: `url(${greenbackground})`, backgroundSize: 'cover',backgroundRepeat: 'no-repeat' ,backgroundPosition: 'center'}}></div>
-      <div className='relative p-2 bg-white'>Additional customs documents are required for your destination.<div className='pl-2 inline-block text-blue-700 cursor-pointer hover:underline hover:text-blue-900'>Please click here to learn more.</div></div>
-      </div>
-      <div>
-        {posts.map((post: any) => (
-          <div onClick={() => {navigate(`/postdetail/${post.id}`)}} className='cursor-pointer border-2 border-black m-5 p-5' key={post.id}>
-            <div>{post.title}</div>
-            <div>{post.content}</div>
-            <img className='w-52' src={`${post.image_url}`} />
-            <button onClick={(e) => {e.stopPropagation(); handleDeletepost(post.id);}} className='bg-gray-400'>Delete</button>
-          </div>
-        ))}
-      </div>
-      <div onClick={() => {
-        if(!user){
-          alert("You need to login!");
-          navigate('/login');
-          return ;
-        } 
-        navigate('/createpost')}} 
-        className='cursor-pointer bg-yellow-300 p-2 max-w-20'>create post</div>
+        <div className='border-b border-gray-300 shadow-md'>Result for <div className='inline-block font-bold text-amber-700'>"{id}"</div></div>
+      
+        <div className='flex flex-col'>
+         <div>
+         <div className="font-bold">Results</div>
+         <div>Check each product page for other buying options.</div>
+         </div>
+         <div>
+         {posts?.map((post) => (
+             <div key={post.id} className='flex border border-gray-200 rounded-md'>
+                <img onClick={() => navigate(`/postdetail/${post.id}`)} className='w-52 cursor-pointer' src={`${post.image_url}`} />
+                <div>
+                <div className='hover:text-amber-600'>Featured from Sihyeonzon brands</div>
+                <div onClick={() => navigate(`/postdetail/${post.id}`)} className='hover:text-amber-600 cursor-pointer font-bold'>{post.title}</div>
+                <div className=''>5.0 ⭐⭐⭐⭐⭐</div>
+                <div>GBP <div className='inline-block font-bold'>{post.price}</div></div>
+                <div>Ships to United of Kingdom</div>
+                </div>
+             </div>
+         ))}
+         </div>
+         <div>s</div>
+        </div>
+
     <div className='bg-[#142535]'>
     <div className='flex gap-10 max-w-[1000px] pt-10 pb-14 mx-auto bg-[#142535] text-[#DDD]'>
      <div>
      <div className='text-white'>Get to Know Us</div>
      <div>Careers</div>
      <div>Blog</div>
-     <div>About Sihyeonzon</div>
+     <div>About Amazon</div>
      <div>Investor Relations</div>
      <div>Sihyeonzon Devices</div>
      <div>Sihyeonzon Science</div>
@@ -189,7 +174,7 @@ console.log(posts);
      <div>
      <div className='text-white'>Make Money with Us</div>
      <div>Sell products on Sihyeonzon</div>
-     <div>Sell on Sihyeonzon Business</div>
+     <div>Sell on Amazon Business</div>
      <div>Sell apps on Sihyeonzon</div>
      <div>Become an Affiliate</div>
      <div>Advertise Your Products</div>
@@ -357,7 +342,7 @@ console.log(posts);
     </div>
     </div>
     </div>
-  )
+   )
 }
 
-export default Main
+export default Searchresult
