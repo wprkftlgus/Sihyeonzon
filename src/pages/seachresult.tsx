@@ -86,6 +86,7 @@ function Searchresult() {
       setSearch(search);
       if(search === '') return window.location.reload();
       navigate(`/searchresult/${search}`)
+      if(clickSearch == 'Electronics') navigate(`/searchresult/Electronics`);
   }
 
   return (

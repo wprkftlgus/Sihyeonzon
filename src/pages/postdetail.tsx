@@ -119,6 +119,7 @@ function Postdetail(){
       setSearch(search);
       if(search === '') return window.location.reload();
       navigate(`/searchresult/${search}`)
+      if(clickSearch == 'Electronics') navigate(`/searchresult/Electronics`);
   }
 
   if (post.length === 0) {
