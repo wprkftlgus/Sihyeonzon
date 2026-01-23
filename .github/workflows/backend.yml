@@ -20,7 +20,7 @@ jobs:
 
       - name: Deploy Backend
         run: |
-          ssh -o StrictHostKeyChecking=no ec2-user@16.176.132.188 "
+          ssh -o StrictHostKeyChecking=no ec2-user@54.252.148.65 "
             sudo yum install -y nodejs || true;
             cd ~/Sihyeonzon/server || exit;
             git fetch origin main
