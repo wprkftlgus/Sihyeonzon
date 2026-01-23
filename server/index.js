@@ -33,16 +33,18 @@ app.use('/api' ,meRouter);
 app.use('/api' ,loginRouter);
 app.use('/api' ,RegisterRouter);
 
-async function main(){
+
 app.get('/', async (req,res) => {
+  try{
     const [rows] = await db.execute('SELECT NOW() AS now')
     res.send(rows)
+    } catch(err){
+      console.log(err);
+      res.status(500).send({ message: 'DB error'})
+    }
 })
 
 app.listen(process.env.PORT, '0.0.0.0',() => {
     console.log(`Express running on the ${process.env.PORT}`);
 })
-}
 
-
-main()
