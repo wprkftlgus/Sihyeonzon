@@ -6,6 +6,7 @@ import '../App.css'
 import searchimg from '../assets/cart.png'
 import cart from '../assets/search.png'
 import amazon from '../assets/amazon.png'
+import uk from '../assets/uk.png'
 
 interface Post {
   id: number;
@@ -28,6 +29,7 @@ function Postdetail(){
   const [hiddenDetail2, setHiddenDetail2] =useState(false); 
   const timeoutRef = useRef<number | null>(null);
   const [search, setSearch] = useState<string>('');
+  const [clickSearch, setClickSearch] = useState<string>('');
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -124,36 +126,27 @@ function Postdetail(){
   }
 
   return (
-    <div className="">
-      <div className='pl-5 pr-5 bg-[#131921] text-white flex gap-5'>
+    <div className="min-w-[1900px]">
+      <div className='pt-2 pl-10 pr-10 bg-[#131921] text-white flex gap-5'>
         <div onClick={() => navigate('/')} className='p-1 flex flex-col hover:cursor-pointer border border-[#131921] hover:border-white'>
         <div className='font-bold text-2xl'>SihyeonZon</div>
         <div className='relative bottom-1' style={{backgroundImage: `url(${amazon})`, backgroundPosition: 'center',
         backgroundSize: '120px 70px',backgroundRepeat: 'no-repeat',  width: 120, height:20}}></div>
         </div>
+        <div className='flex flex-col hover:cursor-pointer border border-[#131921] hover:border-white'>
+        <div className='text-sm'>Deliever to</div>
+        <div className='w-[150px]'>United of Kingdom</div>
+        </div>
         <div className='relative flex items-center'>
-        <input value={search} onChange={(e) => setSearch(e.target.value)} onKeyDown={(e) => {if(e.key === 'Enter'){handleSearch();}}} className='focus:ring-4 focus:ring-orange-400 focus:outline-none rounded-md h-10 p-2 text-black' placeholder='Search Sihyeonzon'></input>
-        <div onClick={handleSearch} className='absolute right-0 rounded-r-lg bg-yellow-500 cursor-pointer p-1  ' style={{backgroundImage: `url(${searchimg})`, backgroundPosition: 'center',
+        <input value={search} onChange={(e) => setSearch(e.target.value)} onKeyDown={(e) => {if(e.key === 'Enter'){handleSearch();}}} className='min-w-[1000px] focus:ring-4 focus:ring-orange-400 focus:outline-none rounded-md h-10 p-2 text-black' placeholder='Search Sihyeonzon'></input>
+        <div onClick={handleSearch} className='absolute right-0 rounded-r-md bg-yellow-500 cursor-pointer p-1  ' style={{backgroundImage: `url(${searchimg})`, backgroundPosition: 'center',
     backgroundSize: '40px 40px',backgroundRepeat: 'no-repeat',  width: 40, height:40}}></div>
         </div>
-        {!user ? 
-        <div className='p-1 flex flex-col cursor-pointer border border-[#131921] hover:border-white'
-        onClick={() => navigate('/login')}>
-        <div>Hello, sign in</div>
-        <div>Account & Lists</div>
-        </div>
-         : 
-         <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className=' text-xl border border-[#131921] hover:border-white cursor-pointer'>{user.username}</div>}
-        <div className='flex items-center cursor-pointer border border-[#131921] hover:border-white'>
-        <div className='invert' style={{backgroundImage: `url(${cart})`, backgroundPosition: 'center',
-    backgroundSize: '50px 50px', backgroundRepeat: 'no-repeat',  width: 50, height:50}}></div>
-        <div className='p-1 mt-4'>Cart</div>
-        </div>
-      </div>
-      {hidden && 
-        <div className='max-w-[400px] rounded-lg absolute z-10 p-5 bg-white' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-         <div onClick={() => {handleLogout(); setUser(null); setHidden(false);}} className='text-center text-black cursor-pointer mb-4 rounded-2xl pt-2 pb-2 w-full bg-yellow-300'>Log out</div>
-         
+        <div className='relative'>
+          {hidden && 
+        <div className='top-16 left-0 min-w-[400px] rounded-lg absolute  z-10 p-5 bg-white' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+         <div onClick={() => {handleLogout(); setUser(null); setHidden(false);}} className='text-center text-black cursor-pointer mb-4 rounded-2xl pt-2 pb-2 w-full bg-yellow-300 hover:underline'>Log out</div>
+  
          <div className='flex gap-5 border-t border-gray-300 pt-4'>
          <div className='flex flex-col text-gray-700 pr-3'>
          <div className='text-black font-bold'>Your Lists</div>
@@ -173,7 +166,32 @@ function Postdetail(){
          </div> 
          </div>
         </div>}
-
+         </div>
+        <div className='flex items-center cursor-pointer border border-[#131921] hover:border-white'>
+          <div className='pr-8' style={{backgroundImage: `url(${uk})`, backgroundPosition: 'center', backgroundRepeat: 'no-repeat', backgroundSize: '20px 20px',width:20, height:20}}></div>
+          UK
+        </div>
+        {!user ? 
+        <div className='p-1 flex flex-col cursor-pointer border border-[#131921] hover:border-white'
+        onClick={() => navigate('/login')}>
+        <div>Hello, sign in</div>
+        <div>Account & Lists</div>
+        </div>
+         : 
+         <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className='items-center text-xl border border-[#131921] hover:border-white cursor-pointer'>{user.username}</div>}
+        <div className='flex items-center cursor-pointer border border-[#131921] hover:border-white'>
+        <div className='invert' style={{backgroundImage: `url(${cart})`, backgroundPosition: 'center',
+    backgroundSize: '50px 50px', backgroundRepeat: 'no-repeat',  width: 50, height:50}}></div>
+        <div className='p-1 mt-4'>Cart</div>
+        
+        </div>
+      </div>
+      
+      <div className='bg-[#192d41] text-white flex gap-4 font-bold pl-8'>
+      <div onClick={() => {setClickSearch('Electronincs'); handleSearch();}} className='border border-[#192d41] hover:border-white cursor-pointer p-2'>Electronincs</div>
+      <div onClick={() => {setClickSearch('Clothing'); handleSearch;}} className='border border-[#192d41] hover:border-white cursor-pointer p-2'>Clothings</div>
+      <div onClick={() => {setClickSearch('Foods'); handleSearch;}} className='border border-[#192d41] hover:border-white cursor-pointer p-2'>Foods</div>
+      </div>
 
     <div className='bg-white mt-10 mb-80 ml-5 mr-5'>
      <div className="text-gray-600 mb-10 ml-28">{'>'} <div className="inline-block cursor-pointer hover:underline">{post[0].category}</div></div>

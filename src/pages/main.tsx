@@ -5,6 +5,7 @@ import cart from '../assets/search.png'
 import { useNavigate } from 'react-router-dom'
 import amazon from '../assets/amazon.png'
 import greenbackground from '../assets/greenbackground.jpg'
+import uk from '../assets/uk.png'
 
 interface Post {
   id: number;
@@ -22,7 +23,7 @@ function Main() {
   const [hidden, setHidden] =useState(false); 
   const timeoutRef = useRef<number | null>(null);
   const [search, setSearch] = useState<string>('');
- 
+  const [clickSearch, setClickSearch] = useState<string>('');
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -100,39 +101,31 @@ console.log(posts);
       setSearch(search);
       if(search === '') return window.location.reload();
       navigate(`/searchresult/${search}`)
+      if(clickSearch == 'Electronics') navigate(`/searchresult/Electronics`);
   }
 
   return (
-    <div className="">
-      <div className='pl-5 pr-5 bg-[#131921] text-white flex gap-5'>
+    <div className="min-w-[1900px]">
+      <div className='pt-2 pl-10 pr-10 bg-[#131921] text-white flex gap-5'>
         <div onClick={() => navigate('/')} className='p-1 flex flex-col hover:cursor-pointer border border-[#131921] hover:border-white'>
         <div className='font-bold text-2xl'>SihyeonZon</div>
         <div className='relative bottom-1' style={{backgroundImage: `url(${amazon})`, backgroundPosition: 'center',
         backgroundSize: '120px 70px',backgroundRepeat: 'no-repeat',  width: 120, height:20}}></div>
         </div>
+        <div className='flex flex-col hover:cursor-pointer border border-[#131921] hover:border-white'>
+        <div className='text-sm'>Deliever to</div>
+        <div className='w-[150px]'>United of Kingdom</div>
+        </div>
         <div className='relative flex items-center'>
-        <input value={search} onChange={(e) => setSearch(e.target.value)} onKeyDown={(e) => {if(e.key === 'Enter'){handleSearch();}}} className='focus:ring-4 focus:ring-orange-400 focus:outline-none rounded-md h-10 p-2 text-black' placeholder='Search Sihyeonzon'></input>
-        <div onClick={handleSearch} className='absolute right-0 rounded-r-lg bg-yellow-500 cursor-pointer p-1  ' style={{backgroundImage: `url(${searchimg})`, backgroundPosition: 'center',
+        <input value={search} onChange={(e) => setSearch(e.target.value)} onKeyDown={(e) => {if(e.key === 'Enter'){handleSearch();}}} className='min-w-[1000px] focus:ring-4 focus:ring-orange-400 focus:outline-none rounded-md h-10 p-2 text-black' placeholder='Search Sihyeonzon'></input>
+        <div onClick={handleSearch} className='absolute right-0 rounded-r-md bg-yellow-500 cursor-pointer p-1  ' style={{backgroundImage: `url(${searchimg})`, backgroundPosition: 'center',
     backgroundSize: '40px 40px',backgroundRepeat: 'no-repeat',  width: 40, height:40}}></div>
         </div>
-        {!user ? 
-        <div className='p-1 flex flex-col cursor-pointer border border-[#131921] hover:border-white'
-        onClick={() => navigate('/login')}>
-        <div>Hello, sign in</div>
-        <div>Account & Lists</div>
-        </div>
-         : 
-         <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className=' text-xl border border-[#131921] hover:border-white cursor-pointer'>{user.username}</div>}
-        <div className='flex items-center cursor-pointer border border-[#131921] hover:border-white'>
-        <div className='invert' style={{backgroundImage: `url(${cart})`, backgroundPosition: 'center',
-    backgroundSize: '50px 50px', backgroundRepeat: 'no-repeat',  width: 50, height:50}}></div>
-        <div className='p-1 mt-4'>Cart</div>
-        </div>
-      </div>
-      {hidden && 
-        <div className='max-w-[400px] rounded-lg absolute z-10 p-5 bg-white' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-         <div onClick={() => {handleLogout(); setUser(null); setHidden(false);}} className='text-center text-black cursor-pointer mb-4 rounded-2xl pt-2 pb-2 w-full bg-yellow-300'>Log out</div>
-         
+        <div className='relative'>
+          {hidden && 
+        <div className='top-16 left-0 min-w-[400px] rounded-lg absolute  z-10 p-5 bg-white' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+         <div onClick={() => {handleLogout(); setUser(null); setHidden(false);}} className='text-center text-black cursor-pointer mb-4 rounded-2xl pt-2 pb-2 w-full bg-yellow-300 hover:underline'>Log out</div>
+  
          <div className='flex gap-5 border-t border-gray-300 pt-4'>
          <div className='flex flex-col text-gray-700 pr-3'>
          <div className='text-black font-bold'>Your Lists</div>
@@ -152,14 +145,43 @@ console.log(posts);
          </div> 
          </div>
         </div>}
-      <div className='bg-[#192d41]'>s</div>
-      <div className='-z-1 relative w-full h-[600px]'>
-      <div className='absolute inset-0' style={{backgroundImage: `url(${greenbackground})`, backgroundSize: 'cover',backgroundRepeat: 'no-repeat' ,backgroundPosition: 'center'}}></div>
-      <div className='relative p-2 bg-white'>Additional customs documents are required for your destination.<div className='pl-2 inline-block text-blue-700 cursor-pointer hover:underline hover:text-blue-900'>Please click here to learn more.</div></div>
+         </div>
+        <div className='flex items-center cursor-pointer border border-[#131921] hover:border-white'>
+          <div className='pr-8' style={{backgroundImage: `url(${uk})`, backgroundPosition: 'center', backgroundRepeat: 'no-repeat', backgroundSize: '20px 20px',width:20, height:20}}></div>
+          UK
+        </div>
+        {!user ? 
+        <div className='p-1 flex flex-col cursor-pointer border border-[#131921] hover:border-white'
+        onClick={() => navigate('/login')}>
+        <div>Hello, sign in</div>
+        <div>Account & Lists</div>
+        </div>
+         : 
+         <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className='items-center text-xl border border-[#131921] hover:border-white cursor-pointer'>{user.username}</div>}
+        <div className='flex items-center cursor-pointer border border-[#131921] hover:border-white'>
+        <div className='invert' style={{backgroundImage: `url(${cart})`, backgroundPosition: 'center',
+    backgroundSize: '50px 50px', backgroundRepeat: 'no-repeat',  width: 50, height:50}}></div>
+        <div className='p-1 mt-4'>Cart</div>
+        
+        </div>
+      </div>
+      
+      <div className='bg-[#192d41] text-white flex gap-4 font-bold pl-8'>
+      <div onClick={() => {setClickSearch('Electronincs'); handleSearch();}} className='border border-[#192d41] hover:border-white cursor-pointer p-2'>Electronincs</div>
+      <div onClick={() => {setClickSearch('Clothing'); handleSearch;}} className='border border-[#192d41] hover:border-white cursor-pointer p-2'>Clothings</div>
+      <div onClick={() => {setClickSearch('Foods'); handleSearch;}} className='border border-[#192d41] hover:border-white cursor-pointer p-2'>Foods</div>
+      </div>
+
+      <div className='bg-gray-200'>
+      <div className='absolute w-[1500px] pl-52 h-[700px]' style={{backgroundImage: `url(${greenbackground})`,backgroundSize: 'cover',backgroundRepeat: 'no-repeat' ,backgroundPosition: 'center'}}></div>
+      <div className='relative pt-[280px] mx-auto max-w-[1500px]'>
+      <div className='flex bg-white p-2'>
+      <div className=''>Additional customs documents are required for your destination.</div>
+      <div className=' pl-2 inline-block text-blue-700 cursor-pointer hover:underline hover:text-blue-900'>Please click here to learn more.</div>
       </div>
       <div>
         {posts.map((post: any) => (
-          <div onClick={() => {navigate(`/postdetail/${post.id}`)}} className='cursor-pointer border-2 border-black m-5 p-5' key={post.id}>
+          <div onClick={() => {navigate(`/postdetail/${post.id}`)}} className='bg-white cursor-pointer border-2 border-black mt-5' key={post.id}>
             <div>{post.title}</div>
             <div>{post.content}</div>
             <img className='w-52' src={`${post.image_url}`} />
@@ -175,10 +197,12 @@ console.log(posts);
         } 
         navigate('/createpost')}} 
         className='cursor-pointer bg-yellow-300 p-2 max-w-20'>create post</div>
+    </div>
+    </div>
     <div className='bg-[#142535]'>
-    <div className='flex gap-10 max-w-[1000px] pt-10 pb-14 mx-auto bg-[#142535] text-[#DDD]'>
-     <div>
-     <div className='text-white'>Get to Know Us</div>
+    <div className='text-sm flex gap-20 w-[1065px] pt-10 pb-14 mx-auto bg-[#142535] text-[#DDD]'>
+     <div className='flex flex-col gap-1'>
+     <div className='text-lg font-bold text-white'>Get to Know Us</div>
      <div>Careers</div>
      <div>Blog</div>
      <div>About Sihyeonzon</div>
@@ -186,8 +210,8 @@ console.log(posts);
      <div>Sihyeonzon Devices</div>
      <div>Sihyeonzon Science</div>
      </div>
-     <div>
-     <div className='text-white'>Make Money with Us</div>
+     <div className='flex flex-col gap-1'>
+     <div className='text-lg font-bold text-white'>Make Money with Us</div>
      <div>Sell products on Sihyeonzon</div>
      <div>Sell on Sihyeonzon Business</div>
      <div>Sell apps on Sihyeonzon</div>
@@ -197,15 +221,15 @@ console.log(posts);
      <div>Host an Sihyeonzon Hub</div>
      <div>›See More Make Money with Us</div>
      </div>
-     <div>
-     <div className='text-white'>Sihyeonzon Payment Products</div>
+     <div className='flex flex-col gap-1'>
+     <div className='text-lg font-bold text-white'>Sihyeonzon Payment Products</div>
      <div>Sihyeonzon Business Card</div>
      <div>Shop with Points</div>
      <div>Reload Your Balance</div>
      <div>Sihyeonzon Currency Converter</div>
      </div>
-     <div>
-     <div className='text-white'>Let Us Help You</div>
+     <div className='flex flex-col gap-1'>
+     <div className='text-lg font-bold text-white'>Let Us Help You</div>
      <div>Sihyeonzon and COVID-19</div>
      <div>Your Account</div>
      <div>Your Orders</div>
@@ -227,7 +251,7 @@ console.log(posts);
     </div>
     </div>
     <div className='bg-[#131921]'>
-    <div className="max-w-[1050px] mx-auto bg-[#131921] pt-10 pb-10 text-gray-400 text-sm flex flex-wrap justify-between">
+    <div className="w-[1050px] mx-auto bg-[#131921] pt-10 pb-10 text-gray-400 text-xs flex flex-wrap justify-between">
     <div className="flex flex-col gap-6 max-w-32">
     <div>
     <div className='text-white'>Sihyeonzon Music</div>
@@ -354,6 +378,7 @@ console.log(posts);
     </div>
     </div>
     </div>
+    <div className='w-full text-center text-sm text-white pb-8'>© 1996-2026, Sihyeonzon.online, Inc. or its affiliates</div>
     </div>
     </div>
     </div>
