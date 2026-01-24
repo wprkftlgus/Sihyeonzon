@@ -103,7 +103,7 @@ function Searchresult() {
   }
 
   return (
-    <div className="w-screen overflow-x-hidden">
+    <div className="w-full">
       <div className='pt-2 pl-10 pr-10 bg-[#131921] text-white flex gap-5'>
         <div onClick={() => navigate('/')} className='p-1 flex flex-col hover:cursor-pointer border border-[#131921] hover:border-white'>
         <div className='font-bold text-2xl'>SihyeonZon</div>
