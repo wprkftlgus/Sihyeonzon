@@ -4,6 +4,8 @@
 
 :root {
   color-scheme: light;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 html {
