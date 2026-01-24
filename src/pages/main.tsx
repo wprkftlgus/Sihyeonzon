@@ -128,13 +128,19 @@ console.log(posts);
   
          <div className='flex gap-5 border-t border-gray-300 pt-4'>
          <div className='flex flex-col text-gray-700 pr-3'>
-         <div className='text-black font-bold'>Your Lists</div>
-         <div>Create a List</div>
+         <div className='text-gray-600 font-bold'>Your Lists</div>
+         <div onClick={() => {
+        if(!user){
+          alert("You need to login!");
+          navigate('/login');
+          return ;
+        } 
+        navigate('/createpost')}}  className='text-black font-bold cursor-pointer hover:underline w-[120px]'>Create a Post</div>
          <div>Find a List or Registry</div>
          </div>
 
          <div className='flex flex-col text-gray-700 border-l border-gray-300 pl-3'>
-         <div className='text-black font-bold'>Your Account</div>
+         <div className='text-gray-600 font-bold'>Your Account</div>
          <div>Account</div>
          <div>Orders</div>
          <div>Recommendations</div>

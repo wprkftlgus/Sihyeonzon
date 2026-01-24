@@ -7,6 +7,8 @@ import searchimg from '../assets/cart.png'
 import cart from '../assets/search.png'
 import amazon from '../assets/amazon.png'
 import uk from '../assets/uk.png'
+import loadingGif from '../assets/loading.gif'
+import Loading from './loading.tsx';
 
 interface Post {
   id: number;
@@ -121,11 +123,9 @@ function Postdetail(){
       navigate(`/searchresult/${search}`)
       if(clickSearch == 'Electronics') navigate(`/searchresult/Electronics`);
   }
-
-  if (post.length === 0) {
-    return <div>Loading...</div>;
-  }
-
+  if(!post[0]) return(
+    <Loading />
+  )
   return (
     <div className="min-w-[1900px]">
       <div className='pt-2 pl-10 pr-10 bg-[#131921] text-white flex gap-5'>
@@ -150,13 +150,19 @@ function Postdetail(){
   
          <div className='flex gap-5 border-t border-gray-300 pt-4'>
          <div className='flex flex-col text-gray-700 pr-3'>
-         <div className='text-black font-bold'>Your Lists</div>
-         <div>Create a List</div>
+         <div className='text-gray-600 font-bold'>Your Lists</div>
+         <div onClick={() => {
+        if(!user){
+          alert("You need to login!");
+          navigate('/login');
+          return ;
+        } 
+        navigate('/createpost')}}  className='text-black font-bold cursor-pointer hover:underline w-[120px]'>Create a Post</div>
          <div>Find a List or Registry</div>
          </div>
 
          <div className='flex flex-col text-gray-700 border-l border-gray-300 pl-3'>
-         <div className='text-black font-bold'>Your Account</div>
+         <div className='text-gray-600 font-bold'>Your Account</div>
          <div>Account</div>
          <div>Orders</div>
          <div>Recommendations</div>
@@ -195,7 +201,7 @@ function Postdetail(){
       </div>
 
     <div className='bg-white mt-10 mb-80 ml-5 mr-5'>
-     <div className="text-gray-600 mb-10 ml-28">{'>'} <div className="inline-block cursor-pointer hover:underline">{post[0].category}</div></div>
+     <div className="text-gray-600 mb-10 ml-28">{'>'} <div className="inline-block cursor-pointer hover:underline">{post && <div>{post[0].category}</div>}</div></div>
      <div className="flex">
      <div>
      <img className='max-w-[450px] p-2' src={`${post[0].image_url}`} />
@@ -209,17 +215,21 @@ function Postdetail(){
      </div>
      <div className="border-b border-gray-400">
      <div className="mt-4 bg-red-600 text-white max-w-36 text-center p-1 rounded-md">Limited time deal</div>
-     <div className="font-bold mb-3"><div className="font-normal inline-block">GBP</div> <div className="text-3xl inline-block">{post[0].price}</div></div>
-     <div className="mb-2">No Import Charges & 
-        <div className="font-bold inline-block ml-2 mr-2">FREE Shipping</div>to United Kingdom 
+     <div className="font-bold mb-3"><div className="font-normal inline-block">GBP</div> <div className="text-3xl inline-block">{post && <div>{post[0].price}</div>}</div></div>
+     <div className="mb-2">
+        <div className='flex gap-2'>
+        <div>No Import Charges &</div> 
+        <div className="font-bold inline-block ml-2 mr-2">FREE Shipping</div>
+        <div>to United Kingdom</div> 
         <div onMouseEnter={handleMouseEnterDetail1} onMouseLeave={handleMouseLeaveDetail1} className="ml-2 inline-block text-blue-700 cursor-pointer hover:underline hover:text-blue-900">Details</div>
+        </div>
         {hiddenDetail1 && 
         <div onMouseEnter={handleMouseEnterDetail1} onMouseLeave={handleMouseLeaveDetail1} className="rounded-xl max-w-[400px] p-5 border border-gray-400">
         <div className="font-bold border-b border-gray-400 pb-3">Shipping & Fee Details</div>
         <div className="flex flex-col pt-5 pb-3 border-b border-gray-400">
         <div className="flex justify-between">
         <div>Price</div>
-        <div className="font-bold">GBP {post[0].price}</div>    
+        <div className="font-bold">GBP {post && <div>{post[0].price}</div>}</div>    
         </div>
         <div className="flex justify-between">
         <div>SihyeonzonGlobal Shipping</div>
@@ -232,14 +242,14 @@ function Postdetail(){
         </div>
         <div className="flex justify-between pt-3">
         <div>Total</div>
-        <div className="font-bold">GBP {post[0].price}</div>    
+        <div className="font-bold">GBP {post && <div>{post[0].price}</div>}</div>    
         </div>
         </div>}
      </div>
      </div>
      <div>
      <div className="mt-3 font-bold text-2xl">About this item</div>
-     <div className="pt-1 whitespace-pre-line">{post[0].content}</div>
+     <div className="pt-1 whitespace-pre-line">{post && <div>{post[0].content}</div>}</div>
      </div>
      </div>
      <div className="border border-gray-300 rounded-md p-5">
@@ -253,7 +263,7 @@ function Postdetail(){
         <div className="flex flex-col pt-5 pb-3 border-b border-gray-400">
         <div className="flex justify-between">
         <div>Price</div>
-        <div className="font-bold">GBP {post[0].price}</div>    
+        <div className="font-bold">GBP {post && <div>{post[0].price}</div>}</div>    
         </div>
         <div className="flex justify-between">
         <div>SihyeonzonGlobal Shipping</div>
@@ -266,7 +276,7 @@ function Postdetail(){
         </div>
         <div className="flex justify-between pt-3">
         <div>Total</div>
-        <div className="font-bold">GBP {post[0].price}</div>    
+        <div className="font-bold">GBP {post && <div>{post[0].price}</div>}</div>    
         </div>
         </div>}
      </div>

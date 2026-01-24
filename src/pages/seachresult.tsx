@@ -20,10 +20,11 @@ function Searchresult() {
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const [user, setUser] = useState<{ username: string } | null>(null);
   const [hidden, setHidden] =useState(false); 
+  const [hiddenFeatured, setHiddenfeatured] = useState<number | null>(null);
   const timeoutRef = useRef<number | null>(null);
   const [search, setSearch] = useState<string>('');
   const { id } = useParams<{ id: string }>();
-  const [posts, setPosts] = useState<Post[]>([]);
+  const [posts, setPosts] = useState<Post[] | null>([]);
   const [clickSearch, setClickSearch] = useState<string>('');
 
     useEffect(() => {
@@ -81,6 +82,18 @@ function Searchresult() {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
     setHidden(true);
   }
+  
+  const handleMouseLeaveFeatured = () => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    timeoutRef.current = window.setTimeout(() => {
+      setHiddenfeatured(null);
+    }, 800);
+  }
+
+  const handleMouseEnterFeatured = (postId: number) => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    setHiddenfeatured(postId);
+  }
 
   const handleSearch = () => {
       setSearch(search);
@@ -113,13 +126,19 @@ function Searchresult() {
   
          <div className='flex gap-5 border-t border-gray-300 pt-4'>
          <div className='flex flex-col text-gray-700 pr-3'>
-         <div className='text-black font-bold'>Your Lists</div>
-         <div>Create a List</div>
+         <div className='text-gray-600 font-bold'>Your Lists</div>
+         <div onClick={() => {
+        if(!user){
+          alert("You need to login!");
+          navigate('/login');
+          return ;
+        } 
+        navigate('/createpost')}}  className='text-black font-bold cursor-pointer hover:underline w-[120px]'>Create a Post</div>
          <div>Find a List or Registry</div>
          </div>
 
          <div className='flex flex-col text-gray-700 border-l border-gray-300 pl-3'>
-         <div className='text-black font-bold'>Your Account</div>
+         <div className='text-gray-600 font-bold'>Your Account</div>
          <div>Account</div>
          <div>Orders</div>
          <div>Recommendations</div>
@@ -156,28 +175,37 @@ function Searchresult() {
       <div onClick={() => {setClickSearch('Clothing'); handleSearch;}} className='border border-[#192d41] hover:border-white cursor-pointer p-2'>Clothings</div>
       <div onClick={() => {setClickSearch('Foods'); handleSearch;}} className='border border-[#192d41] hover:border-white cursor-pointer p-2'>Foods</div>
       </div>
-        <div className='border-b border-gray-300 shadow-md'>Result for <div className='inline-block font-bold text-amber-700'>"{id}"</div></div>
+        <div className='pl-14 p-2 flex border-b border-gray-300 shadow-md font-bold'>
+          <div className='pr-2'>{posts?.length}</div>
+          <div>Result for</div>
+          <div className='pl-2 inline-block text-amber-700'>"{id}"</div>
+        </div>
       
-        <div className='flex flex-col'>
-         <div>
-         <div className="font-bold">Results</div>
-         <div>Check each product page for other buying options.</div>
+        <div className='flex flex-col mx-auto w-[1600px] mt-8 mb-8'>
+         <div className='mb-2'>
+         <div className="font-bold text-xl">Results</div>
+         <div className='text-gray-600'>Check each product page for other buying options.</div>
          </div>
          <div>
          {posts?.map((post) => (
-             <div key={post.id} className='flex border border-gray-200 rounded-md'>
+             <div key={post.id} className='flex border border-gray-200 rounded-md relative mb-2'>
                 <img onClick={() => navigate(`/postdetail/${post.id}`)} className='w-52 cursor-pointer' src={`${post.image_url}`} />
-                <div>
-                <div className='hover:text-amber-600'>Featured from Sihyeonzon brands</div>
+                <div className='pl-4 flex flex-col gap-1'>
+                {hiddenFeatured === post.id && <div className='absolute -top-16 bg-white left-14 rounded-xl border border-gray-300 p-3 text-sm font-bold w-[500px]'>You are seeing this product from an Amazon brand based on the product’s relevance to your search query.</div>}
+                <div onMouseEnter={() => handleMouseEnterFeatured(post.id)} onMouseLeave={handleMouseLeaveFeatured} className='hover:text-amber-600 text-gray-500 text-sm hover:cursor-pointer w-[220px]'>Featured from Sihyeonzon brands</div>
                 <div onClick={() => navigate(`/postdetail/${post.id}`)} className='hover:text-amber-600 cursor-pointer font-bold'>{post.title}</div>
-                <div className=''>5.0 ⭐⭐⭐⭐⭐</div>
-                <div>GBP <div className='inline-block font-bold'>{post.price}</div></div>
-                <div>Ships to United of Kingdom</div>
+                <div className='text-sm'>5.0 ⭐⭐⭐⭐⭐</div>
+                <div className='flex'>
+                <div className='inline-block mt-1 text-sm'>GBP</div>
+                <div className='inline-block font-bold text-3xl'>{post.price}</div>
+                </div>
+                <div className='text-sm font-bold'>Ships to United of Kingdom</div>
                 </div>
              </div>
          ))}
          </div>
-         <div>s</div>
+         <div>Need help?</div>
+         <div className='flex'><div className='text-blue-600 cursor-pointer mr-2'>Visit the help section</div> or <div className='text-blue-600 cursor-pointer ml-2'>contact us</div></div>
         </div>
 
     <div className='bg-[#142535]'>
