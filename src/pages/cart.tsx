@@ -2,20 +2,21 @@ import { useEffect, useRef, useState } from 'react';
 import '../App.css'
 import searchimg from '../assets/cart.png'
 import cart from '../assets/search.png'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+// import { useParams } from 'react-router-dom'
 import amazon from '../assets/amazon.png'
 import uk from '../assets/uk.png'
 import coffe from '../assets/coffe.svg'
 
 
-interface Post {
-  id: number;
-  category: string;
-  title: string;
-  price: string;
-  content: string;
-  image_url: string;
-}
+// interface Post {
+//   id: number;
+//   category: string;
+//   title: string;
+//   price: string;
+//   content: string;
+//   image_url: string;
+// }
 
 function Cart() {
   const navigate = useNavigate();
@@ -24,23 +25,23 @@ function Cart() {
   const [hidden, setHidden] =useState(false); 
   const timeoutRef = useRef<number | null>(null);
   const [search, setSearch] = useState<string>('');
-  const { id } = useParams<{ id: string }>();
-  const [posts, setPosts] = useState<Post[] | null>([]);
+  // const { id } = useParams<{ id: string }>();
+  // const [posts, setPosts] = useState<Post[] | null>([]);
   const [clickSearch, setClickSearch] = useState<string>('');
 
-    useEffect(() => {
-    const fetchPost = async() => {
-        try{
-            const res = await fetch(`${API_BASE_URL}/api/getsearchedpost/${id}`);
-            const data = await res.json();
-            setPosts(data);
-            console.log(data);
-        } catch(err){
-            console.log(err);
-        } 
-    } 
-    if(id) fetchPost();
-    },[id]) 
+    // useEffect(() => {
+    // const fetchPost = async() => {
+    //     try{
+    //         const res = await fetch(`${API_BASE_URL}/api/getsearchedpost/${id}`);
+    //         const data = await res.json();
+    //         setPosts(data);
+    //         console.log(data);
+    //     } catch(err){
+    //         console.log(err);
+    //     } 
+    // } 
+    // if(id) fetchPost();
+    // },[id]) 
 
   useEffect(() => {
     const fetchUser = async () => {
