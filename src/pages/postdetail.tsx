@@ -7,7 +7,6 @@ import searchimg from '../assets/cart.png'
 import cart from '../assets/search.png'
 import amazon from '../assets/amazon.png'
 import uk from '../assets/uk.png'
-import loadingGif from '../assets/loading.gif'
 import Loading from './loading.tsx';
 
 interface Post {
@@ -186,7 +185,7 @@ function Postdetail(){
         </div>
          : 
          <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className='items-center text-xl border border-[#131921] hover:border-white cursor-pointer'>{user.username}</div>}
-        <div className='flex items-center cursor-pointer border border-[#131921] hover:border-white'>
+        <div onClick={() => navigate('/cart')} className='flex items-center cursor-pointer border border-[#131921] hover:border-white'>
         <div className='invert' style={{backgroundImage: `url(${cart})`, backgroundPosition: 'center',
     backgroundSize: '50px 50px', backgroundRepeat: 'no-repeat',  width: 50, height:50}}></div>
         <div className='p-1 mt-4'>Cart</div>
@@ -200,13 +199,13 @@ function Postdetail(){
       <div onClick={() => {setClickSearch('Foods'); handleSearch;}} className='border border-[#192d41] hover:border-white cursor-pointer p-2'>Foods</div>
       </div>
 
-    <div className='bg-white mt-10 mb-80 ml-5 mr-5'>
+    <div className='bg-white mt-10 mb-80 ml-20 mr-5 '>
      <div className="text-gray-600 mb-10 ml-28">{'>'} <div className="inline-block cursor-pointer hover:underline">{post && <div>{post[0].category}</div>}</div></div>
      <div className="flex">
      <div>
      <img className='max-w-[450px] p-2' src={`${post[0].image_url}`} />
      </div>
-     <div className="flex flex-col pr-5 pl-5">
+     <div className="w-[1500px] flex flex-col pr-10 pl-5">
      <div className="border-b border-gray-400">
      <div className="font-bold text-2xl">{post[0].title}</div>
      <div className="font-bold">5.0 ⭐⭐⭐⭐⭐</div>
@@ -216,20 +215,21 @@ function Postdetail(){
      <div className="border-b border-gray-400">
      <div className="mt-4 bg-red-600 text-white max-w-36 text-center p-1 rounded-md">Limited time deal</div>
      <div className="font-bold mb-3"><div className="font-normal inline-block">GBP</div> <div className="text-3xl inline-block">{post && <div>{post[0].price}</div>}</div></div>
-     <div className="mb-2">
-        <div className='flex gap-2'>
+     <div className="relative mb-2">
+        <div className='flex gap-1'>
         <div>No Import Charges &</div> 
-        <div className="font-bold inline-block ml-2 mr-2">FREE Shipping</div>
+        <div className="font-bold inline-block ml-1 mr-1">FREE Shipping</div>
         <div>to United Kingdom</div> 
-        <div onMouseEnter={handleMouseEnterDetail1} onMouseLeave={handleMouseLeaveDetail1} className="ml-2 inline-block text-blue-700 cursor-pointer hover:underline hover:text-blue-900">Details</div>
+        <div onMouseEnter={handleMouseEnterDetail1} onMouseLeave={handleMouseLeaveDetail1} className="ml-1 inline-block text-blue-700 cursor-pointer hover:underline hover:text-blue-900">Details</div>
         </div>
         {hiddenDetail1 && 
-        <div onMouseEnter={handleMouseEnterDetail1} onMouseLeave={handleMouseLeaveDetail1} className="rounded-xl max-w-[400px] p-5 border border-gray-400">
-        <div className="font-bold border-b border-gray-400 pb-3">Shipping & Fee Details</div>
+        <div onMouseEnter={handleMouseEnterDetail1} onMouseLeave={handleMouseLeaveDetail1} 
+        className="bg-white left-64 absolute rounded-xl w-[350px] p-5 border border-gray-400">
+        <div className="font-bold border-b border-gray-400 pb-3 text-xl">Shipping & Fee Details</div>
         <div className="flex flex-col pt-5 pb-3 border-b border-gray-400">
         <div className="flex justify-between">
         <div>Price</div>
-        <div className="font-bold">GBP {post && <div>{post[0].price}</div>}</div>    
+        <div className="font-bold">GBP {post && <div className='inline-block'>{post[0].price}</div>}</div>    
         </div>
         <div className="flex justify-between">
         <div>SihyeonzonGlobal Shipping</div>
@@ -242,7 +242,7 @@ function Postdetail(){
         </div>
         <div className="flex justify-between pt-3">
         <div>Total</div>
-        <div className="font-bold">GBP {post && <div>{post[0].price}</div>}</div>    
+        <div className="font-bold">GBP {post && <div className='inline-block'>{post[0].price}</div>}</div>    
         </div>
         </div>}
      </div>
@@ -253,17 +253,18 @@ function Postdetail(){
      </div>
      </div>
      <div className="border border-gray-300 rounded-md p-5">
-      <div className="font-bold mb-3"><div className="font-normal inline-block">GBP</div> <div className="text-3xl inline-block">{post[0].price}</div></div>  
-      <div className="mb-2">No Import Charges & 
-        <div className="font-bold inline-block">FREE Shipping</div>to United Kingdom 
-        <div onMouseEnter={handleMouseEnterDetail2} onMouseLeave={handleMouseLeaveDetail2} className="inline-block text-blue-700 cursor-pointer hover:underline hover:text-blue-900">Details</div>
+      <div className="w-[280px] font-bold mb-3"><div className="font-normal inline-block">GBP</div> <div className="text-3xl inline-block">{post[0].price}</div></div>  
+      <div className="mb-2 relative">No Import Charges & 
+        <div className="font-bold inline-block mr-2">FREE Shipping</div>to United Kingdom 
+        <div onMouseEnter={handleMouseEnterDetail2} onMouseLeave={handleMouseLeaveDetail2} className="inline-block text-blue-700 cursor-pointer hover:underline hover:text-blue-900 ml-2">Details</div>
         {hiddenDetail2 && 
-        <div onMouseEnter={handleMouseEnterDetail2} onMouseLeave={handleMouseLeaveDetail2} className="rounded-xl max-w-[400px] p-5 border border-gray-400">
-        <div className="font-bold border-b border-gray-400 pb-3">Shipping & Fee Details</div>
+        <div onMouseEnter={handleMouseEnterDetail2} onMouseLeave={handleMouseLeaveDetail2} 
+        className="absolute -right-10 bg-white rounded-xl w-[350px] p-5 border border-gray-400">
+        <div className="font-bold border-b border-gray-400 pb-3 text-xl">Shipping & Fee Details</div>
         <div className="flex flex-col pt-5 pb-3 border-b border-gray-400">
         <div className="flex justify-between">
         <div>Price</div>
-        <div className="font-bold">GBP {post && <div>{post[0].price}</div>}</div>    
+        <div className="font-bold">GBP {post && <div className='inline-block'>{post[0].price}</div>}</div>    
         </div>
         <div className="flex justify-between">
         <div>SihyeonzonGlobal Shipping</div>
@@ -276,20 +277,24 @@ function Postdetail(){
         </div>
         <div className="flex justify-between pt-3">
         <div>Total</div>
-        <div className="font-bold">GBP {post && <div>{post[0].price}</div>}</div>    
+        <div className="font-bold">GBP {post && <div className='inline-block'>{post[0].price}</div>}</div>    
         </div>
         </div>}
      </div>
-      <div className="text-green-600 text-2xl">In Stock</div>
+      <div className="text-green-700 text-2xl">In Stock</div>
       <div className="w-full p-2 mt-2 mb-2 text-center bg-yellow-300 rounded-2xl cursor-pointer hover:bg-yellow-400">Add to cart</div>
       <div className="w-full p-2 mt-2 mb-2 text-center bg-orange-400 rounded-2xl cursor-pointer hover:bg-orange-500">Buy Now</div>
       <div className="flex flex-col">
       <div className="text-xs">
-      <div className="flex justify-between">
-      <div>Returns</div>
-      <div className="text-blue-700 cursor-pointer hover:underline hover:text-blue-900">30-days refund / replacement</div>
+      <div className='mb-2 flex justify-between'>
+      <div>Shipper / Seller </div>
+      <div className="text-blue-700 cursor-pointer hover:underline hover:text-blue-900">Sihyeonzon.online</div>
       </div>
-      <div className="flex justify-between">
+      <div className="mb-2 flex justify-between">
+      <div>Returns</div>
+      <div className="w-[100px] text-blue-700 cursor-pointer hover:underline hover:text-blue-900">30-days refund / replacement</div>
+      </div>
+      <div className="mb-2 flex justify-between">
       <div>Payment</div>
       <div className="text-blue-700 cursor-pointer hover:underline hover:text-blue-900">Secure transaction</div>
       </div>

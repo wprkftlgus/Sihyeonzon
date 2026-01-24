@@ -162,7 +162,7 @@ function Searchresult() {
         </div>
          : 
          <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className='items-center text-xl border border-[#131921] hover:border-white cursor-pointer'>{user.username}</div>}
-        <div className='flex items-center cursor-pointer border border-[#131921] hover:border-white'>
+        <div onClick={() => navigate('/cart')} className='flex items-center cursor-pointer border border-[#131921] hover:border-white'>
         <div className='invert' style={{backgroundImage: `url(${cart})`, backgroundPosition: 'center',
     backgroundSize: '50px 50px', backgroundRepeat: 'no-repeat',  width: 50, height:50}}></div>
         <div className='p-1 mt-4'>Cart</div>

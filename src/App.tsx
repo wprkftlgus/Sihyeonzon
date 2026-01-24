@@ -5,6 +5,7 @@ import Register from './pages/register'
 import Createpost from './pages/createpost'
 import Postdetail from './pages/postdetail'
 import Searchresult from './pages/seachresult'
+import Cart from './pages/cart'
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <Route path='/createpost' element={<Createpost />}></Route>
       <Route path='/postdetail/:id' element={<Postdetail />}></Route>
       <Route path='/searchresult/:id' element={<Searchresult />}></Route>
+      <Route path='/cart' element={<Cart />}></Route>
     </Routes>
     </BrowserRouter>
   )

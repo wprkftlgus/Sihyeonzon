@@ -2,28 +2,45 @@ import { useEffect, useRef, useState } from 'react';
 import '../App.css'
 import searchimg from '../assets/cart.png'
 import cart from '../assets/search.png'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import amazon from '../assets/amazon.png'
-import greenbackground from '../assets/greenbackground.jpg'
 import uk from '../assets/uk.png'
+import coffe from '../assets/coffe.svg'
+
 
 interface Post {
   id: number;
-  user_id: number;
+  category: string;
   title: string;
+  price: string;
   content: string;
   image_url: string;
 }
 
-function Main() {
+function Cart() {
   const navigate = useNavigate();
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-  const [posts, setPosts] = useState<Post[]>([]);
   const [user, setUser] = useState<{ username: string } | null>(null);
   const [hidden, setHidden] =useState(false); 
   const timeoutRef = useRef<number | null>(null);
   const [search, setSearch] = useState<string>('');
+  const { id } = useParams<{ id: string }>();
+  const [posts, setPosts] = useState<Post[] | null>([]);
   const [clickSearch, setClickSearch] = useState<string>('');
+
+    useEffect(() => {
+    const fetchPost = async() => {
+        try{
+            const res = await fetch(`${API_BASE_URL}/api/getsearchedpost/${id}`);
+            const data = await res.json();
+            setPosts(data);
+            console.log(data);
+        } catch(err){
+            console.log(err);
+        } 
+    } 
+    if(id) fetchPost();
+    },[id]) 
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -42,19 +59,6 @@ function Main() {
     fetchUser();
   },[])
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try{
-        const res = await fetch(`${API_BASE_URL}/api/getposts`)
-        const data = await res.json();
-        setPosts(data);
-      } catch(err){
-        console.log(err);
-      }
-    } 
-    fetchPosts();
-  },[])
-console.log(posts);
   const handleLogout = async () => {
     try{
       const res = await fetch(`${API_BASE_URL}/api/logout`,{
@@ -68,23 +72,6 @@ console.log(posts);
     }
   }
 
-  const handleDeletepost = async (id: number | string) => {
-    
-    try{
-      const res = await fetch(`${API_BASE_URL}/api/deletepost/${id}`,{
-        method: 'DELETE',
-        credentials: 'include'
-      })
-      const data = await res.json();
-      alert(data.message);
-      if(res.ok){
-        setPosts(prev => prev.filter(post => post.id !== id));
-      }
-
-    } catch(err){
-      console.log(err);
-    }
-  }
   const handleMouseLeave = () => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
     timeoutRef.current = window.setTimeout(() => {
@@ -164,7 +151,7 @@ console.log(posts);
         </div>
          : 
          <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className='items-center text-xl border border-[#131921] hover:border-white cursor-pointer'>{user.username}</div>}
-        <div onClick={() => navigate('/cart')} className='flex items-center cursor-pointer border border-[#131921] hover:border-white'>
+        <div className='flex items-center cursor-pointer border border-[#131921] hover:border-white'>
         <div className='invert' style={{backgroundImage: `url(${cart})`, backgroundPosition: 'center',
     backgroundSize: '50px 50px', backgroundRepeat: 'no-repeat',  width: 50, height:50}}></div>
         <div className='p-1 mt-4'>Cart</div>
@@ -177,49 +164,35 @@ console.log(posts);
       <div onClick={() => {setClickSearch('Clothing'); handleSearch;}} className='border border-[#192d41] hover:border-white cursor-pointer p-2'>Clothings</div>
       <div onClick={() => {setClickSearch('Foods'); handleSearch;}} className='border border-[#192d41] hover:border-white cursor-pointer p-2'>Foods</div>
       </div>
-
-      <div className='bg-gray-200'>
-      <div className='absolute w-[1500px] pl-52 h-[700px]' style={{backgroundImage: `url(${greenbackground})`,backgroundSize: 'cover',backgroundRepeat: 'no-repeat' ,backgroundPosition: 'center'}}></div>
-      <div className='relative pt-[280px] mx-auto max-w-[1500px]'>
-      <div className='flex bg-white p-2'>
-      <div className=''>Additional customs documents are required for your destination.</div>
-      <div className=' pl-2 inline-block text-blue-700 cursor-pointer hover:underline hover:text-blue-900'>Please click here to learn more.</div>
-      </div>
-      <div>
-        {posts.map((post: any) => (
-          <div onClick={() => {navigate(`/postdetail/${post.id}`)}} className='bg-white cursor-pointer border-2 border-black mt-5' key={post.id}>
-            <div>{post.title}</div>
-            <div>{post.content}</div>
-            <img className='w-52' src={`${post.image_url}`} />
-            <button onClick={(e) => {e.stopPropagation(); handleDeletepost(post.id);}} className='bg-gray-400'>Delete</button>
+    
+        <div className='pt-5 bg-gray-200 w-full h-[800px]'>
+         <div className='flex ml-10 mr-10 bg-white p-10'>
+          <div className='relative bottom-1' style={{backgroundImage: `url(${coffe})`, backgroundPosition: 'center',
+        backgroundSize: '300px 300px',backgroundRepeat: 'no-repeat',  width: 300, height: 300}}></div>
+          <div>
+          <div className='text-2xl font-bold'>Your Sihyeonzon Cart is empty</div>
+          <div className='text-blue-700 cursor-pointer hover:underline'>Shop today's deals</div>
           </div>
-        ))}
-      </div>
-      <div onClick={() => {
-        if(!user){
-          alert("You need to login!");
-          navigate('/login');
-          return ;
-        } 
-        navigate('/createpost')}} 
-        className='cursor-pointer bg-yellow-300 p-2 max-w-20'>create post</div>
-    </div>
-    </div>
+          </div>
+          <div className='text-sm'>The price and availability of items at Sihyeonzon.online are subject to change. The Cart is a temporary place to store a list of your items and reflects each item's most recent price. Shopping CartLearn more
+Do you have a gift card or promotional code? We'll ask you to enter your claim code when it's time to pay.</div>
+        </div>
+
     <div className='bg-[#142535]'>
-    <div className='text-sm flex gap-20 w-[1065px] pt-10 pb-14 mx-auto bg-[#142535] text-[#DDD]'>
-     <div className='flex flex-col gap-1'>
-     <div className='text-lg font-bold text-white'>Get to Know Us</div>
+    <div className='flex gap-10 max-w-[1000px] pt-10 pb-14 mx-auto bg-[#142535] text-[#DDD]'>
+     <div>
+     <div className='text-white'>Get to Know Us</div>
      <div>Careers</div>
      <div>Blog</div>
-     <div>About Sihyeonzon</div>
+     <div>About Amazon</div>
      <div>Investor Relations</div>
      <div>Sihyeonzon Devices</div>
      <div>Sihyeonzon Science</div>
      </div>
-     <div className='flex flex-col gap-1'>
-     <div className='text-lg font-bold text-white'>Make Money with Us</div>
+     <div>
+     <div className='text-white'>Make Money with Us</div>
      <div>Sell products on Sihyeonzon</div>
-     <div>Sell on Sihyeonzon Business</div>
+     <div>Sell on Amazon Business</div>
      <div>Sell apps on Sihyeonzon</div>
      <div>Become an Affiliate</div>
      <div>Advertise Your Products</div>
@@ -227,15 +200,15 @@ console.log(posts);
      <div>Host an Sihyeonzon Hub</div>
      <div>›See More Make Money with Us</div>
      </div>
-     <div className='flex flex-col gap-1'>
-     <div className='text-lg font-bold text-white'>Sihyeonzon Payment Products</div>
+     <div>
+     <div className='text-white'>Sihyeonzon Payment Products</div>
      <div>Sihyeonzon Business Card</div>
      <div>Shop with Points</div>
      <div>Reload Your Balance</div>
      <div>Sihyeonzon Currency Converter</div>
      </div>
-     <div className='flex flex-col gap-1'>
-     <div className='text-lg font-bold text-white'>Let Us Help You</div>
+     <div>
+     <div className='text-white'>Let Us Help You</div>
      <div>Sihyeonzon and COVID-19</div>
      <div>Your Account</div>
      <div>Your Orders</div>
@@ -257,7 +230,7 @@ console.log(posts);
     </div>
     </div>
     <div className='bg-[#131921]'>
-    <div className="w-[1050px] mx-auto bg-[#131921] pt-10 pb-10 text-gray-400 text-xs flex flex-wrap justify-between">
+    <div className="max-w-[1050px] mx-auto bg-[#131921] pt-10 pb-10 text-gray-400 text-sm flex flex-wrap justify-between">
     <div className="flex flex-col gap-6 max-w-32">
     <div>
     <div className='text-white'>Sihyeonzon Music</div>
@@ -384,11 +357,10 @@ console.log(posts);
     </div>
     </div>
     </div>
-    <div className='w-full text-center text-sm text-white pb-8'>© 1996-2026, Sihyeonzon.online, Inc. or its affiliates</div>
     </div>
     </div>
     </div>
-  )
+   )
 }
 
-export default Main
+export default Cart
