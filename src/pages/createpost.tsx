@@ -49,7 +49,10 @@ function Createpost (){
     <select value={category} onChange={(e) => setCategory(e.target.value)}>
      <option value="Clothing">Clothing</option>
      <option value="Electronics">Electronics</option>
+     <option value="Gaming">Gaming</option>
      <option value="Food">Food</option>
+     <option value="Toys">Toys</option>
+     <option value="Watchs">Watchs</option>
     </select>
     <input value={title} onChange={(e) => setTitle(e.target.value)} className="p-2 border border-solid border-gray-400 rounded" placeholder="Title"></input>
     <textarea value={content} onChange={(e) => setContent(e.target.value)} className="p-2 border border-solid border-gray-400 rounded" placeholder="Content"></textarea>

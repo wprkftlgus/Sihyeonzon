@@ -6,6 +6,16 @@ import { useNavigate } from 'react-router-dom'
 import amazon from '../assets/amazon.png'
 import greenbackground from '../assets/greenbackground.jpg'
 import uk from '../assets/uk.png'
+import main_gamer from '../assets/main_gamer.jpg'
+import main_international from '../assets/main_international.jpg'
+import main_fashion1 from '../assets/main_fashion1.jpg'
+import main_fashion2 from '../assets/main_fashion2.jpg'
+import main_fashion3 from '../assets/main_fashion3.jpg'
+import main_fashion4 from '../assets/main_fashion4.jpg'
+import main_home1 from '../assets/main_home1.jpg'
+import main_home2 from '../assets/main_home2.jpg'
+import main_home3 from '../assets/main_home3.jpg'
+import main_home4 from '../assets/main_home4.jpg'
 
 interface Post {
   id: number;
@@ -164,6 +174,7 @@ console.log(posts);
         </div>
          : 
          <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className='items-center text-xl border border-[#131921] hover:border-white cursor-pointer'>{user.username}</div>}
+         
         <div onClick={() => navigate('/cart')} className='flex items-center cursor-pointer border border-[#131921] hover:border-white'>
         <div className='invert' style={{backgroundImage: `url(${cart})`, backgroundPosition: 'center',
     backgroundSize: '50px 50px', backgroundRepeat: 'no-repeat',  width: 50, height:50}}></div>
@@ -179,22 +190,203 @@ console.log(posts);
       </div>
 
       <div className='bg-gray-200'>
-      <div className='absolute w-[1500px] pl-52 h-[700px]' style={{backgroundImage: `url(${greenbackground})`,backgroundSize: 'cover',backgroundRepeat: 'no-repeat' ,backgroundPosition: 'center'}}></div>
+      <div className='absolute w-[1500px] pl-52 h-[700px] ml-48' style={{backgroundImage: `url(${greenbackground})`,backgroundSize: 'cover',backgroundRepeat: 'no-repeat' ,backgroundPosition: 'center'}}></div>
       <div className='relative pt-[280px] mx-auto max-w-[1500px]'>
-      <div className='flex bg-white p-2'>
+      <div className='flex bg-white p-2 justify-center'>
       <div className=''>Additional customs documents are required for your destination.</div>
       <div className=' pl-2 inline-block text-blue-700 cursor-pointer hover:underline hover:text-blue-900'>Please click here to learn more.</div>
       </div>
-      <div>
-        {posts.map((post: any) => (
-          <div onClick={() => {navigate(`/postdetail/${post.id}`)}} className='bg-white cursor-pointer border-2 border-black mt-5' key={post.id}>
-            <div>{post.title}</div>
-            <div>{post.content}</div>
-            <img className='w-52' src={`${post.image_url}`} />
-            <button onClick={(e) => {e.stopPropagation(); handleDeletepost(post.id);}} className='bg-gray-400'>Delete</button>
-          </div>
-        ))}
+      <div className='flex gap-5'>
+      <div className='bg-white mt-5 p-4 w-[355px]'>
+      <div className='text-xl font-bold mb-3'>Get your game on</div>
+      <div className='cursor-pointer'>
+      <div className='relative bottom-1 mb-2' style={{backgroundImage: `url(${main_gamer})`, backgroundPosition: 'center',
+        backgroundSize: '320px 320px',backgroundRepeat: 'no-repeat',  width: 320, height: 320}}></div>
+      <div className='text-blue-700 text-sm'>Shop gaming</div>
       </div>
+      </div>
+      <div className='bg-white mt-5 p-4 w-[355px]'>
+      <div className='text-xl font-bold mb-3'>Free international delivery</div>
+      <div className='cursor-pointer'>
+      <div className='relative bottom-1 mb-2' style={{backgroundImage: `url(${main_international})`, backgroundPosition: 'center',
+        backgroundSize: '320px 320px',backgroundRepeat: 'no-repeat',  width: 320, height: 320}}></div>
+      <div className='text-blue-700 text-sm'>Click here to check eligibility.</div>
+      </div>
+      </div>
+      <div className='bg-white mt-5 p-4 w-[355px]'>
+      <div className='text-xl font-bold mb-3'>Shop for your home essentials</div>
+      <div className=''>
+      <div className='grid grid-cols-2 grid-rows-2 mb-9 gap-3'>
+      <div className='cursor-pointer'>
+      <div className='' style={{backgroundImage: `url(${main_home1})`, backgroundPosition: 'center',
+        backgroundSize: '150px 120px',backgroundRepeat: 'no-repeat',  width: 150, height: 120}}></div>
+      <div className='text-sm'>Cleaning Tools</div>
+      </div>
+      <div className='cursor-pointer'>
+      <div className='' style={{backgroundImage: `url(${main_home2})`, backgroundPosition: 'center',
+        backgroundSize: '150px 120px',backgroundRepeat: 'no-repeat',  width: 150, height: 120}}></div>
+      <div className='text-sm'>Cleaning Tools</div>
+      </div>
+      <div className='cursor-pointer'>
+      <div className='' style={{backgroundImage: `url(${main_home3})`, backgroundPosition: 'center',
+        backgroundSize: '150px 120px',backgroundRepeat: 'no-repeat',  width: 150, height: 120}}></div>
+      <div className='text-sm'>Cleaning Tools</div>
+      </div>
+      <div className='cursor-pointer'>
+      <div className='' style={{backgroundImage: `url(${main_home4})`, backgroundPosition: 'center',
+        backgroundSize: '150px 120px',backgroundRepeat: 'no-repeat',  width: 150, height: 120}}></div>
+      <div className='text-sm'>Cleaning Tools</div>
+      </div>  
+      </div>
+      <div className='text-blue-700 text-sm'>Discover more in Home</div>
+      </div>
+      </div>
+      <div className='bg-white mt-5 p-4 w-[355px]'>
+      <div className='text-xl font-bold mb-3'>Shop for your home essentials</div>
+      <div className=''>
+      <div className='grid grid-cols-2 grid-rows-2 mb-9 gap-3'>
+      <div className='cursor-pointer'>
+      <div className='' style={{backgroundImage: `url(${main_fashion1})`, backgroundPosition: 'center',
+        backgroundSize: '150px 120px',backgroundRepeat: 'no-repeat',  width: 150, height: 120}}></div>
+      <div className='text-sm'>Cleaning Tools</div>
+      </div>
+      <div className='cursor-pointer'>
+      <div className='' style={{backgroundImage: `url(${main_fashion2})`, backgroundPosition: 'center',
+        backgroundSize: '150px 120px',backgroundRepeat: 'no-repeat',  width: 150, height: 120}}></div>
+      <div className='text-sm'>Cleaning Tools</div>
+      </div>
+      <div className='cursor-pointer'>
+      <div className='' style={{backgroundImage: `url(${main_fashion3})`, backgroundPosition: 'center',
+        backgroundSize: '150px 120px',backgroundRepeat: 'no-repeat',  width: 150, height: 120}}></div>
+      <div className='text-sm'>Cleaning Tools</div>
+      </div>
+      <div className='cursor-pointer'>
+      <div className='' style={{backgroundImage: `url(${main_fashion4})`, backgroundPosition: 'center',
+        backgroundSize: '150px 120px',backgroundRepeat: 'no-repeat',  width: 150, height: 120}}></div>
+      <div className='text-sm'>Cleaning Tools</div>
+      </div>  
+      </div>
+      <div className='text-blue-700 text-sm'>See all deals</div>
+      </div>
+      </div>
+      </div>
+      
+
+      <div className='flex gap-5'>
+      <div className='bg-white mt-5 p-4 w-[355px]'>
+      <div className='text-xl font-bold mb-3'>Toys for all ages</div>
+      <div className=''>
+      <div className='grid grid-cols-2 grid-rows-2 mb-9 gap-3'>
+      <div className='cursor-pointer'>
+      <div className='' style={{backgroundImage: `url(${main_fashion1})`, backgroundPosition: 'center',
+        backgroundSize: '150px 120px',backgroundRepeat: 'no-repeat',  width: 150, height: 120}}></div>
+      <div className='text-sm'>Cleaning Tools</div>
+      </div>
+      <div className='cursor-pointer'>
+      <div className='' style={{backgroundImage: `url(${main_fashion2})`, backgroundPosition: 'center',
+        backgroundSize: '150px 120px',backgroundRepeat: 'no-repeat',  width: 150, height: 120}}></div>
+      <div className='text-sm'>Cleaning Tools</div>
+      </div>
+      <div className='cursor-pointer'>
+      <div className='' style={{backgroundImage: `url(${main_fashion3})`, backgroundPosition: 'center',
+        backgroundSize: '150px 120px',backgroundRepeat: 'no-repeat',  width: 150, height: 120}}></div>
+      <div className='text-sm'>Cleaning Tools</div>
+      </div>
+      <div className='cursor-pointer'>
+      <div className='' style={{backgroundImage: `url(${main_fashion4})`, backgroundPosition: 'center',
+        backgroundSize: '150px 120px',backgroundRepeat: 'no-repeat',  width: 150, height: 120}}></div>
+      <div className='text-sm'>Cleaning Tools</div>
+      </div>  
+      </div>
+      <div className='text-blue-700 text-sm'>Have more fun with family</div>
+      </div>
+      </div>
+      <div className='bg-white mt-5 p-4 w-[355px]'>
+      <div className='text-xl font-bold mb-3'>Shop for your home essentials</div>
+      <div className=''>
+      <div className='grid grid-cols-2 grid-rows-2 mb-9 gap-3'>
+      <div className='cursor-pointer'>
+      <div className='' style={{backgroundImage: `url(${main_fashion1})`, backgroundPosition: 'center',
+        backgroundSize: '150px 120px',backgroundRepeat: 'no-repeat',  width: 150, height: 120}}></div>
+      <div className='text-sm'>Cleaning Tools</div>
+      </div>
+      <div className='cursor-pointer'>
+      <div className='' style={{backgroundImage: `url(${main_fashion2})`, backgroundPosition: 'center',
+        backgroundSize: '150px 120px',backgroundRepeat: 'no-repeat',  width: 150, height: 120}}></div>
+      <div className='text-sm'>Cleaning Tools</div>
+      </div>
+      <div className='cursor-pointer'>
+      <div className='' style={{backgroundImage: `url(${main_fashion3})`, backgroundPosition: 'center',
+        backgroundSize: '150px 120px',backgroundRepeat: 'no-repeat',  width: 150, height: 120}}></div>
+      <div className='text-sm'>Cleaning Tools</div>
+      </div>
+      <div className='cursor-pointer'>
+      <div className='' style={{backgroundImage: `url(${main_fashion4})`, backgroundPosition: 'center',
+        backgroundSize: '150px 120px',backgroundRepeat: 'no-repeat',  width: 150, height: 120}}></div>
+      <div className='text-sm'>Cleaning Tools</div>
+      </div>  
+      </div>
+      <div className='text-blue-700 text-sm'>See all deals</div>
+      </div>
+      </div>
+      <div className='bg-white mt-5 p-4 w-[355px]'>
+      <div className='text-xl font-bold mb-3'>Gaming merchandise</div>
+      <div className=''>
+      <div className='grid grid-cols-2 grid-rows-2 mb-9 gap-3'>
+      <div className='cursor-pointer'>
+      <div className='' style={{backgroundImage: `url(${main_fashion1})`, backgroundPosition: 'center',
+        backgroundSize: '150px 120px',backgroundRepeat: 'no-repeat',  width: 150, height: 120}}></div>
+      <div className='text-sm'>Cleaning Tools</div>
+      </div>
+      <div className='cursor-pointer'>
+      <div className='' style={{backgroundImage: `url(${main_fashion2})`, backgroundPosition: 'center',
+        backgroundSize: '150px 120px',backgroundRepeat: 'no-repeat',  width: 150, height: 120}}></div>
+      <div className='text-sm'>Cleaning Tools</div>
+      </div>
+      <div className='cursor-pointer'>
+      <div className='' style={{backgroundImage: `url(${main_fashion3})`, backgroundPosition: 'center',
+        backgroundSize: '150px 120px',backgroundRepeat: 'no-repeat',  width: 150, height: 120}}></div>
+      <div className='text-sm'>Cleaning Tools</div>
+      </div>
+      <div className='cursor-pointer'>
+      <div className='' style={{backgroundImage: `url(${main_fashion4})`, backgroundPosition: 'center',
+        backgroundSize: '150px 120px',backgroundRepeat: 'no-repeat',  width: 150, height: 120}}></div>
+      <div className='text-sm'>Cleaning Tools</div>
+      </div>  
+      </div>
+      <div className='text-blue-700 text-sm'>See all deals</div>
+      </div>
+      </div>
+      <div className='bg-white mt-5 p-4 w-[355px]'>
+      <div className='text-xl font-bold mb-3'>Level up your beauty routine</div>
+      <div className=''>
+      <div className='grid grid-cols-2 grid-rows-2 mb-9 gap-3'>
+      <div className='cursor-pointer'>
+      <div className='' style={{backgroundImage: `url(${main_fashion1})`, backgroundPosition: 'center',
+        backgroundSize: '150px 120px',backgroundRepeat: 'no-repeat',  width: 150, height: 120}}></div>
+      <div className='text-sm'>Cleaning Tools</div>
+      </div>
+      <div className='cursor-pointer'>
+      <div className='' style={{backgroundImage: `url(${main_fashion2})`, backgroundPosition: 'center',
+        backgroundSize: '150px 120px',backgroundRepeat: 'no-repeat',  width: 150, height: 120}}></div>
+      <div className='text-sm'>Cleaning Tools</div>
+      </div>
+      <div className='cursor-pointer'>
+      <div className='' style={{backgroundImage: `url(${main_fashion3})`, backgroundPosition: 'center',
+        backgroundSize: '150px 120px',backgroundRepeat: 'no-repeat',  width: 150, height: 120}}></div>
+      <div className='text-sm'>Cleaning Tools</div>
+      </div>
+      <div className='cursor-pointer'>
+      <div className='' style={{backgroundImage: `url(${main_fashion4})`, backgroundPosition: 'center',
+        backgroundSize: '150px 120px',backgroundRepeat: 'no-repeat',  width: 150, height: 120}}></div>
+      <div className='text-sm'>Cleaning Tools</div>
+      </div>  
+      </div>
+      <div className='text-blue-700 text-sm'>See all deals</div>
+      </div>
+      </div>
+      </div>
+
       <div onClick={() => {
         if(!user){
           alert("You need to login!");
@@ -205,7 +397,7 @@ console.log(posts);
         className='cursor-pointer bg-yellow-300 p-2 max-w-20'>create post</div>
     </div>
     </div>
-    <div className='bg-[#142535]'>
+    <div className='relative z-10 bg-[#142535]'>
     <div className='text-sm flex gap-20 w-[1065px] pt-10 pb-14 mx-auto bg-[#142535] text-[#DDD]'>
      <div className='flex flex-col gap-1'>
      <div className='text-lg font-bold text-white'>Get to Know Us</div>
