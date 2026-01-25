@@ -30,7 +30,6 @@ function Postdetail(){
   const [hiddenDetail2, setHiddenDetail2] =useState(false); 
   const timeoutRef = useRef<number | null>(null);
   const [search, setSearch] = useState<string>('');
-  const [clickSearch, setClickSearch] = useState<string>('');
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -119,9 +118,13 @@ function Postdetail(){
   const handleSearch = () => {
       setSearch(search);
       if(search === '') return window.location.reload();
-      navigate(`/searchresult/${search}`)
-      if(clickSearch == 'Electronics') navigate(`/searchresult/Electronics`);
+      navigate(`/searchresult/${search}`);
   }
+
+  const handleClickSearch = (value: string) => {
+      navigate(`/searchresult/${value}`)
+  }
+
   if(!post[0]) return(
     <Loading />
   )
@@ -194,9 +197,9 @@ function Postdetail(){
       </div>
       
       <div className='bg-[#192d41] text-white flex gap-4 font-bold pl-8'>
-      <div onClick={() => {setClickSearch('Electronincs'); handleSearch();}} className='border border-[#192d41] hover:border-white cursor-pointer p-2'>Electronincs</div>
-      <div onClick={() => {setClickSearch('Clothing'); handleSearch;}} className='border border-[#192d41] hover:border-white cursor-pointer p-2'>Clothings</div>
-      <div onClick={() => {setClickSearch('Foods'); handleSearch;}} className='border border-[#192d41] hover:border-white cursor-pointer p-2'>Foods</div>
+      <div onClick={() => {handleClickSearch('Electronics');}} className='border border-[#192d41] hover:border-white cursor-pointer p-2'>Electronincs</div>
+      <div onClick={() => {handleClickSearch('Clothing');}} className='border border-[#192d41] hover:border-white cursor-pointer p-2'>Clothings</div>
+      <div onClick={() => {handleClickSearch('Food');}} className='border border-[#192d41] hover:border-white cursor-pointer p-2'>Foods</div>
       </div>
 
     <div className='bg-white mt-10 mb-80 ml-20 mr-5 '>
