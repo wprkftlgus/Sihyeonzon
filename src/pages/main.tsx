@@ -33,13 +33,13 @@ import main_makeup2 from '../assets/main_makeup2.jpg'
 import main_makeup3 from '../assets/main_makeup3.jpg'
 import main_makeup4 from '../assets/main_makeup4.jpg'
 
-interface Post {
-  id: number;
-  user_id: number;
-  title: string;
-  content: string;
-  image_url: string;
-}
+// interface Post {
+//   id: number;
+//   user_id: number;
+//   title: string;
+//   content: string;
+//   image_url: string;
+// }
 
 function Main() {
   const navigate = useNavigate();
