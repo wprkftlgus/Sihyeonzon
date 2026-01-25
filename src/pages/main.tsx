@@ -380,7 +380,7 @@ function Main() {
       <div className='bg-white mt-5 p-4 w-[355px]'>
       <div className='text-xl font-bold mb-3'>Level up your beauty routine</div>
       <div className=''>
-      <div className='grid grid-cols-2 grid-rows-2 mb-9 gap-3'>
+      <div onClick={() => {handleClickSearch('Makeup');}} className='grid grid-cols-2 grid-rows-2 mb-9 gap-3'>
       <div className='cursor-pointer'>
       <div className='' style={{backgroundImage: `url(${main_makeup1})`, backgroundPosition: 'center',
         backgroundSize: '150px 120px',backgroundRepeat: 'no-repeat',  width: 150, height: 120}}></div>
@@ -402,7 +402,7 @@ function Main() {
       <div className='text-sm'>Cleaning Tools</div>
       </div>  
       </div>
-      <div className='text-blue-700 text-sm'>See more</div>
+      <div onClick={() => {handleClickSearch('Makeup');}} className='cursor-pointer text-blue-700 text-sm'>See more</div>
       </div>
       </div>
       </div>
