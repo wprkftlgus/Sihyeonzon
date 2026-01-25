@@ -44,7 +44,7 @@ interface Post {
 function Main() {
   const navigate = useNavigate();
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-  const [posts, setPosts] = useState<Post[]>([]);
+  // const [posts, setPosts] = useState<Post[]>([]);
   const [user, setUser] = useState<{ username: string } | null>(null);
   const [hidden, setHidden] =useState(false); 
   const timeoutRef = useRef<number | null>(null);
@@ -66,18 +66,18 @@ function Main() {
     fetchUser();
   },[])
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try{
-        const res = await fetch(`${API_BASE_URL}/api/getposts`)
-        const data = await res.json();
-        setPosts(data);
-      } catch(err){
-        console.log(err);
-      }
-    } 
-    fetchPosts();
-  },[])
+  // useEffect(() => {
+  //   const fetchPosts = async () => {
+  //     try{
+  //       const res = await fetch(`${API_BASE_URL}/api/getposts`)
+  //       const data = await res.json();
+  //       setPosts(data);
+  //     } catch(err){
+  //       console.log(err);
+  //     }
+  //   } 
+  //   fetchPosts();
+  // },[])
 
   const handleLogout = async () => {
     try{
