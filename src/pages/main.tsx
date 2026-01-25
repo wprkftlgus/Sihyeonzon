@@ -78,23 +78,24 @@ console.log(posts);
     }
   }
 
-  const handleDeletepost = async (id: number | string) => {
+  // const handleDeletepost = async (id: number | string) => {
     
-    try{
-      const res = await fetch(`${API_BASE_URL}/api/deletepost/${id}`,{
-        method: 'DELETE',
-        credentials: 'include'
-      })
-      const data = await res.json();
-      alert(data.message);
-      if(res.ok){
-        setPosts(prev => prev.filter(post => post.id !== id));
-      }
+  //   try{
+  //     const res = await fetch(`${API_BASE_URL}/api/deletepost/${id}`,{
+  //       method: 'DELETE',
+  //       credentials: 'include'
+  //     })
+  //     const data = await res.json();
+  //     alert(data.message);
+  //     if(res.ok){
+  //       setPosts(prev => prev.filter(post => post.id !== id));
+  //     }
 
-    } catch(err){
-      console.log(err);
-    }
-  }
+  //   } catch(err){
+  //     console.log(err);
+  //   }
+  // }
+  
   const handleMouseLeave = () => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
     timeoutRef.current = window.setTimeout(() => {
