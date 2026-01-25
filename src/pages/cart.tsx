@@ -27,7 +27,6 @@ function Cart() {
   const [search, setSearch] = useState<string>('');
   // const { id } = useParams<{ id: string }>();
   // const [posts, setPosts] = useState<Post[] | null>([]);
-  const [clickSearch, setClickSearch] = useState<string>('');
 
     // useEffect(() => {
     // const fetchPost = async() => {
@@ -89,7 +88,10 @@ function Cart() {
       setSearch(search);
       if(search === '') return window.location.reload();
       navigate(`/searchresult/${search}`)
-      if(clickSearch == 'Electronics') navigate(`/searchresult/Electronics`);
+  }
+
+  const handleClickSearch = (value: string) => {
+      navigate(`/searchresult/${value}`)
   }
 
   return (
@@ -161,9 +163,9 @@ function Cart() {
       </div>
       
       <div className='bg-[#192d41] text-white flex gap-4 font-bold pl-8'>
-      <div onClick={() => {setClickSearch('Electronincs'); handleSearch();}} className='border border-[#192d41] hover:border-white cursor-pointer p-2'>Electronincs</div>
-      <div onClick={() => {setClickSearch('Clothing'); handleSearch;}} className='border border-[#192d41] hover:border-white cursor-pointer p-2'>Clothings</div>
-      <div onClick={() => {setClickSearch('Foods'); handleSearch;}} className='border border-[#192d41] hover:border-white cursor-pointer p-2'>Foods</div>
+      <div onClick={() => {handleClickSearch('Electronics');}} className='border border-[#192d41] hover:border-white cursor-pointer p-2'>Electronincs</div>
+      <div onClick={() => {handleClickSearch('Clothing');}} className='border border-[#192d41] hover:border-white cursor-pointer p-2'>Clothings</div>
+      <div onClick={() => {handleClickSearch('Food');}} className='border border-[#192d41] hover:border-white cursor-pointer p-2'>Foods</div>
       </div>
     
         <div className='pt-5 bg-gray-200 w-full h-[800px]'>
