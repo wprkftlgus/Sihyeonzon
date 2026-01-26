@@ -311,7 +311,12 @@ function Postdetail(){
         </div>}
      </div>
       <div className="text-green-700 text-2xl">In Stock</div>
-      <div onClick={handleCartAdd} className="w-full p-2 mt-2 mb-2 text-center bg-yellow-300 rounded-2xl cursor-pointer hover:bg-yellow-400">Add to cart</div>
+      <div onClick={() => {
+        if(!user){
+          alert('You need to Login!');
+          return navigate('/login');
+        }
+        handleCartAdd();}} className="w-full p-2 mt-2 mb-2 text-center bg-yellow-300 rounded-2xl cursor-pointer hover:bg-yellow-400">Add to cart</div>
       <div className="w-full p-2 mt-2 mb-2 text-center bg-orange-400 rounded-2xl cursor-pointer hover:bg-orange-500">Buy Now</div>
       <div className="flex flex-col">
       <div className="text-xs">
