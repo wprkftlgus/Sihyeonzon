@@ -66,15 +66,15 @@ function Main() {
     fetchUser();
   },[])
  
-  useEffect(() => {
-    const fetchCart = async() => {
-      try{
+  // useEffect(() => {
+  //   const fetchCart = async() => {
+  //     try{
 
-      }catch(err){
+  //     }catch(err){
 
-      }
-    }
-  },[])
+  //     }
+  //   }
+  // },[])
 
   // useEffect(() => {
   //   const fetchPosts = async () => {
