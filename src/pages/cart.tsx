@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 import '../App.css'
 import searchimg from '../assets/cart.png'
-import cart from '../assets/search.png'
+import cartimg from '../assets/search.png'
 import { useNavigate } from 'react-router-dom'
 // import { useParams } from 'react-router-dom'
 import amazon from '../assets/amazon.png'
 import uk from '../assets/uk.png'
 import coffe from '../assets/coffe.svg'
+import Loading from '../pages/loading'
 
 
 // interface Post {
@@ -18,6 +19,7 @@ import coffe from '../assets/coffe.svg'
 //   image_url: string;
 // }
 interface Cart {
+  post_id: number;
   image_url: string;
   title: string;
   price: string;
@@ -32,6 +34,7 @@ function Cart() {
   const timeoutRef = useRef<number | null>(null);
   const [search, setSearch] = useState<string>('');
   const [cart, setCart] = useState< Cart[]>([]);
+  const [loading, setLoading] = useState(false);
   // const { id } = useParams<{ id: string }>();
   // const [posts, setPosts] = useState<Post[] | null>([]);
 
@@ -68,11 +71,13 @@ function Cart() {
 
   useEffect(() => {
     const fetchCart = async () => {
+      setLoading(false);
       const res = await fetch (`${API_BASE_URL}/api/getcart`,{
         credentials: 'include'
       });
       const data = await res.json();
       setCart(data);
+      setLoading(true);
     }
     fetchCart();
   },[])
@@ -110,6 +115,18 @@ function Cart() {
 
   const handleClickSearch = (value: string) => {
       navigate(`/searchresult/${value}`)
+  }
+
+  const subtotal = cart.reduce((acc, item) => {
+    const price = Number(item.price);
+    const quantity = Number(item.quantity);
+    return acc + price * quantity;
+  },0)
+ 
+  if(loading == false){
+    return(
+      <div><Loading /></div>
+    )
   }
 
   return (
@@ -173,7 +190,7 @@ function Cart() {
          : 
          <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className='items-center text-xl border border-[#131921] hover:border-white cursor-pointer'>{user.username}</div>}
         <div className='flex items-center cursor-pointer border border-[#131921] hover:border-white'>
-        <div className='invert' style={{backgroundImage: `url(${cart})`, backgroundPosition: 'center',
+        <div className='invert' style={{backgroundImage: `url(${cartimg})`, backgroundPosition: 'center',
     backgroundSize: '50px 50px', backgroundRepeat: 'no-repeat',  width: 50, height:50}}></div>
         <div className='p-1 mt-4'>Cart</div>
         
@@ -186,15 +203,44 @@ function Cart() {
       <div onClick={() => {handleClickSearch('Food');}} className='border border-[#192d41] hover:border-white cursor-pointer p-2'>Foods</div>
       </div>
      {cart.length > 0 ?
-     <div>
-      {cart.map((item) => (
-        <div>
-        <img src={item.image_url}></img>
-        <div>{item.title}</div>
-        <div>{item.price}</div>
+     <div className='bg-gray-200 '>
+     <div className='pt-3 pl-20 pb-32 max-w-[1400px]'>
+      <div className='bg-white'>
+      <div className='pt-5 ml-5 mr-5 border-b border-gray-300'>
+      <div className='text-3xl mb-5 font-bold'>Shopping Cart</div>
+      <div className='text-right'>Price</div>
+      </div>
+      {cart.map((item, id) => (
+        <div key={id} className=' justify-between flex p-5 ml-5 border-b border-gray-300 '>
+        <div className='flex'>
+        <div className='relative w-52'>
+        <img onClick={() => navigate(`/postdetail/${item.post_id}`)} className='inset-0 cursor-pointer' style={{backgroundSize: '200 200', backgroundRepeat: 'no-repeat', backgroundPosition: 'center',width: 200, height: 200}} src={item.image_url}></img>
+        </div>
+        <div className='w-[1000px]'>
+        <div onClick={() => navigate(`/postdetail/${item.post_id}`)} className='cursor-pointer font-bold'>{item.title}</div>
+        <div className='text-green-700'>In Stock</div>
+        <div className='flex text-gray-600 gap-1'>
+        <div className='font-bold'>FREE Shipping</div>
+        <div>to United of Kingdom</div>
+        </div>
         <div>{item.quantity}</div>
         </div>
+        </div>
+        <div className='font-bold text-xl'>£{item.price}</div>
+        </div>
       ))}
+     <div className='justify-end flex gap-2 text-xl items-center mr-4 pb-10'>
+     <div className='flex items-center'> 
+     <div className='p-2'>Subtotal</div>
+     <div className=''>({cart.length} items):</div>
+     </div>
+     <div className='font-bold'>£{subtotal}</div>
+     </div>
+     </div>
+     <div className='bg-white p-7 mt-5'></div>
+     <div className='mt-5 text-sm'>The price and availability of items at Sihyeonzon.online are subject to change. The Cart is a temporary place to store a list of your items and reflects each item's most recent price. Shopping CartLearn more
+Do you have a gift card or promotional code? We'll ask you to enter your claim code when it's time to pay.</div>
+     </div> 
      </div> 
      : <div className='pt-5 bg-gray-200 w-full h-[800px]'>
          <div className='flex ml-10 mr-10 bg-white p-10'>
