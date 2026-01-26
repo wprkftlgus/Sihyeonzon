@@ -205,7 +205,11 @@ function Postdetail(){
         <div>Account & Lists</div>
         </div>
          : 
-         <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className='items-center text-xl border border-[#131921] hover:border-white cursor-pointer'>{user.username}</div>}
+         <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className='border border-[#131921] hover:border-white cursor-pointer'>
+         <div>Welcome back!</div>
+         <div className='text-center items-center text-xl'>{user.username}</div>
+         </div>
+         }
         <div onClick={() => navigate('/cart')} className='flex items-center cursor-pointer border border-[#131921] hover:border-white'>
         <div className='invert' style={{backgroundImage: `url(${cart})`, backgroundPosition: 'center',
     backgroundSize: '50px 50px', backgroundRepeat: 'no-repeat',  width: 50, height:50}}></div>
