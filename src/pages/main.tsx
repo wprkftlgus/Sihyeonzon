@@ -65,6 +65,16 @@ function Main() {
     }}
     fetchUser();
   },[])
+ 
+  useEffect(() => {
+    const fetchCart = async() => {
+      try{
+
+      }catch(err){
+
+      }
+    }
+  },[])
 
   // useEffect(() => {
   //   const fetchPosts = async () => {
@@ -198,7 +208,11 @@ function Main() {
          </div>
          }
          
-        <div onClick={() => navigate('/cart')} className='flex items-center cursor-pointer border border-[#131921] hover:border-white'>
+        <div onClick={() => {
+          if(!user){
+          alert('You need to login!'); 
+          return navigate('/login');
+          } navigate('/cart')}} className='flex items-center cursor-pointer border border-[#131921] hover:border-white'>
         <div className='invert' style={{backgroundImage: `url(${cart})`, backgroundPosition: 'center',
     backgroundSize: '50px 50px', backgroundRepeat: 'no-repeat',  width: 50, height:50}}></div>
         <div className='p-1 mt-4'>Cart</div>
