@@ -7,6 +7,7 @@ import loginRouter from './routes/login.js'
 import RegisterRouter from './routes/register.js'
 import db from "./db.js"
 import cookieParser from 'cookie-parser';
+import cartRouter from './routes/cart.js'
 
 dotenv.config() 
 const app = express();
@@ -19,6 +20,7 @@ app.use(cors({
     'https://subtle-hummingbird-788d7e.netlify.app',
     'http://localhost:5173',
     'http://localhost:4173',
+    'http://localhost:3000',
     'https://sihyeonzon.online', 
     'sihyeonzon.online'
   ],
@@ -32,6 +34,7 @@ app.use('/api' ,postRouter);
 app.use('/api' ,meRouter);
 app.use('/api' ,loginRouter);
 app.use('/api' ,RegisterRouter);
+app.use('/api', cartRouter);
 
 
 app.get('/', async (req,res) => {

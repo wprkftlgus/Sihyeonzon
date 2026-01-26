@@ -30,7 +30,7 @@ function Postdetail(){
   const [hiddenDetail2, setHiddenDetail2] =useState(false); 
   const timeoutRef = useRef<number | null>(null);
   const [search, setSearch] = useState<string>('');
-
+  
   useEffect(() => {
     const fetchUser = async () => {
       try{
@@ -63,6 +63,24 @@ function Postdetail(){
     }
     fetchpost();
   },[])
+  
+  const handleCartAdd = async () => {
+    const post_id = id ? Number(id) : null;
+    try {
+      const res = await fetch (`${API_BASE_URL}/api/createcart`,{
+        method: 'POST',
+        headers : {"Content-Type" : "application/json"},
+        body : JSON.stringify({post_id}),
+        credentials : 'include'
+      })
+      if(res.ok){
+      const data = await res.json();
+      alert(data.message);
+      }
+    } catch(err){
+      console.log(err);
+    }
+  }
 
   const handleLogout = async () => {
     try{
@@ -285,7 +303,7 @@ function Postdetail(){
         </div>}
      </div>
       <div className="text-green-700 text-2xl">In Stock</div>
-      <div className="w-full p-2 mt-2 mb-2 text-center bg-yellow-300 rounded-2xl cursor-pointer hover:bg-yellow-400">Add to cart</div>
+      <div onClick={handleCartAdd} className="w-full p-2 mt-2 mb-2 text-center bg-yellow-300 rounded-2xl cursor-pointer hover:bg-yellow-400">Add to cart</div>
       <div className="w-full p-2 mt-2 mb-2 text-center bg-orange-400 rounded-2xl cursor-pointer hover:bg-orange-500">Buy Now</div>
       <div className="flex flex-col">
       <div className="text-xs">

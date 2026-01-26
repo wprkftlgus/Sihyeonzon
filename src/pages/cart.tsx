@@ -17,6 +17,12 @@ import coffe from '../assets/coffe.svg'
 //   content: string;
 //   image_url: string;
 // }
+interface Cart {
+  image_url: string;
+  title: string;
+  price: string;
+  quantity: string;
+}
 
 function Cart() {
   const navigate = useNavigate();
@@ -25,6 +31,7 @@ function Cart() {
   const [hidden, setHidden] =useState(false); 
   const timeoutRef = useRef<number | null>(null);
   const [search, setSearch] = useState<string>('');
+  const [cart, setCart] = useState< Cart[]>([]);
   // const { id } = useParams<{ id: string }>();
   // const [posts, setPosts] = useState<Post[] | null>([]);
 
@@ -57,6 +64,17 @@ function Cart() {
       console.error(err);
     }}
     fetchUser();
+  },[])
+
+  useEffect(() => {
+    const fetchCart = async () => {
+      const res = await fetch (`${API_BASE_URL}/api/getcart`,{
+        credentials: 'include'
+      });
+      const data = await res.json();
+      setCart(data);
+    }
+    fetchCart();
   },[])
 
   const handleLogout = async () => {
@@ -167,8 +185,18 @@ function Cart() {
       <div onClick={() => {handleClickSearch('Clothing');}} className='border border-[#192d41] hover:border-white cursor-pointer p-2'>Clothings</div>
       <div onClick={() => {handleClickSearch('Food');}} className='border border-[#192d41] hover:border-white cursor-pointer p-2'>Foods</div>
       </div>
-    
-        <div className='pt-5 bg-gray-200 w-full h-[800px]'>
+     {cart.length > 0 ?
+     <div>
+      {cart.map((item) => (
+        <div>
+        <img src={item.image_url}></img>
+        <div>{item.title}</div>
+        <div>{item.price}</div>
+        <div>{item.quantity}</div>
+        </div>
+      ))}
+     </div> 
+     : <div className='pt-5 bg-gray-200 w-full h-[800px]'>
          <div className='flex ml-10 mr-10 bg-white p-10'>
           <div className='relative bottom-1' style={{backgroundImage: `url(${coffe})`, backgroundPosition: 'center',
         backgroundSize: '300px 300px',backgroundRepeat: 'no-repeat',  width: 300, height: 300}}></div>
@@ -179,7 +207,8 @@ function Cart() {
           </div>
           <div className='text-sm'>The price and availability of items at Sihyeonzon.online are subject to change. The Cart is a temporary place to store a list of your items and reflects each item's most recent price. Shopping CartLearn more
 Do you have a gift card or promotional code? We'll ask you to enter your claim code when it's time to pay.</div>
-        </div>
+        </div>}
+      
 
     <div className='bg-[#142535]'>
     <div className='flex gap-10 max-w-[1000px] pt-10 pb-14 mx-auto bg-[#142535] text-[#DDD]'>
