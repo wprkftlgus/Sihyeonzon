@@ -24,7 +24,7 @@ app.use(cors({
     'https://sihyeonzon.online', 
     'sihyeonzon.online'
   ],
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
   credentials: true
 }));
 

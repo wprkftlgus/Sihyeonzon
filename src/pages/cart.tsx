@@ -23,7 +23,7 @@ interface Cart {
   image_url: string;
   title: string;
   price: string;
-  quantity: string;
+  quantity: number;
 }
 
 function Cart() {
@@ -35,6 +35,8 @@ function Cart() {
   const [search, setSearch] = useState<string>('');
   const [cart, setCart] = useState< Cart[]>([]);
   const [loading, setLoading] = useState(false);
+  const [updatingId, setUpdatingId] = useState<number | null>(null);
+
   // const { id } = useParams<{ id: string }>();
   // const [posts, setPosts] = useState<Post[] | null>([]);
 
@@ -115,6 +117,64 @@ function Cart() {
 
   const handleClickSearch = (value: string) => {
       navigate(`/searchresult/${value}`)
+  }
+  
+  const handleDecreaseItem = async (post_id: number) => {
+    if(updatingId !== null) return ;
+
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/decreaseitem`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({post_id}),
+        credentials: 'include'
+      })
+      if(res.ok){
+        setUpdatingId(post_id);
+      }
+      setCart(prev => prev.map(item => item.post_id === post_id ? {...item, quantity: item.quantity - 1} : item))
+    } catch(err){
+      console.log(err);
+    } finally{
+      setUpdatingId(null);
+    }
+  }
+
+  const handleAddItem = async (post_id: number) => {
+    if(updatingId !== null) return ;
+    
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/additem`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({post_id}),
+        credentials: 'include'
+      })
+      if(res.ok){
+        setUpdatingId(post_id);
+      }
+      setCart(prev => prev.map(item => item.post_id === post_id ? {...item, quantity: item.quantity + 1} : item))
+    } catch(err){
+      console.log(err);
+    } finally{
+      setUpdatingId(null);
+    }
+  }
+
+  const handleDeleteItem = async (post_id: number) => {
+    try{
+      const res = await fetch(`${API_BASE_URL}/api/removeitem`,{
+        method: 'DELETE',
+        headers : { "Content-Type" : "application/json"},
+        body: JSON.stringify({ post_id }),
+        credentials: 'include'
+      })
+      const data = await res.json();
+      setCart(prev => prev.filter(item => item.post_id !== post_id));
+      alert(data.message);
+    } catch(err){
+      console.log(err);
+    } 
   }
 
   const subtotal = cart.reduce((acc, item) => {
@@ -214,8 +274,8 @@ function Cart() {
       <div className='text-3xl mb-5 font-bold'>Shopping Cart</div>
       <div className='text-right'>Price</div>
       </div>
-      {cart.map((item, id) => (
-        <div key={id} className=' justify-between flex p-5 ml-5 border-b border-gray-300 '>
+      {cart.map((item) => (
+        <div key={item.post_id} className=' justify-between flex p-5 ml-5 border-b border-gray-300 '>
         <div className='flex'>
         <div className='relative w-52'>
         <img onClick={() => navigate(`/postdetail/${item.post_id}`)} className='inset-0 cursor-pointer' style={{backgroundSize: '200 200', backgroundRepeat: 'no-repeat', backgroundPosition: 'center',width: 200, height: 200}} src={item.image_url}></img>
@@ -227,7 +287,15 @@ function Cart() {
         <div className='font-bold'>FREE Shipping</div>
         <div>to United of Kingdom</div>
         </div>
+        <div className='flex gap-3 items-center'>
+        <div className='font-bold flex gap-3 items-center p-1 border-2 border-yellow-400 rounded-xl'>
+        <button onClick={() => handleDecreaseItem(item.post_id)} disabled={updatingId !== null } className='cursor-pointer text-xl'>-</button>
         <div>{item.quantity}</div>
+        <button onClick={() => handleAddItem(item.post_id)} disabled={updatingId !== null } className='cursor-pointer text-xl'>+</button>
+        </div>
+        <div>|</div>
+        <div onClick={() => handleDeleteItem(item.post_id)} className='text-blue-600 cursor-pointer'>Delete</div>
+        </div>
         </div>
         </div>
         <div className='font-bold text-xl'>£{item.price}</div>

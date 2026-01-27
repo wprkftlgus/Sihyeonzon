@@ -36,4 +36,41 @@ cartRouter.get('/getcart', authMiddleware, async (req, res) => {
     }
 })
 
+cartRouter.patch('/additem', authMiddleware, async (req, res) => {
+    const user_id = req.user.id;
+    const {post_id} = req.body;
+    try{
+        await db.execute("UPDATE cart SET quantity = quantity + 1 WHERE user_id = ? AND post_id = ?", [user_id, post_id])
+        res.json({ message: 'item increased'});
+    } catch(err){
+        console.log(err);
+        res.status(500).json({ message: 'Server Error'});
+    }
+})
+
+cartRouter.patch('/decreaseitem', authMiddleware, async (req, res) => {
+    const user_id = req.user.id;
+    const {post_id} = req.body;
+    try{
+        await db.execute("UPDATE cart SET quantity = quantity - 1 WHERE user_id = ? AND post_id = ?", [user_id, post_id])
+        res.json({ message: 'item decreased'});
+    } catch(err){
+        console.log(err);
+        res.status(500).json({ message: 'Server Error'});
+    }
+})
+
+cartRouter.delete('/removeitem', authMiddleware, async (req, res) => {
+    const user_id = req.user.id;
+    const {post_id} = req.body;
+
+    try{
+        await db.execute("DELETE FROM cart WHERE user_id = ? AND post_id = ?", [user_id, post_id])
+        res.json({ message: 'Item removed from your cart'});
+    } catch(err){
+        console.log(err);
+        res.status(500).json({ message: 'Server Error'});
+    }
+})
+
 export default cartRouter
