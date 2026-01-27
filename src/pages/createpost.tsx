@@ -54,6 +54,7 @@ function Createpost (){
      <option value="Toys">Toys</option>
      <option value="Watchs">Watchs</option>
      <option value="Makeup">Makeup</option>
+     <option value="Home">Home</option>
     </select>
     <input value={title} onChange={(e) => setTitle(e.target.value)} className="p-2 border border-solid border-gray-400 rounded" placeholder="Title"></input>
     <textarea value={content} onChange={(e) => setContent(e.target.value)} className="p-2 border border-solid border-gray-400 rounded" placeholder="Content"></textarea>

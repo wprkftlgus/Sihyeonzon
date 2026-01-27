@@ -254,7 +254,7 @@ function Main() {
       <div className='bg-white mt-5 p-4 w-[355px]'>
       <div className='text-xl font-bold mb-3'>Shop for your home essentials</div>
       <div className=''>
-      <div className='grid grid-cols-2 grid-rows-2 mb-9 gap-3'>
+      <div onClick={() => {handleClickSearch('Home');}} className='grid grid-cols-2 grid-rows-2 mb-9 gap-3'>
       <div className='cursor-pointer'>
       <div className='' style={{backgroundImage: `url(${main_home1})`, backgroundPosition: 'center',
         backgroundSize: '150px 120px',backgroundRepeat: 'no-repeat',  width: 150, height: 120}}></div>
