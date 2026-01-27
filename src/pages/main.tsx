@@ -263,17 +263,17 @@ function Main() {
       <div className='cursor-pointer'>
       <div className='' style={{backgroundImage: `url(${main_home2})`, backgroundPosition: 'center',
         backgroundSize: '150px 120px',backgroundRepeat: 'no-repeat',  width: 150, height: 120}}></div>
-      <div className='text-sm'>Cleaning Tools</div>
+      <div className='text-sm'>Home Storage</div>
       </div>
       <div className='cursor-pointer'>
       <div className='' style={{backgroundImage: `url(${main_home3})`, backgroundPosition: 'center',
         backgroundSize: '150px 120px',backgroundRepeat: 'no-repeat',  width: 150, height: 120}}></div>
-      <div className='text-sm'>Cleaning Tools</div>
+      <div className='text-sm'>Home Decor</div>
       </div>
       <div className='cursor-pointer'>
       <div className='' style={{backgroundImage: `url(${main_home4})`, backgroundPosition: 'center',
         backgroundSize: '150px 120px',backgroundRepeat: 'no-repeat',  width: 150, height: 120}}></div>
-      <div className='text-sm'>Cleaning Tools</div>
+      <div className='text-sm'>Bedding</div>
       </div>  
       </div>
       <div className='text-blue-700 text-sm'>Discover more in Home</div>
@@ -286,22 +286,22 @@ function Main() {
       <div className='cursor-pointer'>
       <div className='' style={{backgroundImage: `url(${main_fashion1})`, backgroundPosition: 'center',
         backgroundSize: '150px 120px',backgroundRepeat: 'no-repeat',  width: 150, height: 120}}></div>
-      <div className='text-sm'>Cleaning Tools</div>
+      <div className='text-sm'>Jeans under £25</div>
       </div>
       <div className='cursor-pointer'>
       <div className='' style={{backgroundImage: `url(${main_fashion2})`, backgroundPosition: 'center',
         backgroundSize: '150px 120px',backgroundRepeat: 'no-repeat',  width: 150, height: 120}}></div>
-      <div className='text-sm'>Cleaning Tools</div>
+      <div className='text-sm'>Tops under £13</div>
       </div>
       <div className='cursor-pointer'>
       <div className='' style={{backgroundImage: `url(${main_fashion3})`, backgroundPosition: 'center',
         backgroundSize: '150px 120px',backgroundRepeat: 'no-repeat',  width: 150, height: 120}}></div>
-      <div className='text-sm'>Cleaning Tools</div>
+      <div className='text-sm'>Dress under £15</div>
       </div>
       <div className='cursor-pointer'>
       <div className='' style={{backgroundImage: `url(${main_fashion4})`, backgroundPosition: 'center',
         backgroundSize: '150px 120px',backgroundRepeat: 'no-repeat',  width: 150, height: 120}}></div>
-      <div className='text-sm'>Cleaning Tools</div>
+      <div className='text-sm'>Shoes under £25</div>
       </div>  
       </div>
       <div onClick={() => {handleClickSearch('Clothing');}} className='cursor-pointer text-blue-700 text-sm'>See all deals</div>
@@ -318,50 +318,50 @@ function Main() {
       <div className='cursor-pointer'>
       <div className='' style={{backgroundImage: `url(${main_toy1})`, backgroundPosition: 'center',
         backgroundSize: '150px 120px',backgroundRepeat: 'no-repeat',  width: 150, height: 120}}></div>
-      <div className='text-sm'>Cleaning Tools</div>
+      <div className='text-sm'>Ride on's</div>
       </div>
       <div className='cursor-pointer'>
       <div className='' style={{backgroundImage: `url(${main_toy2})`, backgroundPosition: 'center',
         backgroundSize: '150px 120px',backgroundRepeat: 'no-repeat',  width: 150, height: 120}}></div>
-      <div className='text-sm'>Cleaning Tools</div>
+      <div className='text-sm'>Building & construction</div>
       </div>
       <div className='cursor-pointer'>
       <div className='' style={{backgroundImage: `url(${main_toy3})`, backgroundPosition: 'center',
         backgroundSize: '150px 120px',backgroundRepeat: 'no-repeat',  width: 150, height: 120}}></div>
-      <div className='text-sm'>Cleaning Tools</div>
+      <div className='text-sm'>Dolls & Doll Houses</div>
       </div>
       <div className='cursor-pointer'>
       <div className='' style={{backgroundImage: `url(${main_toy4})`, backgroundPosition: 'center',
         backgroundSize: '150px 120px',backgroundRepeat: 'no-repeat',  width: 150, height: 120}}></div>
-      <div className='text-sm'>Cleaning Tools</div>
+      <div className='text-sm'>Swimming pools</div>
       </div>  
       </div>
       <div onClick={() => {handleClickSearch('Toys');}} className='cursor-pointer text-blue-700 text-sm'>See all</div>
       </div>
       </div>
       <div className='bg-white mt-5 p-4 w-[355px]'>
-      <div className='text-xl font-bold mb-3'>Shop for your home essentials</div>
+      <div className='text-xl font-bold mb-3'>Have more fun with family</div>
       <div className=''>
       <div onClick={() => {handleClickSearch('Toys');}} className='grid grid-cols-2 grid-rows-2 mb-9 gap-3'>
       <div className='cursor-pointer'>
       <div className='' style={{backgroundImage: `url(${main_toy5})`, backgroundPosition: 'center',
         backgroundSize: '150px 120px',backgroundRepeat: 'no-repeat',  width: 150, height: 120}}></div>
-      <div className='text-sm'>Cleaning Tools</div>
+      <div className='text-sm'>Outdoor play sets</div>
       </div>
       <div className='cursor-pointer'>
       <div className='' style={{backgroundImage: `url(${main_toy6})`, backgroundPosition: 'center',
         backgroundSize: '150px 120px',backgroundRepeat: 'no-repeat',  width: 150, height: 120}}></div>
-      <div className='text-sm'>Cleaning Tools</div>
+      <div className='text-sm'>Learning Toys</div>
       </div>
       <div className='cursor-pointer'>
       <div className='' style={{backgroundImage: `url(${main_toy7})`, backgroundPosition: 'center',
         backgroundSize: '150px 120px',backgroundRepeat: 'no-repeat',  width: 150, height: 120}}></div>
-      <div className='text-sm'>Cleaning Tools</div>
+      <div className='text-sm'>Action Figures</div>
       </div>
       <div className='cursor-pointer'>
       <div className='' style={{backgroundImage: `url(${main_toy8})`, backgroundPosition: 'center',
         backgroundSize: '150px 120px',backgroundRepeat: 'no-repeat',  width: 150, height: 120}}></div>
-      <div className='text-sm'>Cleaning Tools</div>
+      <div className='text-sm'>Pretend Play Toys</div>
       </div>  
       </div>
       <div onClick={() => {handleClickSearch('Toys');}} className='cursor-pointer text-blue-700 text-sm'>See more</div>
@@ -374,22 +374,22 @@ function Main() {
       <div className='cursor-pointer'>
       <div className='' style={{backgroundImage: `url(${main_gaming1})`, backgroundPosition: 'center',
         backgroundSize: '150px 120px',backgroundRepeat: 'no-repeat',  width: 150, height: 120}}></div>
-      <div className='text-sm'>Cleaning Tools</div>
+      <div className='text-sm'>Apparel</div>
       </div>
       <div className='cursor-pointer'>
       <div className='' style={{backgroundImage: `url(${main_gaming2})`, backgroundPosition: 'center',
         backgroundSize: '150px 120px',backgroundRepeat: 'no-repeat',  width: 150, height: 120}}></div>
-      <div className='text-sm'>Cleaning Tools</div>
+      <div className='text-sm'>Hats</div>
       </div>
       <div className='cursor-pointer'>
       <div className='' style={{backgroundImage: `url(${main_gaming3})`, backgroundPosition: 'center',
         backgroundSize: '150px 120px',backgroundRepeat: 'no-repeat',  width: 150, height: 120}}></div>
-      <div className='text-sm'>Cleaning Tools</div>
+      <div className='text-sm'>Action figures</div>
       </div>
       <div className='cursor-pointer'>
       <div className='' style={{backgroundImage: `url(${main_gaming4})`, backgroundPosition: 'center',
         backgroundSize: '150px 120px',backgroundRepeat: 'no-repeat',  width: 150, height: 120}}></div>
-      <div className='text-sm'>Cleaning Tools</div>
+      <div className='text-sm'>Mugs</div>
       </div>  
       </div>
       <div onClick={() => {handleClickSearch('Gaming');}} className='cursor-pointer text-blue-700 text-sm'>See more</div>
@@ -402,22 +402,22 @@ function Main() {
       <div className='cursor-pointer'>
       <div className='' style={{backgroundImage: `url(${main_makeup1})`, backgroundPosition: 'center',
         backgroundSize: '150px 120px',backgroundRepeat: 'no-repeat',  width: 150, height: 120}}></div>
-      <div className='text-sm'>Cleaning Tools</div>
+      <div className='text-sm'>Makeup</div>
       </div>
       <div className='cursor-pointer'>
       <div className='' style={{backgroundImage: `url(${main_makeup2})`, backgroundPosition: 'center',
         backgroundSize: '150px 120px',backgroundRepeat: 'no-repeat',  width: 150, height: 120}}></div>
-      <div className='text-sm'>Cleaning Tools</div>
+      <div className='text-sm'>Brushes</div>
       </div>
       <div className='cursor-pointer'>
       <div className='' style={{backgroundImage: `url(${main_makeup3})`, backgroundPosition: 'center',
         backgroundSize: '150px 120px',backgroundRepeat: 'no-repeat',  width: 150, height: 120}}></div>
-      <div className='text-sm'>Cleaning Tools</div>
+      <div className='text-sm'>Sponges</div>
       </div>
       <div className='cursor-pointer'>
       <div className='' style={{backgroundImage: `url(${main_makeup4})`, backgroundPosition: 'center',
         backgroundSize: '150px 120px',backgroundRepeat: 'no-repeat',  width: 150, height: 120}}></div>
-      <div className='text-sm'>Cleaning Tools</div>
+      <div className='text-sm'>Mirrors</div>
       </div>  
       </div>
       <div onClick={() => {handleClickSearch('Makeup');}} className='cursor-pointer text-blue-700 text-sm'>See more</div>
