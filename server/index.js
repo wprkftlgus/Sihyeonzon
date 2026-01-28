@@ -8,6 +8,7 @@ import RegisterRouter from './routes/register.js'
 import db from "./db.js"
 import cookieParser from 'cookie-parser';
 import cartRouter from './routes/cart.js'
+import stripeRouter from './routes/stripe.js'
 
 dotenv.config() 
 const app = express();
@@ -35,7 +36,7 @@ app.use('/api' ,meRouter);
 app.use('/api' ,loginRouter);
 app.use('/api' ,RegisterRouter);
 app.use('/api', cartRouter);
-
+app.use('/api', stripeRouter);
 
 app.get('/', async (req,res) => {
   try{

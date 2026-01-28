@@ -8,7 +8,7 @@ import amazon from '../assets/amazon.png'
 import uk from '../assets/uk.png'
 import coffe from '../assets/coffe.svg'
 import Loading from '../pages/loading'
-
+import CheckoutPage from './CheckoutPage';
 
 // interface Post {
 //   id: number;
@@ -36,6 +36,8 @@ function Cart() {
   const [cart, setCart] = useState< Cart[]>([]);
   const [loading, setLoading] = useState(false);
   const [updatingId, setUpdatingId] = useState<number | null>(null);
+  const [showCheckout, setShowCheckout] = useState(false);
+  const [clientSecret, setClientSecret] = useState<string | null>(null);
 
   // const { id } = useParams<{ id: string }>();
   // const [posts, setPosts] = useState<Post[] | null>([]);
@@ -83,6 +85,16 @@ function Cart() {
     }
     fetchCart();
   },[])
+  
+  useEffect(() => {
+  fetch(`${API_BASE_URL}/api/create-payment-intent`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ amount: 1000 }),
+  })
+    .then(res => res.json())
+    .then(data => setClientSecret(data.clientSecret));
+}, []);
 
   const handleLogout = async () => {
     try{
@@ -267,7 +279,7 @@ function Cart() {
       <div onClick={() => {handleClickSearch('Food');}} className='border border-[#192d41] hover:border-white cursor-pointer p-2'>Foods</div>
       </div>
      {cart.length > 0 ?
-     <div className='bg-gray-200 '>
+     <div className='bg-gray-200 flex'>
      <div className='pt-3 pl-20 pb-32 max-w-[1400px]'>
       <div className='bg-white'>
       <div className='pt-5 ml-5 mr-5 border-b border-gray-300'>
@@ -312,6 +324,26 @@ function Cart() {
      <div className='bg-white p-7 mt-5'></div>
      <div className='mt-5 text-sm'>The price and availability of items at Sihyeonzon.online are subject to change. The Cart is a temporary place to store a list of your items and reflects each item's most recent price. Shopping CartLearn more
 Do you have a gift card or promotional code? We'll ask you to enter your claim code when it's time to pay.</div>
+     </div>
+     <div className='bg-white max-h-[230px] mt-3 ml-5 p-5'>
+      <div className='flex items-center'>
+      <div className='bg-green-700 w-[220px] h-4 rounded-2xl'></div>
+      <div className='text-sm font-bold ml-2'>£{subtotal}</div>
+      </div>
+      <div className='mb-4'>
+      <div className='text-green-800 text-sm font-bold'>Your order qualifies for FREE Shipping.</div>
+      <div className='cursor-pointer hover:underline text-blue-800 text-sm'>Shop more eligible items</div>
+      </div>
+      <div className='text-xl flex items-center mb-2'> 
+      <div className='p-2'>Subtotal</div>
+      <div className=''>({cart.length} items):</div>
+      <div className='ml-2 font-bold'>£{subtotal}</div>
+      </div>
+      {!showCheckout && (
+        <div onClick={() => setShowCheckout(true)} className="bg-yellow-300 rounded-2xl text-center w-[250px] p-2 cursor-pointer hover:bg-yellow-400">
+          Proceed to checkout
+        </div>
+      )} {showCheckout && clientSecret && <CheckoutPage clientSecret={clientSecret} />}
      </div> 
      </div> 
      : <div className='pt-5 bg-gray-200 w-full h-[800px]'>
