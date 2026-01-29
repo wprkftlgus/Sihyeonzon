@@ -350,16 +350,18 @@ Do you have a gift card or promotional code? We'll ask you to enter your claim c
      </div> 
      </div> 
      : <div className='pt-5 bg-gray-200 w-full h-[800px]'>
-         <div className='flex ml-10 mr-10 bg-white p-10'>
-          <div className='relative bottom-1' style={{backgroundImage: `url(${coffe})`, backgroundPosition: 'center',
-        backgroundSize: '300px 300px',backgroundRepeat: 'no-repeat',  width: 300, height: 300}}></div>
-          <div>
+         <div className='flex ml-10 mr-10 bg-white items-center'>
+          <div className='relative bottom-1 ml-5' style={{backgroundImage: `url(${coffe})`, backgroundPosition: 'center',
+        backgroundSize: '400px 400px',backgroundRepeat: 'no-repeat',  width: 400, height: 300}}></div>
+          <div className='ml-5'>
           <div className='text-2xl font-bold'>Your Sihyeonzon Cart is empty</div>
-          <div className='text-blue-700 cursor-pointer hover:underline'>Shop today's deals</div>
+          <div onClick={() => navigate('/searchresult/s')} className='text-blue-700 cursor-pointer hover:underline inline-block'>Shop today's deals</div>
           </div>
           </div>
-          <div className='text-sm'>The price and availability of items at Sihyeonzon.online are subject to change. The Cart is a temporary place to store a list of your items and reflects each item's most recent price. Shopping CartLearn more
-Do you have a gift card or promotional code? We'll ask you to enter your claim code when it's time to pay.</div>
+          <div className='bg-white ml-10 mr-10 mt-5 h-[60px]'></div>
+          <div className='text-sm ml-10 mr-10 mt-3'>The price and availability of items at Sihyeonzon.online are subject to change. The Cart is a temporary place to store a list of your items and reflects each item's most recent price.
+          <div className='text-blue-700 cursor-pointer inline-block hover:underline ml-1'>Learn more</div> 
+          <div>Do you have a gift card or promotional code? We'll ask you to enter your claim code when it's time to pay.</div></div>
         </div>}
       
 
