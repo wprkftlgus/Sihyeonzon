@@ -226,7 +226,7 @@ function Main() {
       <div onClick={() => {handleClickSearch('Food');}} className='border border-[#192d41] hover:border-white cursor-pointer p-2'>Foods</div>
       </div>
 
-      <div className='bg-gray-200'>
+      <div className='bg-gray-200 pb-3'>
       <div className='absolute w-[1515px] pl-52 h-[700px] ml-48' style={{backgroundImage: `url(${greenbackground})`,backgroundSize: 'cover',backgroundRepeat: 'no-repeat' ,backgroundPosition: 'center'}}></div>
       <div className='relative pt-[280px] mx-auto max-w-[1500px]'>
       <div className='flex bg-white p-2 justify-center'>
@@ -425,7 +425,8 @@ function Main() {
       </div>
       </div>
       </div>
-
+      
+      <div className='flex justify-end mr-10'>
       <div onClick={() => {
         if(!user){
           alert("You need to login!");
@@ -433,7 +434,8 @@ function Main() {
           return ;
         } 
         navigate('/createpost')}} 
-        className='cursor-pointer bg-yellow-300 p-2 max-w-20'>create post</div>
+        className='cursor-pointer mt-5 bg-yellow-300 p-2 hover:bg-yellow-400 rounded-2xl text-center font-bold w-[120px] justify-end'>create post</div>
+      </div>
     </div>
     </div>
     <div className='relative z-10 bg-[#142535]'>

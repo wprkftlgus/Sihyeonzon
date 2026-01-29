@@ -9,6 +9,7 @@ import uk from '../assets/uk.png'
 import coffe from '../assets/coffe.svg'
 import Loading from '../pages/loading'
 import CheckoutPage from './CheckoutPage';
+import bin from '../assets/bin.png'
 
 // interface Post {
 //   id: number;
@@ -302,7 +303,8 @@ function Cart() {
         </div>
         <div className='flex gap-3 items-center'>
         <div className='font-bold flex gap-3 items-center p-1 border-2 border-yellow-400 rounded-xl'>
-        <button onClick={() => handleDecreaseItem(item.post_id)} disabled={updatingId !== null } className='cursor-pointer text-xl'>-</button>
+        {item.quantity == 1 ? <div onClick={() => handleDeleteItem(item.post_id)} className='cursor-pointer' style={{backgroundImage: `url(${bin})`, backgroundPosition: 'center',
+    backgroundSize: '15px 15px',backgroundRepeat: 'no-repeat',  width: 15, height: 15}}></div> : <button onClick={() => handleDecreaseItem(item.post_id)} disabled={updatingId !== null } className='cursor-pointer text-xl'>-</button>}
         <div>{item.quantity}</div>
         <button onClick={() => handleAddItem(item.post_id)} disabled={updatingId !== null } className='cursor-pointer text-xl'>+</button>
         </div>

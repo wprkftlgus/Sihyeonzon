@@ -8,6 +8,7 @@ import cart from '../assets/search.png'
 import amazon from '../assets/amazon.png'
 import uk from '../assets/uk.png'
 import Loading from './loading.tsx';
+import CheckoutPage from './CheckoutPage.tsx';
 
 interface Post {
   id: number;
@@ -30,6 +31,8 @@ function Postdetail(){
   const [hiddenDetail2, setHiddenDetail2] =useState(false); 
   const timeoutRef = useRef<number | null>(null);
   const [search, setSearch] = useState<string>('');
+  const [showCheckout, setShowCheckout] = useState(false);
+  const [clientSecret, setClientSecret] = useState<string | null>(null);
   
   useEffect(() => {
     const fetchUser = async () => {
@@ -63,6 +66,18 @@ function Postdetail(){
     }
     fetchpost();
   },[])
+
+  useEffect(() => {
+  fetch(`${API_BASE_URL}/api/create-payment-intent`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ amount: 1000 }),
+    credentials: 'include'
+  })
+    .then(res => res.json())
+    .then(data => setClientSecret(data.clientSecret));
+}, []);
+
   
   const handleCartAdd = async () => {
     const post_id = id ? Number(id) : null;
@@ -317,7 +332,11 @@ function Postdetail(){
           return navigate('/login');
         }
         handleCartAdd();}} className="w-full p-2 mt-2 mb-2 text-center bg-yellow-300 rounded-2xl cursor-pointer hover:bg-yellow-400">Add to cart</div>
-      <div className="w-full p-2 mt-2 mb-2 text-center bg-orange-400 rounded-2xl cursor-pointer hover:bg-orange-500">Buy Now</div>
+      {!showCheckout && (
+        <div onClick={() => setShowCheckout(true)} className="w-full p-2 mt-2 mb-2 text-center bg-orange-400 rounded-2xl cursor-pointer hover:bg-orange-500">
+          Buy Now
+        </div>
+      )} {showCheckout && clientSecret && <CheckoutPage clientSecret={clientSecret} />}
       <div className="flex flex-col">
       <div className="text-xs">
       <div className='mb-2 flex justify-between'>
