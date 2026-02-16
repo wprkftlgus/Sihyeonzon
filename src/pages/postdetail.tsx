@@ -9,6 +9,7 @@ import amazon from '../assets/amazon.png'
 import uk from '../assets/uk.png'
 import Loading from './loading.tsx';
 import CheckoutPage from './CheckoutPage.tsx';
+import check from '../assets/check.png'
 
 interface Post {
   id: number;
@@ -33,6 +34,8 @@ function Postdetail(){
   const [search, setSearch] = useState<string>('');
   const [showCheckout, setShowCheckout] = useState(false);
   const [clientSecret, setClientSecret] = useState<string | null>(null);
+  const [alarm, setAlarm] = useState(false);
+  const timeoutalarmRef = useRef<number | null>(null);
   
   useEffect(() => {
     const fetchUser = async () => {
@@ -90,7 +93,16 @@ function Postdetail(){
       })
       if(res.ok){
       const data = await res.json();
-      alert(data.message);
+      if(data){
+        setAlarm(true);
+        if(timeoutalarmRef.current){
+          clearTimeout(timeoutalarmRef.current);
+        }
+        timeoutRef.current = setTimeout(() => {
+    setAlarm(false);
+    timeoutRef.current = null;
+  }, 3000);
+      }
       }
     } catch(err){
       console.log(err);
@@ -242,6 +254,15 @@ function Postdetail(){
       <div onClick={() => {handleClickSearch('Clothing');}} className='border border-[#192d41] hover:border-white cursor-pointer p-2'>Clothings</div>
       <div onClick={() => {handleClickSearch('Food');}} className='border border-[#192d41] hover:border-white cursor-pointer p-2'>Foods</div>
       </div>
+    
+    { alarm && (
+      <div className='animate-fadeIn shadow-2xl w-[400px] right-[1%] bottom-3 bg-white fixed text-2xl z-20 p-8 rounded-xl'>
+      <div className='flex items-center gap-5'>
+      <div className='w-50 h-50' style={{backgroundImage: `url(${check})`, backgroundRepeat: 'no-repeat', backgroundPosition: 'center', width: 50, height: 50, backgroundSize: 'cover'}}></div>  
+      <div className='text-green-500 font-bold text-2xl max-w-[250px]'>Item added from cart successfully.</div>
+      </div>
+      </div>
+        )}
 
     <div className='bg-white mt-10 mb-80 ml-20 mr-5 '>
      <div className="text-gray-600 mb-10 ml-28">{'>'} <div className="inline-block cursor-pointer hover:underline">{post && <div>{post[0].category}</div>}</div></div>

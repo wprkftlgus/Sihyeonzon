@@ -32,6 +32,7 @@ import main_makeup1 from '../assets/main_makeup1.jpg'
 import main_makeup2 from '../assets/main_makeup2.jpg'
 import main_makeup3 from '../assets/main_makeup3.jpg'
 import main_makeup4 from '../assets/main_makeup4.jpg'
+import warning from '../assets/warning.png'
 
 // interface Post {
 //   id: number;
@@ -49,6 +50,7 @@ function Main() {
   const [hidden, setHidden] =useState(false); 
   const timeoutRef = useRef<number | null>(null);
   const [search, setSearch] = useState<string>('');
+  const [needlogin, setNeedlogin] = useState(false);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -210,8 +212,8 @@ function Main() {
          
         <div onClick={() => {
           if(!user){
-          alert('You need to login!'); 
-          return navigate('/login');
+          return setNeedlogin(true);
+          
           } navigate('/cart')}} className='flex items-center cursor-pointer border border-[#131921] hover:border-white'>
         <div className='invert' style={{backgroundImage: `url(${cart})`, backgroundPosition: 'center',
     backgroundSize: '50px 50px', backgroundRepeat: 'no-repeat',  width: 50, height:50}}></div>
@@ -225,7 +227,20 @@ function Main() {
       <div onClick={() => {handleClickSearch('Clothing');}} className='border border-[#192d41] hover:border-white cursor-pointer p-2'>Clothings</div>
       <div onClick={() => {handleClickSearch('Food');}} className='border border-[#192d41] hover:border-white cursor-pointer p-2'>Foods</div>
       </div>
-
+      { needlogin && (
+      <div className=''>
+      <div className="z-50 fixed inset-0 bg-black/50 transiti-opacity duration-300 animate-fadeIn"/>
+      <div className='absolute shadow-2xl text-center w-[600px] left-[34%] bg-white text-2xl top-24 z-50 p-8 rounded-xl'>
+      <div className='flex items-center justify-center gap-2'>
+      <div className='w-50 h-50' style={{backgroundImage: `url(${warning})`, backgroundRepeat: 'no-repeat', backgroundPosition: 'center', width: 50, height: 50, backgroundSize: 'cover'}}></div>  
+      <div className='text-red-500 font-bold text-4xl'>WARNING!</div>
+      </div>
+      <div className='font-bold'>You need to Login!</div>
+      <div onClick={() => navigate('/login')} className='mt-10 bg-blue-500 inline-block p-1 pr-4 pl-4 rounded-xl text-white cursor-pointer hover:bg-blue-400'>Okay</div>
+      </div>
+      </div>
+      )}
+      
       <div className='bg-gray-200 pb-3'>
       <div className='absolute w-[1515px] pl-52 h-[700px] ml-48' style={{backgroundImage: `url(${greenbackground})`,backgroundSize: 'cover',backgroundRepeat: 'no-repeat' ,backgroundPosition: 'center'}}></div>
       <div className='relative pt-[280px] mx-auto max-w-[1500px]'>
@@ -429,15 +444,14 @@ function Main() {
       <div className='flex justify-end mr-10'>
       <div onClick={() => {
         if(!user){
-          alert("You need to login!");
-          navigate('/login');
-          return ;
+          return setNeedlogin(true);
         } 
         navigate('/createpost')}} 
         className='cursor-pointer mt-5 bg-yellow-300 p-2 hover:bg-yellow-400 rounded-2xl text-center font-bold w-[120px] justify-end'>create post</div>
       </div>
     </div>
     </div>
+
     <div className='relative z-10 bg-[#142535]'>
     <div className='text-sm flex gap-20 w-[1065px] pt-10 pb-14 mx-auto bg-[#142535] text-[#DDD]'>
      <div className='flex flex-col gap-1'>

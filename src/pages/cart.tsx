@@ -10,6 +10,7 @@ import coffe from '../assets/coffe.svg'
 import Loading from '../pages/loading'
 import CheckoutPage from './CheckoutPage';
 import bin from '../assets/bin.png'
+import check from '../assets/check.png'
 
 // interface Post {
 //   id: number;
@@ -39,6 +40,7 @@ function Cart() {
   const [updatingId, setUpdatingId] = useState<number | null>(null);
   const [showCheckout, setShowCheckout] = useState(false);
   const [clientSecret, setClientSecret] = useState<string | null>(null);
+  const [alarm, setAlarm] = useState(false);
 
   // const { id } = useParams<{ id: string }>();
   // const [posts, setPosts] = useState<Post[] | null>([]);
@@ -177,15 +179,18 @@ function Cart() {
 
   const handleDeleteItem = async (post_id: number) => {
     try{
-      const res = await fetch(`${API_BASE_URL}/api/removeitem`,{
+       await fetch(`${API_BASE_URL}/api/removeitem`,{
         method: 'DELETE',
         headers : { "Content-Type" : "application/json"},
         body: JSON.stringify({ post_id }),
         credentials: 'include'
       })
-      const data = await res.json();
+      
       setCart(prev => prev.filter(item => item.post_id !== post_id));
-      alert(data.message);
+      setAlarm(true);
+      setTimeout(() => {
+        setAlarm(false);
+      }, 3000);
     } catch(err){
       console.log(err);
     } 
@@ -255,6 +260,17 @@ function Cart() {
           <div className='pr-8' style={{backgroundImage: `url(${uk})`, backgroundPosition: 'center', backgroundRepeat: 'no-repeat', backgroundSize: '20px 20px',width:20, height:20}}></div>
           UK
         </div>
+        
+        { alarm && (
+      <div className='animate-fadeIn shadow-2xl w-[400px] right-[1%] bottom-3 bg-white fixed text-2xl z-20 p-8 rounded-xl'>
+      <div className='flex items-center gap-5'>
+      <div className='w-50 h-50' style={{backgroundImage: `url(${check})`, backgroundRepeat: 'no-repeat', backgroundPosition: 'center', width: 50, height: 50, backgroundSize: 'cover'}}></div>  
+      <div className='text-green-500 font-bold text-2xl max-w-[250px]'>Item removed from cart successfully.</div>
+      </div>
+      <div className='font-bold'>You need to Login!</div>
+      </div>
+        )}
+
         {!user ? 
         <div className='p-1 flex flex-col cursor-pointer border border-[#131921] hover:border-white'
         onClick={() => navigate('/login')}>
