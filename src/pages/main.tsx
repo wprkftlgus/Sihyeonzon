@@ -230,7 +230,7 @@ function Main() {
       { needlogin && (
       <div className=''>
       <div className="z-50 fixed inset-0 bg-black/50 transiti-opacity duration-300 animate-fadeIn"/>
-      <div className='absolute shadow-2xl text-center w-[600px] left-[34%] bg-white text-2xl top-24 z-50 p-8 rounded-xl'>
+      <div className='absolute shadow-2xl text-center w-[600px] left-[650px] bg-white text-2xl top-24 z-50 p-8 rounded-xl'>
       <div className='flex items-center justify-center gap-2'>
       <div className='w-50 h-50' style={{backgroundImage: `url(${warning})`, backgroundRepeat: 'no-repeat', backgroundPosition: 'center', width: 50, height: 50, backgroundSize: 'cover'}}></div>  
       <div className='text-red-500 font-bold text-4xl'>WARNING!</div>
