@@ -267,7 +267,6 @@ function Cart() {
       <div className='w-50 h-50' style={{backgroundImage: `url(${check})`, backgroundRepeat: 'no-repeat', backgroundPosition: 'center', width: 50, height: 50, backgroundSize: 'cover'}}></div>  
       <div className='text-green-500 font-bold text-2xl max-w-[250px]'>Item removed from cart successfully.</div>
       </div>
-      <div className='font-bold'>You need to Login!</div>
       </div>
         )}
 

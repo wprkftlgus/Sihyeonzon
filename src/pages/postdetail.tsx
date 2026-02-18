@@ -256,7 +256,7 @@ function Postdetail(){
       </div>
     
     { alarm && (
-      <div className='animate-fadeIn shadow-2xl w-[400px] right-[1%] bottom-[30px] bg-white fixed text-2xl z-20 p-8 rounded-xl'>
+      <div className='animate-fadeIn shadow-2xl w-[400px] right-[1%] top-[800px] bg-white fixed text-2xl z-20 p-8 rounded-xl'>
       <div className='flex items-center gap-5'>
       <div className='w-50 h-50' style={{backgroundImage: `url(${check})`, backgroundRepeat: 'no-repeat', backgroundPosition: 'center', width: 50, height: 50, backgroundSize: 'cover'}}></div>  
       <div className='text-green-500 font-bold text-2xl max-w-[250px]'>Item added from cart successfully.</div>
